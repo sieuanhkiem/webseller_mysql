@@ -2,7 +2,7 @@ import express, { Express, Request, Response } from 'express';
 const { logging } = require('./config/logging');
 import config from './config/config';
 import './common/string_extendsion';
-import { initialize } from './data-source';
+import AppDataSource, { initialize } from './data-source';
 import mainRoute from './routes/client/main.route';
 import page_err from './routes/client/page_error.route';
 import { DataSource } from 'typeorm';
@@ -16,16 +16,18 @@ mainApp.use('/page_error', page_err);
 
 mainApp.listen(config.server.port, async () => {
     console.log(`⚡️[server]: Server is running at http://${config.server.hostname}:${config.server.port}}`);
-    // try 
-    // {
-    //     const dataSource: DataSource = await initialize() as DataSource;
-    //     if(Common.CheckVariableNotNull(dataSource)){
-    //         await dataSource?.runMigrations();
-    //         if(dataSource.isInitialized) await dataSource.close();
-    //     }
-    // } 
-    // catch  
-    // {
-    //     mainApp.response.redirect('/page_error');
-    // }
+    try 
+    {
+        if(!AppDataSource.isInitialized) {
+            const dataSource: DataSource = await initialize() as DataSource;
+            if(Common.CheckVariableNotNull(dataSource)){
+                // await dataSource.synchronize();
+                if(dataSource.isInitialized) await dataSource.destroy();
+            }
+        }
+    } 
+    catch (error: unknown)
+    {
+        logging.error(`Set up database faild: ${error}`);
+    }
 });

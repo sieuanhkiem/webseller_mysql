@@ -8,5 +8,6 @@ export async function index (req: Request, res: Response) {
     const manager: EntityManager = dataSource.manager;
     const cutomerResult: Customer[] = await manager.getRepository(Customer).createQueryBuilder('customer').getMany();
     console.log(cutomerResult);
+    dataSource.destroy();
     return res.send('hello');
 };
