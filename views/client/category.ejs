@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <%- include('./root/link-header') -%>
+    <title>Mộc Hương Rừng Agarwood</title>
+</head>
+<body>
+    <%- include('./root/header') -%>
+    <!-- ----------------------------------------------Category -->
+    <section class="category">
+        <div class="contener">
+            <div class="category-top row">
+                <p>Trang chủ<span>&#10230;</span>Vòng tay & Lắc tay</p>
+            </div>    
+        </div>
+        <div class="contener">
+            <div class="row">
+                <div class="category-left">
+                    <ul>
+                        <li class="category-left-li"><a href="">Vòng tay & Lắc tay</a></li>
+                        <!-- <ul></ul> -->
+                        <li class="category-left-li"><a href="">Nhẫn</a></li>
+                    </ul>
+                </div>
+                <div class="category-right row">
+                    <div class="category-right-top-item">
+                        <p><b>Vòng tay & Lắc tay</b></p>
+                    </div>
+                    <div class="category-right-top-item">
+                        <button><span>Bộ lọc</span><i class="fas fa-sort-down"></i></button>
+                    </div>
+                    <div class="category-right-top-item">
+                        <select name="" id="">
+                            <option value="">Sắp xếp</option>
+                            <option value="">Giá cao đến thấp</option>
+                            <option value="">Giá thấp đến cao</option>
+                        </select>
+                    </div>
+                    <div class="category-right-content row">
+                        <% data.forEach(function(product) { %>
+                            <div class="category-right-content-item">
+                                <img src="./images/<%= product.image %>" alt="">
+                                <h1><%= product.title %></h1>
+                                <p><%= product.price %> <sup>đ</sup></p>
+                            </div>
+                        <% }) %>
+                        <!-- <div class="category-right-content-item">
+                            <img src="./images/Vòng Tay Trầm Hương 108 Hạt Sánh Chìm Mix Hoa Sen Trầm Cao Cấp Trầm Hương Đủ Kích Thước Nam Nữ.jpeg" alt="">
+                            <h1>Vòng Tay Trầm Hương 108 Hạt Sánh Chìm Mix Hoa Sen Trầm Cao Cấp Trầm Hương Đủ Kích Thước Nam Nữ</h1>
+                            <p>790.000 <sup>đ</sup></p>
+                        </div>
+                        <div class="category-right-content-item">
+                            <img src="./images/Vòng Tay Trầm Hương 108 Hạt Trầm Hương Tự Nhiên.jpeg" alt="">
+                            <h1>Vòng Tay Trầm Hương 108 Hạt Sánh Chìm Mix Hoa Sen Trầm Cao Cấp Trầm Hương Đủ Kích Thước Nam Nữ</h1>
+                            <p>790.000 <sup>đ</sup></p>
+                        </div>
+                        <div class="category-right-content-item">
+                            <img src="./images/Vòng tay trầm hương 108 hạt.jpeg" alt="">
+                            <h1>Vòng Tay Trầm Hương 108 Hạt Sánh Chìm Mix Hoa Sen Trầm Cao Cấp Trầm Hương Đủ Kích Thước Nam Nữ</h1>
+                            <p>790.000 <sup>đ</sup></p>
+                        </div>  
+                        <div class="category-right-content-item">
+                            <img src="./images/Vòng tay trầm hương 108 hạtj Mix Cỏ 4 lá theo mệnh.jpeg" alt="">
+                            <h1>Vòng Tay Trầm Hương 108 Hạt Sánh Chìm Mix Hoa Sen Trầm Cao Cấp Trầm Hương Đủ Kích Thước Nam Nữ</h1>
+                            <p>790.000 <sup>đ</sup></p>
+                        </div>
+                        <div class="category-right-content-item">
+                            <img src="./images/Vòng tay Trầm hương đơn mix charm.jpeg" alt="">
+                            <h1>Vòng Tay Trầm Hương 108 Hạt Sánh Chìm Mix Hoa Sen Trầm Cao Cấp Trầm Hương Đủ Kích Thước Nam Nữ</h1>
+                            <p>790.000 <sup>đ</sup></p>
+                        </div>
+                        <div class="category-right-content-item">
+                            <img src="./images/Vòng tay Trầm hương đơn mix charm.jpeg" alt="">
+                            <h1>Vòng Tay Trầm Hương 108 Hạt Sánh Chìm Mix Hoa Sen Trầm Cao Cấp Trầm Hương Đủ Kích Thước Nam Nữ</h1>
+                            <p>790.000 <sup>đ</sup></p>
+                        </div>
+                        <div class="category-right-content-item">
+                            <img src="./images/mô tả trầm hương 1.jpg" alt="">
+                            <h1>Vòng Tay Trầm Hương 108 Hạt Sánh Chìm Mix Hoa Sen Trầm Cao Cấp Trầm Hương Đủ Kích Thước Nam Nữ</h1>
+                            <p>790.000 <sup>đ</sup></p>
+                        </div>
+                        <div class="category-right-content-item">
+                            <img src="./images/mô tả trầm hương 2.jpg" alt="">
+                            <h1>Vòng Tay Trầm Hương 108 Hạt Sánh Chìm Mix Hoa Sen Trầm Cao Cấp Trầm Hương Đủ Kích Thước Nam Nữ</h1>
+                            <p>790.000 <sup>đ</sup></p>
+                        </div>
+                        <div class="category-right-content-item">
+                            <img src="./images/mô tả trầm hương 3.jpg" alt="">
+                            <h1>Vòng Tay Trầm Hương 108 Hạt Sánh Chìm Mix Hoa Sen Trầm Cao Cấp Trầm Hương Đủ Kích Thước Nam Nữ</h1>
+                            <p>790.000 <sup>đ</sup></p>
+                        </div> -->
+                    </div>
+                    <div class="category-right-bottom row">
+                        <div class="category-right-bottom-item">
+                            <p>Hiện thị <b>2</b> <span>|</span><b> 4</b>  sản phẩm</p>
+                        </div>
+                        <div class="ategory-right-bottom-item">
+                            <p><span>&#171;</span>1 2 3 4 5<span>&#187;</span>Trang cuối</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <%- include('./root/foodter') -%>
+
+    <script src="https://kit.fontawesome.com/fe2553334c.js" crossorigin="anonymous"></script>
+</body>
+
+<script>
+    const header = document.querySelector("header")
+    window.addEventListener(
+        "scroll",
+        function() {
+        x = window.pageYOffset
+        if(x>0){
+            header.classList.add("sticky")
+        }
+        else{
+            header.classList.remove("sticky")
+        }
+        }
+    )
+
+
+    const imgPosition = document.querySelectorAll(".aspect-ratio-169 img")
+    const Imgcontainer = document.querySelector('.aspect-ratio-169')
+    const dotitem = document.querySelectorAll(".dot")
+    let imgNumber = imgPosition.length
+    let index = 0
+    imgPosition.forEach(function(image, index) {
+        image.style.left= index*100 + "%"
+        dotitem[index].addEventListener("click",function(){
+            slider (index)
+        })
+    })
+    function imgSlide (){
+        index++;
+        console.log(index)
+        if(index>=imgNumber) {index=0}
+        slider (index)
+    }
+    function slider (index){
+        Imgcontainer.style.left = "-"+index*100+"%"
+        const docActive = document.querySelector('.active')
+        docActive.classList.remove("active")
+        dotitem[index].classList.add("active")
+    }
+    setInterval(imgSlide,5000)
+</script>
+</html>

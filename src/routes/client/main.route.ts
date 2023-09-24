@@ -1,8 +1,8 @@
 import express, { Router } from 'express';
-import { index } from '../../controllers/client/main.controller';
+import MainController from '../../controllers/client/main.controller';
 const mainRoute: Router = express.Router();
 
-mainRoute.get('/', index);
+mainRoute.get('/', MainController.index);
 
 export default mainRoute;
 

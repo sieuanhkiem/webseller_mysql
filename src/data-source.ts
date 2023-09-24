@@ -22,12 +22,21 @@ const AppDataSource: DataSource = new DataSource({
     }
 });
 
-export async function initialize(): Promise<DataSource | undefined> {
-    try {
-        return await AppDataSource.initialize();
-        logging.info('Data Source has been initialized!');
-    } catch (error) {
-        logging.error(`Error during Data Source initialization: ${error}`);
+export async function initialize(): Promise<void> {
+    let isConnect: boolean = false;
+    try 
+    {
+        if(!AppDataSource.isInitialized) {
+            const dataSource: DataSource = await AppDataSource.initialize();
+            isConnect = dataSource.isInitialized;
+            await dataSource.synchronize();
+            if(isConnect) await dataSource.destroy();
+        }
+    } 
+    catch (error: unknown)
+    {
+        if(isConnect) await AppDataSource.destroy();
+        logging.error(`Set up database faild: ${error}`);
     }
 }
 

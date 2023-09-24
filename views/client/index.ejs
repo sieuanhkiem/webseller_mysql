@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,300;8..144,500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./css/client/main.css"> -->
+    <%- include('./root/link-header') -%>
+    <title>Mộc Hương Rừng Agarwood</title>
+</head>
+<body>
+    <%- include('./root/header') -%>
+    <section id="Slider">
+        <div class="aspect-ratio-169">
+            <img src="./images/header shop.jpg">
+            <img src="./images/mô tả trầm hương 1.jpg">
+            <img src="./images/header shop.jpg">
+            <img src="./images/mô tả trầm hương 2.jpg">
+            <img src="./images/header shop.jpg">
+            <img src="./images/mô tả trầm hương 3.jpg">
+        </div>
+
+        <div class="dot-container">
+            <div class="dot active"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+        </div>
+    </section>
+
+    <%- include('./root/foodter') -%>
+    <script src="https://kit.fontawesome.com/fe2553334c.js" crossorigin="anonymous"></script>
+</body>
+
+<script>
+    const header = document.querySelector("header")
+    window.addEventListener(
+        "scroll",
+        function() {
+        x = window.pageYOffset
+        if(x>0){
+            header.classList.add("sticky")
+        }
+        else{
+            header.classList.remove("sticky")
+        }
+        }
+    )
+
+
+    const imgPosition = document.querySelectorAll(".aspect-ratio-169 img")
+    const Imgcontainer = document.querySelector('.aspect-ratio-169')
+    const dotitem = document.querySelectorAll(".dot")
+    let imgNumber = imgPosition.length
+    let index = 0
+    imgPosition.forEach(function(image, index) {
+        image.style.left= index*100 + "%"
+        dotitem[index].addEventListener("click",function(){
+            slider (index)
+        })
+    })
+    function imgSlide (){
+        index++;
+        console.log(index)
+        if(index>=imgNumber) {index=0}
+        slider (index)
+    }
+    function slider (index){
+        Imgcontainer.style.left = "-"+index*100+"%"
+        const docActive = document.querySelector('.active')
+        docActive.classList.remove("active")
+        dotitem[index].classList.add("active")
+    }
+    setInterval(imgSlide,5000)
+</script>
+</html>
