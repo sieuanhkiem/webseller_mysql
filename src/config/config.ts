@@ -19,7 +19,8 @@ const config = {
         database: SQLSERVER_DATABASE,
         user: SQLSERVER_USER,
         pass: SQLSERVER_PASS
-    }
+    },
+    secrectkey: 'E821752166E916AEEF940855'
 };
 
 export default config;

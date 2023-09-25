@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <%- include('./root/link-header') -%>
+        <title>Mộc Hương Rừng Agarwood</title>
+    </head>
+    <body>
+        <%- include('./root/header') -%>
+        <!-- --------------------------------------------------------Product -->
+        <section class="product">
+            <div class="container">
+                <div class="product-top row">
+                    <p>Trang chủ <span>&#10230;</span> Vòng tay & Lắc tay</p>
+                </div>
+                <div class="product-content row">
+                    <div class="product-content-left row">
+                        <div class="product-content-left-big-img">
+                            <img src="./images/Vòng Tay Trầm Hương 108 Hạt Sánh Chìm Mix Hoa Sen Trầm Cao Cấp Trầm Hương Đủ Kích Thước Nam Nữ.jpeg" alt="">
+                        </div>
+                        <div class="product-content-left-small-img">
+                            <img src="./images/Vòng tay trầm hương 108 hạt.jpeg" alt="">
+                            <img src="./images/Vòng tay trầm hương 108 hạt.jpeg" alt="">
+                            <img src="./images/Vòng tay trầm hương 108 hạt.jpeg" alt="">
+                            <img src="./images/Vòng tay trầm hương 108 hạt.jpeg" alt="">
+                        </div>
+                    </div>
+                    <div class="product-content-right">
+                        <div class="product-content-right-prod-name">
+                            <h1>Vòng Tay Trầm Hương 108 Hạt Sánh Chìm Mix Hoa Sen Trầm Cao Cấp Trầm Hương Đủ Kích Thước Nam Nữ</h1>
+                            <p>MSP: 123</p>
+                        </div>
+                        <div class="product-content-right-prod-price">
+                            <p>790.000 <sup>đ</sup></p>
+                        </div>
+                        <div class="product-content-right-prod-color">
+                            <p><span style="font-weight: bold;">Màu sắc</span> :Vàng <span style="color: yellow;">*</span> </p> 
+                            <!-- <div product-content-right-prod-color-img>
+                                <img src="img/Vòng tay trầm hương 108 hạtj Mix Cỏ 4 lá theo mệnh.jpeg" alt="">
+                            </div> -->
+                        </div>
+                        <div class="product-content-right-prod-size">
+                            <p style="font-weight: bold;">Size </p>
+                            <div class="size">
+                                <span>S</span>
+                                <span>M</span>
+                                <span>L</span>
+                                <span>XL</span>
+                            </div>
+                        </div>
+                        <div class="Quantity">
+                            <p style="font-weight: bold;">Số lượng: </p>
+                            <input type="number" min="0" value="1">
+                        </div>
+                        <p style="color: red;">Vui lòng chọn Size</p>
+                        <div class="product-content-right-prod-button">
+                            <button><i class="fas fa-shopping-cart"></i><p>MUA HÀNG</p></button>
+                        </div>
+                        <div class="product-content-right-bottom">
+                            <div class="product-content-right-bottom-top">
+                                &#8744;
+                            </div>
+                            <div class="product-content-right-bottom-content-big">
+                                <div class="product-content-right-bottom-content-title row">
+                                    <div class="product-content-right-bottom-content-title-item chitiet">
+                                        <p>Chi tiết</p>
+                                    </div>
+                                    <div class="product-content-right-bottom-content-title-item baoquan">
+                                        <p>Bảo quản</p>
+                                    </div>
+                                    <div class="product-content-right-bottom-content-title-item Thamkhaosize">
+                                        <p>Tham khảo size</p>
+                                    </div>
+                                </div>
+                                <div class="product-content-right-bottom-content">
+                                    <div class="product-content-right-bottom-content-Chitiet">
+                                        Vòng tay Trầm Hương 108 Hạt Việt Nam phù hợp cho cả Nam và Nữ giúp đoạn trừ 108 muộn phiền. Vòng tay mang lại vận khí may mắn, tài lộc đồng thời toát lên vẻ đẹp tuyệt mỹ, tự tin.
+                                    </div>
+                                    <div class="product-content-right-bottom-content-Baoquan">
+                                        Bạn nên dùng vải sạch lau khô vòng và để sản phẩm ở nơi thoáng mát, sau khi vòng trầm khô thì dùng vải sạch chà mạnh để tinh dầu trong vòng thoát mùi ra.<br>
+                                        Hạn chế dùng nhiệt sấy khô cho vòng bởi quá trình này có thể khiến tinh dầu trong vòng nóng lên và bốc hơi ra ngoài.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <script>
+            const baoquan = document.querySelector(".baoquan")
+            const chitiet = document.querySelector(".chitiet")
+            if(baoquan!= null){
+                baoquan.addEventListener("click",function(){
+                    document.querySelector(".product-content-right-bottom-content-Chitiet").style.display = "none"
+                    document.querySelector(".product-content-right-bottom-content-Baoquan").style.display = "block"
+                })
+            }
+            if(chitiet){
+                chitiet.addEventListener("click",function(){
+                    document.querySelector(".product-content-right-bottom-content-Baoquan").style.display = "none"
+                    document.querySelector(".product-content-right-bottom-content-Chitiet").style.display = "block"
+                })
+            }
+        </script>
+
+        <%- include('./root/foodter') -%>
+
+        <script src="https://kit.fontawesome.com/fe2553334c.js" crossorigin="anonymous"></script>
+    </body>
+</html>

@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { logging } from '../../config/logging';
+import { Common } from '../../common/common_extendsion';
 
 export default class CategoryController {
     public static async index(req: Request, res: Response) {
@@ -45,6 +46,7 @@ export default class CategoryController {
                 price: 800.000
             }
         ]
+
         return res.render('./client/category.ejs', { data });
     }
 }

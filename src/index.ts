@@ -5,6 +5,7 @@ import './common/string_extendsion';
 import { initialize } from './data-source';
 import mainRoute from './routes/client/main.route';
 import categoryRoute from './routes/client/category.route';
+import productRoute from './routes/client/product.route';
 import page_err from './routes/client/page_error.route';
 // import { Common } from './common/common_extendsion';
 const mainApp: Express = express();
@@ -14,6 +15,7 @@ mainApp.set('views', './views');
 mainApp.set('view engine', 'ejs');
 mainApp.use('', mainRoute);
 mainApp.use('/category', categoryRoute);
+mainApp.use('/product', productRoute);
 mainApp.use('/page_error', page_err);
 
 mainApp.listen(config.server.port, async () => {
