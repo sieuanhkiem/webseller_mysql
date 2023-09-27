@@ -20,7 +20,8 @@ const config = {
         user: SQLSERVER_USER,
         pass: SQLSERVER_PASS
     },
-    secrectkey: 'E821752166E916AEEF940855'
+    secrectkey: 'E821752166E916AEEF940855',
+    quantityofpage: 8
 };
 
 export default config;

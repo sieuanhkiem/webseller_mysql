@@ -22,14 +22,25 @@ const AppDataSource: DataSource = new DataSource({
     }
 });
 
-export async function initialize(): Promise<void> {
+export async function initialize(refresh: boolean = false): Promise<void> {
     let isConnect: boolean = false;
     try 
     {
         if(!AppDataSource.isInitialized) {
             const dataSource: DataSource = await AppDataSource.initialize();
             isConnect = dataSource.isInitialized;
-            await dataSource.synchronize();
+            if(refresh) {
+                dataSource.entityMetadatas.forEach(async ent => {
+                    console.log(ent.oneToManyRelations);
+                    // await dataSource.manager.query(`
+                    // IF object_id('${ent.tablePath}', 'u') IS NOT NULL
+                    // BEGIN
+                    //     DROP TABLE ${ent.tablePath}
+                    // END
+                    // `);
+                });
+                // await dataSource.synchronize();
+            }
             if(isConnect) await dataSource.destroy();
         }
     } 

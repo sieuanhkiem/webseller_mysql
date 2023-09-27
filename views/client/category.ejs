@@ -40,11 +40,11 @@
                         </select>
                     </div>
                     <div class="category-right-content row">
-                        <% data.forEach(function(product) { %>
+                        <% product.products.forEach(function(itProduct) { %>
                             <div class="category-right-content-item">
-                                <img src="./images/<%= product.image %>" alt="">
-                                <h1><%= product.title %></h1>
-                                <p><%= product.price %> <sup>đ</sup></p>
+                                <a href="#"></a><img src="./images/<%= itProduct.image %>" alt="<%= itProduct.image %>"></a>
+                                <h1><%= itProduct.product_name %></h1>
+                                <p><%= itProduct.product_price %> <sup>đ</sup></p>
                             </div>
                         <% }) %>
                         <!-- <div class="category-right-content-item">
@@ -94,12 +94,14 @@
                         </div> -->
                     </div>
                     <div class="category-right-bottom row">
-                        <div class="category-right-bottom-item">
+                        <!-- <div class="category-right-bottom-item">
                             <p>Hiện thị <b>2</b> <span>|</span><b> 4</b>  sản phẩm</p>
-                        </div>
+                        </div> -->
+                        <% if(product.maxPage > 0) { %>
                         <div class="ategory-right-bottom-item">
                             <p><span>&#171;</span>1 2 3 4 5<span>&#187;</span>Trang cuối</p>
                         </div>
+                        <% } %>
                     </div>
                 </div>
             </div>

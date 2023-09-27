@@ -1,5 +1,5 @@
 import { Entity, Column, PrimaryColumn, BaseEntity } from 'typeorm';
-import { Length, IsUUID } from 'class-validator'
+import { Length, IsUUID, IsDate } from 'class-validator'
 
 @Entity('Shops')
 export class Shops extends BaseEntity {
@@ -70,4 +70,13 @@ export class Shops extends BaseEntity {
     })
     @Length(18)
     telephone: string
+
+    @Column({
+        name: 'Create_Date',
+        type: 'datetime',
+        nullable: true,
+        default: Date.now()
+    })
+    @IsDate()
+    create_date: Date
 }

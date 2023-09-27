@@ -19,7 +19,8 @@ export class Inventory extends BaseEntity {
     @Column({
         name: 'Transaction_Date',
         nullable: true,
-        type: 'datetime'
+        type: 'datetime',
+        default: Date.now()
     })
     @IsDate()
     transaction_date: Date
@@ -36,7 +37,8 @@ export class Inventory extends BaseEntity {
     @Column({
         name: 'Create_Date',
         nullable: true,
-        type: 'datetime'
+        type: 'datetime',
+        default: Date.now()
     })
     @IsDate()
     create_date: Date

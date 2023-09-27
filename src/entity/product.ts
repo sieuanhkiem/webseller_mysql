@@ -1,5 +1,5 @@
 import { Entity, Column, PrimaryColumn, BaseEntity } from 'typeorm';
-import { Length, IsUUID } from 'class-validator'
+import { Length, IsUUID, IsDate, IsInt } from 'class-validator'
 
 @Entity('Product')
 export class Product extends BaseEntity {
@@ -35,6 +35,16 @@ export class Product extends BaseEntity {
     @Length(255)
     product_name: string
 
+
+    @Column({
+        name: 'Product_Price',
+        nullable: true,
+        type: 'int',
+        unsigned: true
+    })
+    @IsInt()
+    product_price: number
+
     @Column({
         name: 'Product_Type',
         type: 'nvarchar',
@@ -54,7 +64,7 @@ export class Product extends BaseEntity {
     product_group: string
 
     @Column({
-        name: 'Product Category',
+        name: 'Product_Category',
         type: 'nvarchar',
         length: 50,
         nullable: true
@@ -79,4 +89,22 @@ export class Product extends BaseEntity {
     })
     @Length(255)
     comment: string
+
+    @Column({
+        name: 'Product_Image',
+        type: 'nvarchar',
+        length: 50,
+        nullable: true
+    })
+    @Length(100)
+    image: string
+
+    @Column({
+        name: 'Create_Date',
+        type: 'datetime',
+        nullable: true,
+        default: Date.now()
+    })
+    @IsDate()
+    create_date: Date
 }

@@ -1,5 +1,5 @@
 import { Entity, Column, PrimaryColumn, BaseEntity } from 'typeorm';
-import { IsNumber, Length, IsUUID } from 'class-validator'
+import { IsNumber, Length, IsUUID , IsDate } from 'class-validator'
 
 @Entity('Customer')
 export class Customer extends BaseEntity{
@@ -69,4 +69,13 @@ export class Customer extends BaseEntity{
     })
     @Length(50)
     job: string
+
+    @Column({
+        name: 'Create_Date',
+        type: 'datetime',
+        nullable: true,
+        default: Date.now()
+    })
+    @IsDate()
+    create_date: Date
 }

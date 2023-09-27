@@ -1,7 +1,7 @@
 import { Entity, Column, PrimaryColumn, BaseEntity } from 'typeorm';
 import { Length, IsDate, IsUUID, IsInt } from 'class-validator'
 
-@Entity('Sales Order')
+@Entity('SalesOrder')
 export class SalesOrder extends BaseEntity {
     @PrimaryColumn('uuid', {
         name: 'Id',
@@ -29,6 +29,7 @@ export class SalesOrder extends BaseEntity {
         name: 'Transaction Date',
         type: 'datetime',
         nullable: true,
+        default: Date.now()
     })
     @IsDate()
     transaction_date: Date
@@ -37,6 +38,7 @@ export class SalesOrder extends BaseEntity {
         name: 'Sales_Order_Date',
         type: 'datetime',
         nullable: true,
+        default: Date.now()
     })
     @IsDate()
     sales_order_date: Date
@@ -45,6 +47,7 @@ export class SalesOrder extends BaseEntity {
         name: 'Delivery_Date',
         type: 'datetime',
         nullable: true,
+        default: Date.now()
     })
     @IsDate()
     delivery_date: Date
@@ -71,6 +74,7 @@ export class SalesOrder extends BaseEntity {
         name: 'Create Date',
         type: 'datetime',
         nullable: true,
+        default: Date.now()
     })
     @IsDate()
     create_date: Date

@@ -47,7 +47,8 @@ export class Employee extends BaseEntity {
     @Column({
         name: 'On_Board_Date',
         type: 'datetime',
-        nullable: true
+        nullable: true,
+        default: Date.now()
     })
     @IsDate()
     on_board_date: Date
