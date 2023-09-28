@@ -80,9 +80,55 @@ export class Inventory extends BaseEntity {
     amount: number
 
     @Column({
-        name: 'Delete',
-        type: 'bit',
+        name: 'Price',
+        nullable: false,
+        type: 'int',
+        unsigned: true
+    })
+    @IsInt()
+    price: number
+
+    @Column({
+        name: 'Currenry',
+        type: 'nvarchar',
+        length: 30,
         nullable: true
     })
-    delete: boolean
+    @Length(30)
+    currenry: string
+
+    @Column({
+        name: 'Color_Code',
+        type: 'nvarchar',
+        length: 100,
+        nullable: true
+    })
+    @Length(100)
+    color_code: string
+
+    @Column({
+        name: 'Size_Code',
+        type: 'nvarchar',
+        length: 100,
+        nullable: true
+    })
+    @Length(100)
+    size_code: string
+
+    @Column({
+        name: 'Shop_Code',
+        type: 'nvarchar',
+        length: 50,
+        nullable: true
+    })
+    @Length(50)
+    shop_code: string
+
+    @Column({
+        name: 'Is_Delete',
+        type: 'bit',
+        nullable: true,
+        default: 0
+    })
+    is_delete: boolean
 }

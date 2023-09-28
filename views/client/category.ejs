@@ -10,6 +10,7 @@
 <body>
     <%- include('./root/header') -%>
     <!-- ----------------------------------------------Category -->
+    <% const showCountPagePaniation = 5 %>
     <section class="category">
         <div class="contener">
             <div class="category-top row">
@@ -94,13 +95,46 @@
                         </div> -->
                     </div>
                     <div class="category-right-bottom row">
-                        <!-- <div class="category-right-bottom-item">
+                        <div class="category-right-bottom-item">
                             <p>Hiện thị <b>2</b> <span>|</span><b> 4</b>  sản phẩm</p>
-                        </div> -->
-                        <% if(product.maxPage > 0) { %>
-                        <div class="ategory-right-bottom-item">
-                            <p><span>&#171;</span>1 2 3 4 5<span>&#187;</span>Trang cuối</p>
                         </div>
+                        <% if(product.maxPage > 0 && product.products.length > 0) { %>
+                            <div class="ategory-right-bottom-item">
+                                <p>
+                                    <% if(product.currentPage == 1) { %>
+                                        <span>&#171;</span></a>
+                                    <% } else { %>
+                                        <a href="/category/1/<%= product.currentPage - 1 %>"><span>&#171;</span></a>
+                                    <% } %>
+
+                                    <% let countPage = 1 %>
+                                    <% let startPage = 1 %>
+
+                                    <% if(product.currentPage > 1) { %>
+                                        <% startPage = product.currentPage - 1 %>
+                                    <% } %>
+                                    <% while(startPage <= product.maxPage && countPage <= showCountPagePaniation) { %>
+                                        <% if(product.currentPage == startPage) { %>
+                                            <span>[<%= startPage %>]</span>
+                                        <% } else { %>
+                                            <span><a href="/category/1/<%= startPage %>"><%= startPage %></a></span>
+                                        <% } %>
+                                        <% startPage++ %>
+                                        <% countPage++ %>
+                                    <% } %>
+                                    
+                                    <% if(product.currentPage == product.maxPage) { %>
+                                        <span>&#187;</span>
+                                    <% } else { %>
+                                        <a href="/category/1/<%= product.currentPage + 1 %>"><span>&#187;</span></a>
+                                    <% } %>
+                                    <% if(product.currentPage != product.maxPage) { %>
+                                        <a href="/category/1/<%= product.maxPage %>"><span>Trang cuối</span></a>
+                                    <% } else { %>
+                                        <span>Trang cuối</span>
+                                    <% } %>
+                                </p>
+                            </div>
                         <% } %>
                     </div>
                 </div>

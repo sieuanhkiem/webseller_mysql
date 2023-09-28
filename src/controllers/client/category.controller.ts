@@ -8,9 +8,16 @@ export default class CategoryController {
     private static productService: ProducService = new ProducService();
 
     public static async index(req: Request, res: Response) {
-        const page:number = parseInt(req.params.page || '1');
-        const categoryCode: string = req.params.categorycode;
-        const productPagination = await CategoryController.productService.GetProductByNumberPage(page, config.quantityofpage, categoryCode);
-        return res.render('./client/category.ejs', { product: productPagination });
+        try {
+            const page:number = parseInt(req.params.page || '1');
+            const categoryCode: string = req.params.categorycode;
+            const productPagination = await CategoryController.productService.GetProductByNumberPage(page, config.quantityofpage, categoryCode);
+            productPagination.maxPage = 10;
+            return res.render('./client/category.ejs', { product: productPagination });
+        } 
+        catch (error: unknown) {
+            logging.error(`[${CategoryController.name}].[${CategoryController.index.name}]: ${error}`);
+            res.redirect('/page_error');
+        }
     }
 }

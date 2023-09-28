@@ -1,75 +1,70 @@
 import { Entity, Column, PrimaryColumn, BaseEntity } from 'typeorm';
 import { Length, IsUUID, IsDate } from 'class-validator'
 
-@Entity('Shops')
-export class Shops extends BaseEntity {
+@Entity('Image')
+export class Image extends BaseEntity {
     @PrimaryColumn('uuid', {
         name: 'Id',
         generated: 'uuid',
         type: 'uniqueidentifier'
     })
-    // @Column({
-    //     name: 'Id',
-    //     type: 'uniqueidentifier',
-
-    // })
     @IsUUID()
     id: string
 
-    @Column({
-        name: 'Shop_Code',
-        type: 'nvarchar',
-        unique: true,
-        length: 50,
-        nullable: false
-    })
-    @Length(50)
-    shop_code: string
 
     @Column({
-        name: 'Shop_Name',
+        name: 'Image_Code',
+        type: 'nvarchar',
+        length: 100,
+        unique: true,
+        nullable: false
+    })
+    @Length(100)
+    image_code: string
+
+
+    @Column({
+        name: 'Image_Name',
+        type: 'nvarchar',
+        length: 255,
+        nullable: false
+    })
+    @Length(255)
+    image_name: string
+
+    @Column({
+        name: 'Image',
+        type: 'image',
+        nullable: false
+    })
+    image: Buffer
+
+    @Column({
+        name: 'Image_Type',
+        type: 'nvarchar',
+        length: 50,
+        nullable: true
+    })
+    @Length(50)
+    image_type: string
+
+    @Column({
+        name: 'Comment',
         type: 'nvarchar',
         length: 255,
         nullable: true
     })
     @Length(255)
-    shop_name: string
+    comment: string
 
     @Column({
-        name: 'Brandch',
-        type: 'nvarchar',
-        length: 50,
-        nullable: true
+        name: 'Is_Delete',
+        type: 'bit',
+        length: 255,
+        nullable: true,
+        default: 0
     })
-    @Length(50)
-    brandch: string
-
-    @Column({
-        name: 'Address',
-        type: 'nvarchar',
-        length: 50,
-        nullable: true
-    })
-    @Length(50)
-    address: string
-
-    @Column({
-        name: 'Tax',
-        type: 'nvarchar',
-        length: 50,
-        nullable: true
-    })
-    @Length(50)
-    tax: string
-
-    @Column({
-        name: 'Telephone',
-        type: 'nvarchar',
-        length: 18,
-        nullable: true
-    })
-    @Length(18)
-    telephone: string
+    is_delete: boolean
 
     @Column({
         name: 'Create_Date',

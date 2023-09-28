@@ -1,5 +1,5 @@
-import { Entity, Column, PrimaryColumn, BaseEntity } from 'typeorm';
-import { Length, IsUUID, IsDate, IsInt } from 'class-validator'
+import { Entity, Column, PrimaryColumn, BaseEntity, OneToMany } from 'typeorm';
+import { Length, IsUUID, IsDate, IsInt } from 'class-validator';
 
 @Entity('Product')
 export class Product extends BaseEntity {
