@@ -2,6 +2,8 @@ import "reflect-metadata"
 import { DataSource } from 'typeorm';
 import { logging } from './config/logging';
 import config from './config/config';
+import { ForeignKeyMetadata } from "typeorm/metadata/ForeignKeyMetadata";
+import { RelationMetadata } from "typeorm/metadata/RelationMetadata";
 
 const AppDataSource: DataSource = new DataSource({
     type: 'mssql',
@@ -30,16 +32,28 @@ export async function initialize(refresh: boolean = false): Promise<void> {
             const dataSource: DataSource = await AppDataSource.initialize();
             isConnect = dataSource.isInitialized;
             if(refresh) {
-                dataSource.entityMetadatas.forEach(async ent => {
-                    console.log(ent.oneToManyRelations);
-                    // await dataSource.manager.query(`
-                    // IF object_id('${ent.tablePath}', 'u') IS NOT NULL
-                    // BEGIN
-                    //     DROP TABLE ${ent.tablePath}
-                    // END
-                    // `);
+                dataSource.entityMetadatas.forEach(ent => {
+                    ent.foreignKeys.reduce(async function (current: Promise<never[]>, foreign: ForeignKeyMetadata) {
+                        await dataSource.manager.query(
+                            `
+                            IF (OBJECT_ID('${foreign.name}', 'F') IS NOT NULL)
+                                BEGIN
+                                    ALTER TABLE ${foreign.entityMetadata.tablePath} DROP CONSTRAINT ${foreign.name}
+                                END
+                            `
+                        )
+                        return current
+                    }, Promise.resolve([]))
+                    .then( async function (result) {
+                        await dataSource.manager.query(`
+                            IF object_id('${ent.tablePath}', 'u') IS NOT NULL
+                            BEGIN
+                                DROP TABLE ${ent.tablePath}
+                            END
+                        `);
+                    });
                 });
-                // await dataSource.synchronize();
+                await dataSource.synchronize();
             }
             if(isConnect) await dataSource.destroy();
         }

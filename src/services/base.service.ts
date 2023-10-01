@@ -7,13 +7,13 @@ export default class BaseService {
 
     protected async connectDatabase(): Promise<void> {
         try {
-            if(this.dataSource == undefined && !AppDataSource.isInitialized) {
+            if(this.dataSource == undefined || !AppDataSource.isInitialized) {
                 this.dataSource = await AppDataSource.initialize();
                 logging.info('connect database success');
             }
-            else {
-                this.dataSource?.initialize();
-            }
+            // else {
+            //     this.dataSource?.initialize();
+            // }
         } catch (error: unknown) {
             logging.error(`connect to database faild: ${error}`);
         }

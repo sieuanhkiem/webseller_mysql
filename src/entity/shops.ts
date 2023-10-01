@@ -1,5 +1,8 @@
-import { Entity, Column, PrimaryColumn, BaseEntity } from 'typeorm';
+import { Entity, Column, PrimaryColumn, BaseEntity, ManyToOne, OneToMany } from 'typeorm';
 import { Length, IsUUID, IsDate } from 'class-validator'
+import { Address } from './address';
+import { Inventory } from './inventory';
+import { SalesOrder } from './sales_order';
 
 @Entity('Shops')
 export class Shops extends BaseEntity {
@@ -20,10 +23,10 @@ export class Shops extends BaseEntity {
         name: 'Shop_Code',
         type: 'nvarchar',
         unique: true,
-        length: 50,
+        length: 100,
         nullable: false
     })
-    @Length(50)
+    @Length(100)
     shop_code: string
 
     @Column({
@@ -35,23 +38,23 @@ export class Shops extends BaseEntity {
     @Length(255)
     shop_name: string
 
-    @Column({
-        name: 'Brandch',
-        type: 'nvarchar',
-        length: 50,
-        nullable: true
-    })
-    @Length(50)
-    brandch: string
+    // @Column({
+    //     name: 'Brandch',
+    //     type: 'nvarchar',
+    //     length: 50,
+    //     nullable: true
+    // })
+    // @Length(50)
+    // brandch: string
 
-    @Column({
-        name: 'Address',
-        type: 'nvarchar',
-        length: 50,
-        nullable: true
-    })
-    @Length(50)
-    address: string
+    // @Column({
+    //     name: 'Address_Code',
+    //     type: 'nvarchar',
+    //     length: 100,
+    //     nullable: false
+    // })
+    // @Length(100)
+    // address_code: string
 
     @Column({
         name: 'Tax',
@@ -72,11 +75,38 @@ export class Shops extends BaseEntity {
     telephone: string
 
     @Column({
+        name: 'Telephone1',
+        type: 'nvarchar',
+        length: 18,
+        nullable: true
+    })
+    @Length(18)
+    telephone1: string
+
+    @Column({
+        name: 'Slogan',
+        type: 'nvarchar',
+        length: 100,
+        nullable: true
+    })
+    @Length(100)
+    slogan: string
+
+    @Column({
         name: 'Create_Date',
         type: 'datetime',
         nullable: true,
-        default: Date.now()
+        default: () => 'CURRENT_TIMESTAMP'
     })
     @IsDate()
     create_date: Date
+
+    @ManyToOne(() => Address, (address) => address.shops, { nullable: false })
+    address: Address
+
+    @OneToMany(() => Inventory, (inventory) => inventory.shop, { nullable: false })
+    inventories: Inventory[]
+
+    @OneToMany(() => SalesOrder, (saleOrder) => saleOrder.shop, { nullable: false })
+    sales_order: SalesOrder[]
 }

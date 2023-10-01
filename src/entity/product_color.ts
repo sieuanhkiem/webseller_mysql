@@ -1,5 +1,6 @@
-import { Entity, Column, PrimaryColumn, BaseEntity } from 'typeorm';
+import { Entity, Column, PrimaryColumn, BaseEntity, OneToMany } from 'typeorm';
 import { Length, IsUUID, IsDate } from 'class-validator'
+import { Inventory } from './inventory';
 
 @Entity('Product_Color')
 export class ProductColor extends BaseEntity {
@@ -43,8 +44,11 @@ export class ProductColor extends BaseEntity {
         name: 'Create_Date',
         type: 'datetime',
         nullable: true,
-        default: Date.now()
+        default: () => 'CURRENT_TIMESTAMP'
     })
     @IsDate()
     create_date: Date
+
+    @OneToMany(() => Inventory, (inventory) => inventory.product_color, { nullable: false })
+    inventories: Inventory[]
 }

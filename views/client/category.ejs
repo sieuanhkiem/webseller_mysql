@@ -10,42 +10,58 @@
 <body>
     <%- include('./root/header') -%>
     <!-- ----------------------------------------------Category -->
-    <% const showCountPagePaniation = 5 %>
+    <% const showCountPagePaniation = product.maxPage > 5 ? 5 : product.maxPage %>
     <section class="category">
         <div class="contener">
             <div class="category-top row">
-                <p>Trang chủ<span>&#10230;</span>Vòng tay & Lắc tay</p>
+                <p>Trang chủ<span>&#10230;</span><%= category.currentCategory?.category_name || '' %></p>
             </div>    
         </div>
         <div class="contener">
             <div class="row">
                 <div class="category-left">
                     <ul>
-                        <li class="category-left-li"><a href="">Vòng tay & Lắc tay</a></li>
-                        <!-- <ul></ul> -->
-                        <li class="category-left-li"><a href="">Nhẫn</a></li>
+                        <% category.categoriesProduct.forEach(function(category) { %>
+                            <li class="category-left-li"><a href="/category/<%= category.category_code %>/1"><%= category.category_name %></a></li>
+                        <% }) %>
+                        <!-- <ul></ul>
+                        <li class="category-left-li"><a href="">Nhẫn</a></li> -->
                     </ul>
                 </div>
                 <div class="category-right row">
                     <div class="category-right-top-item">
-                        <p><b>Vòng tay & Lắc tay</b></p>
+                        <p><b><%= category.currentCategory?.category_name || '' %></b></p>
                     </div>
                     <div class="category-right-top-item">
                         <button><span>Bộ lọc</span><i class="fas fa-sort-down"></i></button>
                     </div>
                     <div class="category-right-top-item">
-                        <select name="" id="">
-                            <option value="">Sắp xếp</option>
-                            <option value="">Giá cao đến thấp</option>
-                            <option value="">Giá thấp đến cao</option>
+                        <select name="sort_product" id="select-product-sort">
+                            <% if(order == 'ASC') { %>
+                                <option value="ASC" selected >Giá thấp đến cao</option>
+                            <% } else { %>
+                                <option value="ASC">Giá thấp đến cao</option>
+                            <% } %>
+
+                            <% if(order == 'DESC') { %>
+                                <option value="DESC" selected>Giá cao đến thấp</option>
+                            <% } else { %>
+                                <option value="DESC">Giá cao đến thấp</option>
+                            <% } %>
                         </select>
                     </div>
                     <div class="category-right-content row">
                         <% product.products.forEach(function(itProduct) { %>
                             <div class="category-right-content-item">
-                                <a href="#"></a><img src="./images/<%= itProduct.image %>" alt="<%= itProduct.image %>"></a>
+                                <% if(itProduct.images != undefined && itProduct.images.length > 0) { %>
+                                    <a href="#"></a><img src="./images/<%= itProduct.images[0].image_name %>.<%= itProduct.images[0].image_type %>" alt="<%= itProduct.images[0].image_name %>"></a>
+                                <%  } else { %>
+                                    <a href="#"></a><img src="./images/300x300.png" alt="300x300"></a>
+                                <% } %>
                                 <h1><%= itProduct.product_name %></h1>
-                                <p><%= itProduct.product_price %> <sup>đ</sup></p>
+                                <% if(itProduct.price_product) { %>
+                                    <%= itProduct.price_product.salePrice %> <sup>đ</sup></p>
+                                <% } %>
                             </div>
                         <% }) %>
                         <!-- <div class="category-right-content-item">
@@ -96,7 +112,7 @@
                     </div>
                     <div class="category-right-bottom row">
                         <div class="category-right-bottom-item">
-                            <p>Hiện thị <b>2</b> <span>|</span><b> 4</b>  sản phẩm</p>
+                            <p>Hiện thị <b><%= quantityOfPage > product.totalRecord ? product.totalRecord : quantityOfPage %></b> <span>|</span><b><%= product.totalRecord %></b>  sản phẩm</p>
                         </div>
                         <% if(product.maxPage > 0 && product.products.length > 0) { %>
                             <div class="ategory-right-bottom-item">
@@ -104,7 +120,7 @@
                                     <% if(product.currentPage == 1) { %>
                                         <span>&#171;</span></a>
                                     <% } else { %>
-                                        <a href="/category/1/<%= product.currentPage - 1 %>"><span>&#171;</span></a>
+                                        <a href="/category/<%= category.currentCategory?.category_code || '' %>/<%= product.currentPage - 1 %>"><span>&#171;</span></a>
                                     <% } %>
 
                                     <% let countPage = 1 %>
@@ -117,7 +133,7 @@
                                         <% if(product.currentPage == startPage) { %>
                                             <span>[<%= startPage %>]</span>
                                         <% } else { %>
-                                            <span><a href="/category/1/<%= startPage %>"><%= startPage %></a></span>
+                                            <span><a href="/category/<%= category.currentCategory?.category_code || '' %>/<%= startPage %>"><%= startPage %></a></span>
                                         <% } %>
                                         <% startPage++ %>
                                         <% countPage++ %>
@@ -126,10 +142,10 @@
                                     <% if(product.currentPage == product.maxPage) { %>
                                         <span>&#187;</span>
                                     <% } else { %>
-                                        <a href="/category/1/<%= product.currentPage + 1 %>"><span>&#187;</span></a>
+                                        <a href="/category/<%= category.currentCategory?.category_code || '' %>/<%= product.currentPage + 1 %>"><span>&#187;</span></a>
                                     <% } %>
                                     <% if(product.currentPage != product.maxPage) { %>
-                                        <a href="/category/1/<%= product.maxPage %>"><span>Trang cuối</span></a>
+                                        <a href="/category/<%= category.currentCategory?.category_code || '' %>/<%= product.maxPage %>"><span>Trang cuối</span></a>
                                     <% } else { %>
                                         <span>Trang cuối</span>
                                     <% } %>
@@ -145,6 +161,7 @@
     <%- include('./root/foodter') -%>
 
     <script src="https://kit.fontawesome.com/fe2553334c.js" crossorigin="anonymous"></script>
+    <script src="/js/client/category/category-js.js"></script>
 </body>
 
 <!-- <script>

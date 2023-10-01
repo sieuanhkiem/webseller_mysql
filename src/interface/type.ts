@@ -13,6 +13,13 @@ interface Cart {
 type ProductPagination<T> = {
     currentPage: number,
     maxPage: number,
+    totalRecord: number,
     isContinue: boolean,
     products: T[]
+}
+
+type SalePriceOfProduct = {
+    // salePriceId: string,
+    productCode: string,
+    salePrice: number
 }

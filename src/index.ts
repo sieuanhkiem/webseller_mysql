@@ -13,6 +13,7 @@ import sessionRoute from './routes/session/session.route';
 // import { Common } from './common/common_extendsion';
 const mainApp: Express = express();
 mainApp.use('*/css', express.static('./public/css'));
+mainApp.use('*/js', express.static('./public/javascript'));
 mainApp.use('*/images', express.static('./public/images'));
 mainApp.set('views', './views');
 mainApp.set('view engine', 'ejs');
@@ -40,6 +41,6 @@ mainApp.use('/page_error', page_err);
 mainApp.use('/session', sessionRoute);
 
 mainApp.listen(config.server.port, async () => {
-    await initialize(true);
+    await initialize(false);
     console.log(`⚡️[server]: Server is running at http://${config.server.hostname}:${config.server.port}}`);
 });

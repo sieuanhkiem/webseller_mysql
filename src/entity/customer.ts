@@ -1,5 +1,6 @@
-import { Entity, Column, PrimaryColumn, BaseEntity } from 'typeorm';
+import { Entity, Column, PrimaryColumn, BaseEntity, OneToMany } from 'typeorm';
 import { IsNumber, Length, IsUUID , IsDate } from 'class-validator'
+import { SalesOrder } from './sales_order';
 
 @Entity('Customer')
 export class Customer extends BaseEntity{
@@ -20,19 +21,19 @@ export class Customer extends BaseEntity{
         nullable: true,
         type: 'nvarchar',
         unique: true,
-        length: 50,
+        length: 100,
         name: 'Customer_Code'
     })
-    @Length(50)
+    @Length(100)
     customer_code: string
 
     @Column({
         nullable: true,
         type: 'nvarchar',
-        length: 50,
+        length: 255,
         name: 'Customer_Name'
     })
-    @Length(50)
+    @Length(255)
     customer_name: string
 
     @Column({
@@ -71,11 +72,40 @@ export class Customer extends BaseEntity{
     job: string
 
     @Column({
+        name: 'Telephone1',
+        type: 'nvarchar',
+        length: 18,
+        nullable: true
+    })
+    @Length(18)
+    telephone1: string
+
+    @Column({
+        name: 'Telephone2',
+        type: 'nvarchar',
+        length: 18,
+        nullable: true
+    })
+    @Length(18)
+    telephone2: string
+
+    @Column({
+        name: 'Is_Delete',
+        type: 'bit',
+        nullable: true,
+        default: 0
+    })
+    is_delete: boolean
+
+    @Column({
         name: 'Create_Date',
         type: 'datetime',
         nullable: true,
-        default: Date.now()
+        default: () => 'CURRENT_TIMESTAMP'
     })
     @IsDate()
     create_date: Date
+
+    @OneToMany(() => SalesOrder, (saleOrder) => saleOrder.customer)
+    sales_orders: SalesOrder[]
 }

@@ -20,19 +20,19 @@ export class Employee extends BaseEntity {
         name: 'Employee_Code',
         type: 'nvarchar',
         unique: true,
-        length: 50,
+        length: 100,
         nullable: false
     })
-    @Length(50)
+    @Length(100)
     employee_code: string
 
     @Column({
         name: 'Employee_Name',
         type: 'nvarchar',
-        length: 50,
+        length: 255,
         nullable: false
     })
-    @Length(50)
+    @Length(255)
     employee_name: string
 
     @Column({
@@ -45,21 +45,21 @@ export class Employee extends BaseEntity {
     sex: string
 
     @Column({
-        name: 'On_Board_Date',
+        name: 'Start_Date',
         type: 'datetime',
         nullable: true,
-        default: Date.now()
+        default: () => 'CURRENT_TIMESTAMP'
     })
     @IsDate()
-    on_board_date: Date
+    start_date: Date
 
     @Column({
-        name: 'End_Job_Date',
+        name: 'End_Date',
         type: 'datetime',
         nullable: true
     })
     @IsDate()
-    end_job_date: Date
+    end_date: Date
 
     @Column({
         name: 'Birth_Day',
@@ -78,4 +78,30 @@ export class Employee extends BaseEntity {
     })
     @Length(50)
     position: string
+
+    @Column({
+        name: 'Is_Active',
+        type: 'bit',
+        nullable: true,
+        default: 1
+    })
+    is_active: boolean
+
+
+    @Column({
+        name: 'Is_Delete',
+        type: 'bit',
+        nullable: true,
+        default: 0
+    })
+    is_delete: boolean
+
+    @Column({
+        name: 'Create_Date',
+        type: 'datetime',
+        nullable: true,
+        default: () => 'CURRENT_TIMESTAMP'
+    })
+    @IsDate()
+    create_date: Date
 }

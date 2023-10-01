@@ -1,5 +1,5 @@
-import { Entity, Column, PrimaryColumn, BaseEntity } from 'typeorm';
-import { Length, IsUUID, IsDate } from 'class-validator'
+import { Entity, Column, PrimaryColumn, BaseEntity, OneToMany } from 'typeorm';
+import { Length, IsUUID, IsDate } from 'class-validator';
 
 @Entity('Image')
 export class Image extends BaseEntity {
@@ -35,7 +35,7 @@ export class Image extends BaseEntity {
     @Column({
         name: 'Image',
         type: 'image',
-        nullable: false
+        nullable: true
     })
     image: Buffer
 
@@ -60,7 +60,6 @@ export class Image extends BaseEntity {
     @Column({
         name: 'Is_Delete',
         type: 'bit',
-        length: 255,
         nullable: true,
         default: 0
     })
@@ -70,7 +69,7 @@ export class Image extends BaseEntity {
         name: 'Create_Date',
         type: 'datetime',
         nullable: true,
-        default: Date.now()
+        default: () => 'CURRENT_TIMESTAMP'
     })
     @IsDate()
     create_date: Date

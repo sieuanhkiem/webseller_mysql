@@ -1,7 +1,10 @@
-import { Entity, Column, PrimaryColumn, BaseEntity } from 'typeorm';
-import { Length, IsDate, IsUUID, IsInt } from 'class-validator'
+import { Entity, Column, PrimaryColumn, BaseEntity, ManyToOne } from 'typeorm';
+import { Length, IsDate, IsUUID, IsInt } from 'class-validator';
+import { Product } from './product';
+import { Shops } from './shops';
+import { Customer } from './customer';
 
-@Entity('SalesOrder')
+@Entity('Sales_Order')
 export class SalesOrder extends BaseEntity {
     @PrimaryColumn('uuid', {
         name: 'Id',
@@ -35,13 +38,13 @@ export class SalesOrder extends BaseEntity {
     transaction_date: Date
 
     @Column({
-        name: 'Sales_Order_Date',
+        name: 'Sale_Date',
         type: 'datetime',
         nullable: true,
         default: Date.now()
     })
     @IsDate()
-    sales_order_date: Date
+    sale_date: Date
 
     @Column({
         name: 'Delivery_Date',
@@ -52,57 +55,57 @@ export class SalesOrder extends BaseEntity {
     @IsDate()
     delivery_date: Date
 
-    @Column({
-        name: 'Product Number',
-        type: 'nvarchar',
-        nullable: true,
-        length: 50
-    })
-    @Length(50)
-    product_number: string
+    // @Column({
+    //     name: 'Product_Num',
+    //     type: 'nvarchar',
+    //     nullable: false,
+    //     length: 100
+    // })
+    // @Length(100)
+    // product_num: string
 
     @Column({
-        name: 'Created By',
+        name: 'Created_By',
         type: 'nvarchar',
         nullable: true,
-        length: 50
+        length: 100
     })
-    @Length(50)
+    @Length(100)
     created_by: string
 
     @Column({
-        name: 'Create Date',
+        name: 'Create_Date',
         type: 'datetime',
         nullable: true,
-        default: Date.now()
+        default: () => 'CURRENT_TIMESTAMP'
     })
     @IsDate()
     create_date: Date
 
     @Column({
-        name: 'Last Update Date',
+        name: 'Last_Update',
         type: 'datetime',
-        nullable: false,
-        default: Date.now()
+        nullable: true,
+        default: () => 'CURRENT_TIMESTAMP'
     })
     @IsDate()
-    last_update_date: Date
+    last_update: Date
 
     @Column({
-        name: 'Sales Quantity',
+        name: 'Quantity',
         type: 'int',
         nullable: true
     })
     @IsInt()
-    sales_quantity: number
+    quantity: number
 
     @Column({
-        name: 'Sales Amt',
+        name: 'Amount',
         type: 'int',
         nullable: true
     })
     @IsInt()
-    sales_amt: number
+    amount: number
 
     @Column({
         name: 'Tax',
@@ -114,41 +117,71 @@ export class SalesOrder extends BaseEntity {
     tax: string
 
     @Column({
-        name: 'Transport Fee',
+        name: 'Transport_Fee',
         type: 'int',
         nullable: true
     })
     @IsInt()
     transport_fee: number
 
-    @Column({
-        name: 'Loading Fee',
-        type: 'int',
-        nullable: true
-    })
-    @IsInt()
-    loading_fee: number
+    // @Column({
+    //     name: 'Customer_Number',
+    //     type: 'nvarchar',
+    //     nullable: false,
+    //     length: 100
+    // })
+    // @Length(100)
+    // customer_number: string
 
     @Column({
-        name: 'Customer Number',
+        name: 'Salesman',
         type: 'nvarchar',
+        length: 100,
+        nullable: false
+    })
+    @Length(100)
+    salesman: string
+
+    @Column({
+        name: 'Delivery_Address',
+        type: 'nvarchar',
+        length: 100,
+        nullable: false
+    })
+    @Length(100)
+    delivery_Address: string
+
+    // @Column({
+    //     name: 'Shop_Code',
+    //     type: 'nvarchar',
+    //     length: 100,
+    //     nullable: false
+    // })
+    // @Length(100)
+    // shop_code: string
+
+    @Column({
+        name: 'Is_Delete',
+        type: 'bit',
         nullable: true,
-        length: 50
+        default: 0
     })
-    @Length(50)
-    customer_number: string
+    is_delete: boolean
 
     @Column({
-        name: 'Delete Flag',
+        name: 'Is_Cancle',
         type: 'bit',
-        nullable: true
+        nullable: true,
+        default: 0
     })
-    delete_flag: boolean
+    is_cancle: boolean
 
-    @Column({
-        name: 'Cancel Flag',
-        type: 'bit',
-        nullable: true
-    })
-    cancel_flag: boolean
+    @ManyToOne(() => Product, (product) => product.sales_order, { nullable: false })
+    product: Product
+
+    @ManyToOne(() => Shops, (shop) => shop.sales_order, { nullable: false })
+    shop: Shops
+
+    @ManyToOne(() => Customer, (customer) => customer.sales_orders, { nullable: false })
+    customer: Customer
 }

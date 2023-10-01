@@ -1,5 +1,8 @@
-import { Entity, Column, PrimaryColumn, BaseEntity } from 'typeorm';
-import { Length, IsDate, IsNumber, IsUUID, IsInt } from 'class-validator'
+import { Entity, Column, PrimaryColumn, BaseEntity, ManyToOne } from 'typeorm';
+import { Length, IsDate, IsNumber, IsUUID, IsInt } from 'class-validator';
+import { Product } from './product';
+import { Shops } from './shops';
+import { ProductColor } from './product_color';
 
 @Entity('Inventory')
 export class Inventory extends BaseEntity {
@@ -20,7 +23,7 @@ export class Inventory extends BaseEntity {
         name: 'Transaction_Date',
         nullable: true,
         type: 'datetime',
-        default: Date.now()
+        default: () => 'CURRENT_TIMESTAMP'
     })
     @IsDate()
     transaction_date: Date
@@ -38,7 +41,7 @@ export class Inventory extends BaseEntity {
         name: 'Create_Date',
         nullable: true,
         type: 'datetime',
-        default: Date.now()
+        default: () => 'CURRENT_TIMESTAMP'
     })
     @IsDate()
     create_date: Date
@@ -54,11 +57,11 @@ export class Inventory extends BaseEntity {
 
     @Column({
         name: 'Product_Num',
-        nullable: true,
+        nullable: false,
         type: 'nvarchar',
-        length: 50
+        length: 100
     })
-    @Length(50)
+    @Length(100)
     product_num: string
 
     @Column({
@@ -97,32 +100,32 @@ export class Inventory extends BaseEntity {
     @Length(30)
     currenry: string
 
-    @Column({
-        name: 'Color_Code',
-        type: 'nvarchar',
-        length: 100,
-        nullable: true
-    })
-    @Length(100)
-    color_code: string
+    // @Column({
+    //     name: 'Color_Code',
+    //     type: 'nvarchar',
+    //     length: 100,
+    //     nullable: false
+    // })
+    // @Length(100)
+    // color_code: string
 
-    @Column({
-        name: 'Size_Code',
-        type: 'nvarchar',
-        length: 100,
-        nullable: true
-    })
-    @Length(100)
-    size_code: string
+    // @Column({
+    //     name: 'Size_Code',
+    //     type: 'nvarchar',
+    //     length: 100,
+    //     nullable: false
+    // })
+    // @Length(100)
+    // size_code: string
 
-    @Column({
-        name: 'Shop_Code',
-        type: 'nvarchar',
-        length: 50,
-        nullable: true
-    })
-    @Length(50)
-    shop_code: string
+    // @Column({
+    //     name: 'Shop_Code',
+    //     type: 'nvarchar',
+    //     length: 100,
+    //     nullable: false
+    // })
+    // @Length(50)
+    // shop_code: string
 
     @Column({
         name: 'Is_Delete',
@@ -131,4 +134,13 @@ export class Inventory extends BaseEntity {
         default: 0
     })
     is_delete: boolean
+
+    @ManyToOne(() => Product, (product) => product.inventoris, { nullable: false })
+    product: Product
+
+    @ManyToOne(() => Shops, (shop) => shop.inventories, { nullable: false })
+    shop: Shops
+
+    @ManyToOne(() => ProductColor, (productColor) => productColor.inventories, { nullable: false })
+    product_color: Product
 }

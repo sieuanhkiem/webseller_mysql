@@ -1,5 +1,7 @@
-import { Entity, Column, PrimaryColumn, BaseEntity, ManyToOne } from 'typeorm';
+import { Entity, Column, PrimaryColumn, BaseEntity, ManyToOne, OneToMany } from 'typeorm';
 import { Length, IsUUID, IsDate } from 'class-validator';
+import { Product } from './product'
+import { SalesPrice } from './sales_price';
 
 @Entity('Product_Size')
 export class ProductSize extends BaseEntity {
@@ -39,19 +41,18 @@ export class ProductSize extends BaseEntity {
     @Length(255)
     comment: string
 
-    @Column({
-        name: 'Product_Code',
-        type: 'nvarchar',
-        length: 50,
-        nullable: false
-    })
-    @Length(50)
-    product_code: string
+    // @Column({
+    //     name: 'Product_Code',
+    //     type: 'nvarchar',
+    //     length: 100,
+    //     nullable: false
+    // })
+    // @Length(100)
+    // product_code: string
 
     @Column({
         name: 'Is_Delete',
         type: 'bit',
-        length: 255,
         nullable: true,
         default: 0
     })
@@ -61,8 +62,14 @@ export class ProductSize extends BaseEntity {
         name: 'Create_Date',
         type: 'datetime',
         nullable: true,
-        default: Date.now()
+        default: () => 'CURRENT_TIMESTAMP'
     })
     @IsDate()
     create_date: Date
+
+    @ManyToOne(() => Product, (product) => product.product_sizes, { nullable: false })
+    product: Product
+
+    @OneToMany(() => SalesPrice, (salePrice) => salePrice.product_size)
+    sales_price: SalesPrice[] 
 }
