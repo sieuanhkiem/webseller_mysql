@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- google font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,300;8..144,500&display=swap" rel="stylesheet">
+<!-- main css -->
+    <%- include('./root/link-header') -%>
+    <title>Mộc Hương Rừng Agarwood</title>
+</head>
+<body>
+    <%- include('./root/header') -%>
+    <!-- --------------------------------------------------------Gio hàng -->
+    <section class="cart">
+        <div class="container">
+            <div class="cart-top-wrap">
+                <div class="cart-top">
+                    <div class="cart-top-cart cart-top-item">
+                        <i class="fas fa-shopping-cart"></i>
+                    </div>
+                    <div class="cart-top-addres cart-top-item">
+                        <i class="fa-sharp fa-solid fa-location-dot"></i>
+                    </div>
+                    <div class="cart-top-conform cart-top-item">
+                        <i class="fa-sharp fa-solid fa-circle-check"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="cart-content row">
+                <div class="cart-content-left">
+                    <table>
+                        <tr>
+                            <th>Sản phẩm</th>
+                            <th>Tên sản phẩm</th>
+                            <th>Màu</th>
+                            <th>Size</th>
+                            <th>Số lượng</th>
+                            <th>Thành tiền</th>
+                            <th>Xóa</th>
+                        </tr>
+                        <tr>
+                            <td><img src="img/Vòng Tay Trầm Hương 108 Hạt Sánh Chìm Mix Hoa Sen Trầm Cao Cấp Trầm Hương Đủ Kích Thước Nam Nữ.jpeg" alt=""></td>
+                            <td><p>Vòng Tay Trầm Hương 108 Hạt Sánh Chìm Mix Hoa Sen Trầm Cao Cấp Trầm Hương Đủ Kích Thước Nam Nữ</p></td>
+                            <td><p><span style="color: yellow;"></span> </p></td>
+                            <td><p>L</p></td>
+                            <td><input type="number" min="0" value="1"></td>
+                            <td><p>790.000 <sup>đ</sup></p></td>
+                            <td><span>X</span></td>
+                        </tr>
+                        <tr>
+                            <td><img src="img/Vòng tay trầm hương đơn Mix Charm_Trầm hương thiên nhiên.jpeg" alt=""></td>
+                            <td><p>Vòng Tay Trầm Hương 108 Hạt Sánh Chìm Mix Hoa Sen Trầm Cao Cấp Trầm Hương Đủ Kích Thước Nam Nữ</p></td>
+                            <td><p><span style="color: yellow;"></span> </p></td>
+                            <td><p>L</p></td>
+                            <td><input type="number" min="0" value="1"></td>
+                            <td><p>790.000 <sup>đ</sup></p></td>
+                            <td><span>X</span></td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="cart-content-right">
+                    <table>
+                        <tr>
+                            <th colspan="2"> TỔNG TIỀN GIỎ HÀNG</th>
+                        </tr>
+                        <tr>
+                            <td>TỔNG SẢN PHẨM</td>
+                            <td>2</td>
+                        </tr>
+                        <tr>
+                            <td>TỔNG TIỀN HÀNG</td>
+                            <td><p>790.000 <sup>đ</sup></p></td>
+                        </tr>
+                        <tr>
+                            <td>TẠM TÍNH</td>
+                            <td><p style="color: black;font-weight: bold;">790.000 <sup>đ</sup></p></td>
+                        </tr>
+                    </table>
+                    <div class="cart-content-right-text">
+                        <p>Bạn sẽ được miễn phí ship khi tổng giá trị đơn hàng trên 2.000.000 VND</p>
+                    </div>
+                    <div class="cart-content-righ-button">
+                        <button>MUA TIẾP</button>
+                        <button>XÁC NHẬN THÔNG TIN</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- ---------------------------------------------------------Footer -->
+    <%- include('./root/foodter') -%>
+
+    <script src="https://kit.fontawesome.com/fe2553334c.js" crossorigin="anonymous"></script>
+</body>
+</html>

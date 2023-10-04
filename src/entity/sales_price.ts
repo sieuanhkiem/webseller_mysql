@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryColumn, BaseEntity, ManyToOne } from 'typeorm';
+import { Entity, Column, PrimaryColumn, BaseEntity, ManyToOne, LEGAL_TCP_SOCKET_OPTIONS } from 'typeorm';
 import { Length, IsDate, IsUUID, IsInt } from 'class-validator'
 import { Product } from './product';
 import { ProductSize } from './product_size';
@@ -21,6 +21,15 @@ export class SalesPrice extends BaseEntity {
     // })
     // @Length(100)
     // product_num: string
+
+    @Column({
+        name: 'Sale_Code',
+        type: 'nvarchar',
+        nullable: false,
+        unique: true
+    })
+    @Length(100)
+    sale_code: string
 
     @Column({
         name: 'Sale_Price',

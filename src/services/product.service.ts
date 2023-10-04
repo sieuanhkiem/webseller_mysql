@@ -37,10 +37,10 @@ export default class ProductService extends BaseService {
                 const salePrice: SalePriceOfProduct[] = await repositorySalePrice.createQueryBuilder('sale_price')
                 .select('MIN(sale_price.sale_price)', 'salePrice')
                 .addSelect('product.product_code', 'productCode')
-                // .addSelect('sale_price.id', 'salePriceId')
+                .addSelect('sale_price.sale_code', 'saleCode')
                 .innerJoin('sale_price.product', 'product')
                 .where('product.id = :productId and sale_price.is_delete = :delete', { productId: productPagination.id, delete: 0 })
-                .groupBy('product.product_code')
+                .groupBy('product.product_code, sale_price.sale_code')
                 .execute();
                 if(salePrice.length > 0) productPagination.price_product = salePrice[0];
             }
@@ -69,6 +69,104 @@ export default class ProductService extends BaseService {
                 isContinue: false,
                 products: [] 
             };
+        }
+    }
+
+    public async GetDetailsProduct(productCode: string): Promise<ProductPaginationModel | undefined | null> {
+        try {
+            await super.connectDatabase();
+            const repositoryProduct: Repository<Product> = this.dataSource?.getRepository<Product>(Product) as Repository<Product>;
+            const repositorySalePrice: Repository<SalesPrice> = this.dataSource?.getRepository<SalesPrice>(SalesPrice) as Repository<SalesPrice>;
+            let productDetail: ProductPaginationModel = await repositoryProduct.createQueryBuilder('product')
+                             .where('product.product_code = :productCode', { productCode })
+                             .setFindOptions({
+                                relations: {
+                                    category_product: true,
+                                    images: true,
+                                    product_sizes: true,
+                                    product_colors: true
+                                }
+                             })
+                             .getOneOrFail();
+            
+
+            const salePriceProduct: SalePriceOfProduct[] = await repositorySalePrice.createQueryBuilder('sale_price')
+                                                                            .select('Min(sale_price.sale_price)', 'salePrice')
+                                                                            .addSelect('product.product_code', 'productCode')
+                                                                            .addSelect('sale_price.sale_code', 'saleCode')
+                                                                            .addSelect('product_size.size_code', 'sizeCode')
+                                                                            .innerJoin('sale_price.product', 'product')
+                                                                            .innerJoin('sale_price.product_size', 'product_size')
+                                                                            .where('product.product_code = :productCode and sale_price.is_delete = :delete', { productCode, delete: 0 })
+                                                                            .groupBy('product.product_code, sale_price.sale_code, product_size.size_code')
+                                                                            .execute();
+
+            
+            if(salePriceProduct.length > 0) productDetail.price_product = salePriceProduct[0];
+            await super.disconnectDatabase();
+            return productDetail;
+        } 
+        catch (error: unknown) {
+            logging.error(`[${ProductService.name}].[${this.GetDetailsProduct.name}]: ${error}`);
+            super.disconnectDatabase();
+            return null;
+        }
+    }
+
+    public async GetRandomProduct(): Promise<ProductPaginationModel[]> {
+        try {
+            const repositoryProduct: Repository<Product> = this.dataSource?.getRepository(Product) as Repository<Product>;
+            const repositorySalePrice: Repository<SalesPrice> = await this.dataSource?.getRepository(SalesPrice) as Repository<SalesPrice>;
+            await super.connectDatabase();
+            let productsRand: ProductPaginationModel[] = await repositoryProduct.createQueryBuilder('product')
+                                                                                 .orderBy('NEWID()')
+                                                                                 .setFindOptions({
+                                                                                    relations: {
+                                                                                        images: true
+                                                                                    }
+                                                                                 })
+                                                                                 .limit(5)
+                                                                                 .getMany();
+
+            
+            for (let product of productsRand) {
+                const salePrice: SalePriceOfProduct[] = await repositorySalePrice.createQueryBuilder('sale_price')
+                                                                                .select('MIN(sale_price.sale_price)', 'salePrice')
+                                                                                .addSelect('product.product_code', 'productCode')
+                                                                                .addSelect('sale_price.sale_code', 'saleCode')
+                                                                                .innerJoin('sale_price.product', 'product')
+                                                                                .where('product.id = :productId and sale_price.is_delete = :delete', { productId: product.id, delete: 0 })
+                                                                                .groupBy('product.product_code, sale_price.sale_code')
+                                                                                .execute();
+                if(salePrice.length > 0) product.price_product = salePrice[0];
+            }                                                                    
+            await super.disconnectDatabase();
+            return productsRand;
+        } 
+        catch (error: unknown) {
+            logging.error(`[${ProductService.name}].[${this.GetRandomProduct.name}]: ${error}`);
+            return []
+        }
+    }
+
+    public async FindProductByCode(productCode: string): Promise<Product | null | undefined> {
+        try {
+            await super.connectDatabase();
+            const product: Product = await Product.findOneOrFail({
+                where: {
+                    product_code: productCode,
+                },
+                relations: {
+                    images: true
+                }
+            });
+            await super.disconnectDatabase();
+            console.log(product);
+            return product;
+        } 
+        catch (error: unknown) {
+            logging.error(`[${ProductService.name}].[${this.FindProductByCode.name}]: ${error}`);
+            return null;
         }
     }
 }

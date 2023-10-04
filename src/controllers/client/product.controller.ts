@@ -2,9 +2,22 @@ import { Request, Response } from 'express';
 import { logging } from '../../config/logging';
 import { Common } from '../../common/common_extendsion';
 import config from '../../config/config';
+import ProductService from '../../services/product.service';
 
 export default class ProductController {
+    private static productService: ProductService = new ProductService();
     public static async index(req: Request, res: Response) {
-        return res.render('./client/product.ejs');
+        try {
+            const productCode: string | null = req.params.productcode || null;
+            if(productCode == null) throw new Error('Can not find product code');
+            const productDetail = await ProductController.productService.GetDetailsProduct(productCode);
+            if(productDetail == null || productDetail == undefined) throw new Error(`Can not find product by ${productCode}`);
+            const productRand = await ProductController.productService.GetRandomProduct();
+            return res.render('./client/product.ejs', { productDetail, productRand });
+        } 
+        catch (error: unknown) {
+            logging.error(`[${ProductController.name}].[${ProductController.index.name}]: ${error}`)
+            res.redirect('/page_error');   
+        }
     }
 }

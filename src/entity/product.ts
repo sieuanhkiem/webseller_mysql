@@ -6,6 +6,7 @@ import { SalesOrder } from './sales_order';
 import { Image } from './image';
 import { Inventory } from './inventory';
 import { ProductCategory } from './product_category';
+import { ProductColor } from './product_color';
  
 @Entity('Product')
 export class Product extends BaseEntity {
@@ -149,4 +150,8 @@ export class Product extends BaseEntity {
 
     @ManyToOne(() => ProductCategory, (productCateogry) => productCateogry.products, { nullable: false })
     category_product: ProductCategory
+
+    @ManyToMany(() => ProductColor)
+    @JoinTable()
+    product_colors: ProductColor[]
 }

@@ -120,7 +120,7 @@
                                     <% if(product.currentPage == 1) { %>
                                         <span>&#171;</span></a>
                                     <% } else { %>
-                                        <a href="/category/<%= category.currentCategory?.category_code || '' %>/<%= product.currentPage - 1 %>"><span>&#171;</span></a>
+                                        <a href="/category/<%= category.currentCategory?.category_code || '' %>/<%= product.currentPage - 1 %>.<%= order %>"><span>&#171;</span></a>
                                     <% } %>
 
                                     <% let countPage = 1 %>
@@ -133,7 +133,7 @@
                                         <% if(product.currentPage == startPage) { %>
                                             <span>[<%= startPage %>]</span>
                                         <% } else { %>
-                                            <span><a href="/category/<%= category.currentCategory?.category_code || '' %>/<%= startPage %>"><%= startPage %></a></span>
+                                            <span><a href="/category/<%= category.currentCategory?.category_code || '' %>/<%= startPage %>.<%= order %>"><%= startPage %></a></span>
                                         <% } %>
                                         <% startPage++ %>
                                         <% countPage++ %>
@@ -142,10 +142,10 @@
                                     <% if(product.currentPage == product.maxPage) { %>
                                         <span>&#187;</span>
                                     <% } else { %>
-                                        <a href="/category/<%= category.currentCategory?.category_code || '' %>/<%= product.currentPage + 1 %>"><span>&#187;</span></a>
+                                        <a href="/category/<%= category.currentCategory?.category_code || '' %>/<%= product.currentPage + 1 %>.<%= order %>"><span>&#187;</span></a>
                                     <% } %>
                                     <% if(product.currentPage != product.maxPage) { %>
-                                        <a href="/category/<%= category.currentCategory?.category_code || '' %>/<%= product.maxPage %>"><span>Trang cuối</span></a>
+                                        <a href="/category/<%= category.currentCategory?.category_code || '' %>/<%= product.maxPage %>.<%= order %>"><span>Trang cuối</span></a>
                                     <% } else { %>
                                         <span>Trang cuối</span>
                                     <% } %>
@@ -161,7 +161,7 @@
     <%- include('./root/foodter') -%>
 
     <script src="https://kit.fontawesome.com/fe2553334c.js" crossorigin="anonymous"></script>
-    <script src="/js/client/category/category-js.js"></script>
+    <script src="/js/client/category-js.js"></script>
 </body>
 
 <!-- <script>

@@ -10,6 +10,8 @@ import categoryRoute from './routes/client/category.route';
 import productRoute from './routes/client/product.route';
 import page_err from './routes/client/page_error.route';
 import sessionRoute from './routes/session/session.route';
+import cartRoute from './routes/client/cart.route';
+import jsonRoute from './routes/json/json.route';
 // import { Common } from './common/common_extendsion';
 const mainApp: Express = express();
 mainApp.use('*/css', express.static('./public/css'));
@@ -39,6 +41,8 @@ mainApp.use('/category', categoryRoute);
 mainApp.use('/product', productRoute);
 mainApp.use('/page_error', page_err);
 mainApp.use('/session', sessionRoute);
+mainApp.use('/cart', cartRoute);
+mainApp.use('/json', jsonRoute);
 
 mainApp.listen(config.server.port, async () => {
     await initialize(false);

@@ -145,10 +145,10 @@ export class SalesOrder extends BaseEntity {
     @Column({
         name: 'Delivery_Address',
         type: 'nvarchar',
-        length: 100,
+        length: 255,
         nullable: false
     })
-    @Length(100)
+    @Length(255)
     delivery_Address: string
 
     // @Column({

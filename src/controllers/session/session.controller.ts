@@ -27,37 +27,45 @@ export default class SessionController {
     }
 
     public static pushSessionCart(req: Request, res: Response) {
-        const cartItem: CartItem = req.body;
-        if(req.session.cart) {
-            logging.info('đã nhận session store');
-            const index = req.session.cart.cartItem.findIndex(product => product.itemCode == cartItem.itemCode);
-            if(index > -1) req.session.cart.cartItem[index].quantity += cartItem.quantity;
-            else req.session.cart.cartItem.push(cartItem);
-            req.session.cart.totalItem = req.session.cart.cartItem.reduce(function (count: number, cartItem: CartItem) {
-                return count + cartItem.quantity;
-            } , 0);
-            req.session.cart.totalPrice = req.session.cart.cartItem.reduce(function (totalPrice: number, cartItem: CartItem) {
-                return totalPrice + cartItem.price;
-            } , 0);
+        try {
+            const cartEncrypt: string = req.body.cart || null;
+            if(cartEncrypt == null) throw Error('Request body is empty');
+            const cartItem: CartItem = Common.decrypt(cartEncrypt) as CartItem;
+            if(req.session.cart) {
+                logging.info('đã nhận session store');
+                const index = req.session.cart.cartItem.findIndex(product => product.productCode == cartItem.productCode && product.sizeCode == cartItem.sizeCode && product.colorCode == cartItem.colorCode);
+                if(index > -1) req.session.cart.cartItem[index].quantity += cartItem.quantity;
+                else req.session.cart.cartItem.push(cartItem);
+                req.session.cart.totalItem = req.session.cart.cartItem.reduce(function (count: number, cartItem: CartItem) {
+                    return count + cartItem.quantity;
+                } , 0);
+                // req.session.cart.totalPrice = req.session.cart.cartItem.reduce(function (totalPrice: number, cartItem: CartItem) {
+                //     return totalPrice + cartItem.price;
+                // } , 0);
+            }
+            else {
+                req.session.cart = {
+                    totalItem: 0,
+                    totalPrice: 0,
+                    cartItem: []
+                };
+                req.session.cart.cartItem.push(cartItem);
+            }
+            return res.json({ 
+                cart: Common.encrypt(req.session.cart) 
+            });
+        } 
+        catch (error: unknown) {
+            logging.error(`[${SessionController.name}].[${SessionController.pushSessionCart.name}]: ${error}`);
+            return res.json({ code: 500, error })
         }
-        else {
-            req.session.cart = {
-                totalItem: 0,
-                totalPrice: 0,
-                cartItem: []
-            };
-            req.session.cart.cartItem.push(cartItem);
-        }
-        return res.json({ 
-            cart: Common.encrypt(req.session.cart) 
-        });
     }
 
     public static removeSessionCart(req: Request, res: Response) {
         const cartItem: CartItem = req.body;
         if(req.session.cart) {
             if(req.session.cart.cartItem.length > 0) {
-                const index = req.session.cart.cartItem.findIndex(itItem => itItem.itemCode == cartItem.itemCode);
+                const index = req.session.cart.cartItem.findIndex(itItem => itItem.productCode == cartItem.productCode && itItem.sizeCode == cartItem.sizeCode && itItem.colorCode == cartItem.colorCode);
                 if(index > 0) {
                     req.session.cart.cartItem.slice(index, 1);
                 }

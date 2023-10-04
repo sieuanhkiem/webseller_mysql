@@ -13,50 +13,98 @@
         <section class="product">
             <div class="container">
                 <div class="product-top row">
-                    <p>Trang chủ <span>&#10230;</span> Vòng tay & Lắc tay</p>
+                    <p>Trang chủ <span>&#10230;</span><%= productDetail.category_product.category_name %></p>
                 </div>
                 <div class="product-content row">
                     <div class="product-content-left row">
-                        <div class="product-content-left-big-img">
-                            <img src="./images/Vòng Tay Trầm Hương 108 Hạt Sánh Chìm Mix Hoa Sen Trầm Cao Cấp Trầm Hương Đủ Kích Thước Nam Nữ.jpeg" alt="">
-                        </div>
-                        <div class="product-content-left-small-img">
-                            <img src="./images/Vòng tay trầm hương 108 hạt.jpeg" alt="">
-                            <img src="./images/Vòng tay trầm hương 108 hạt.jpeg" alt="">
-                            <img src="./images/Vòng tay trầm hương 108 hạt.jpeg" alt="">
-                            <img src="./images/Vòng tay trầm hương 108 hạt.jpeg" alt="">
-                        </div>
+                        <% if(productDetail.images && productDetail.images.length > 0) { %>
+                            <div class="product-content-left-big-img">
+                                <img src="/images/<%= productDetail.images[0].image_name %>.<%= productDetail.images[0].image_type %>" alt="<%= productDetail.images[0].image_name %>">
+                            </div>
+                        <% } %>
+
+                        <% if(productDetail.images && productDetail.images.length > 1) { %>
+                            <div class="product-content-left-small-img">
+                                <% for(let i = 1; i < productDetail.images.length && i <= 4; i++) { %>
+                                    <img src="./images/<%= productDetail.images[i].image_name %>.<%= productDetail.images[i].image_type %>" alt="<%= productDetail.images[i].image_name %>">
+                                <% } %>
+                                <!-- <img src="./images/Vòng tay trầm hương 108 hạt.jpeg" alt="">
+                                <img src="./images/Vòng tay trầm hương 108 hạt.jpeg" alt="">
+                                <img src="./images/Vòng tay trầm hương 108 hạt.jpeg" alt=""> -->
+                            </div>
+                        <% } else { %>
+                            <div class="product-content-left-small-img">
+                                <% for(let i = 1; i < 5; i++) { %>
+                                    <img src="./images/300x300.png" alt="300x300">
+                                <% } %>
+                            </div>
+                        <% } %>
                     </div>
                     <div class="product-content-right">
                         <div class="product-content-right-prod-name">
-                            <h1>Vòng Tay Trầm Hương 108 Hạt Sánh Chìm Mix Hoa Sen Trầm Cao Cấp Trầm Hương Đủ Kích Thước Nam Nữ</h1>
-                            <p>MSP: 123</p>
+                            <h1><%= productDetail.product_name %></h1>
+                            <p>MSP: <%= productDetail.product_code %></p>
+                            <span hidden="true" class="product_code"><%= productDetail.product_code %></span>
                         </div>
                         <div class="product-content-right-prod-price">
-                            <p>790.000 <sup>đ</sup></p>
+                            <% if(productDetail.price_product) { %>
+                                <p><%= productDetail.price_product.salePrice %><sup>đ</sup></p>
+                                <span hidden="true" class="sale_price"><%= productDetail.price_product.saleCode %></span>
+                            <% } else { %>
+                                <p>Chưa có giá</p>
+                            <% } %>
                         </div>
                         <div class="product-content-right-prod-color">
-                            <p><span style="font-weight: bold;">Màu sắc</span> :Vàng <span style="color: yellow;">*</span> </p> 
+
+                            <p>
+                                <span style="font-weight: bold;">Màu sắc:</span> </br>
+                                <%if(productDetail.product_colors && productDetail.product_colors.length > 0) { %>
+                                    <% productDetail.product_colors.forEach(function(itColor, index) { %>
+                                        <% if(index == 0) { %>
+                                            <span class="product-color chose-color" data-color-code="<%= itColor.color_code %>" ><%= itColor.color_name %> <span style="color:#<%= itColor.color_code %>;">*</span></span>  
+                                        <% } else { %>
+                                            <span class="product-color" data-color-code="<%= itColor.color_code %>" ><%= itColor.color_name %> <span style="color:#<%= itColor.color_code %>;">*</span></span>  
+                                        <% } %>
+                                    <% }) %>
+                                <% } %> 
+                                <!-- <span class="product-color">Tím <span style="color: yellow;">*</span></span>   -->
+                            </p>
                             <!-- <div product-content-right-prod-color-img>
                                 <img src="img/Vòng tay trầm hương 108 hạtj Mix Cỏ 4 lá theo mệnh.jpeg" alt="">
                             </div> -->
                         </div>
                         <div class="product-content-right-prod-size">
                             <p style="font-weight: bold;">Size </p>
-                            <div class="size">
-                                <span>S</span>
-                                <span>M</span>
-                                <span>L</span>
-                                <span>XL</span>
-                            </div>
+                            <% if(productDetail.product_sizes && productDetail.product_sizes.length > 0) { %>
+                                <div class="size">
+                                    <% productDetail.product_sizes.forEach(function(itSize) { %>
+                                        <% if(productDetail.price_product && itSize.size_code == productDetail.price_product.sizeCode) { %>
+                                            <span class="active-size" data-size-code="<%= itSize.size_code %>"><%= itSize.size_name %></span>
+                                        <% } else { %>
+                                            <span data-size-code="<%= itSize.size_code %>"><%= itSize.size_name %></span>
+                                        <% } %>
+                                    <% }) %>
+                                    <!-- <span>M</span>
+                                    <span>L</span>
+                                    <span>XL</span> -->
+                                </div>
+                            <% } %>
                         </div>
                         <div class="Quantity">
                             <p style="font-weight: bold;">Số lượng: </p>
-                            <input type="number" min="0" value="1">
+                            <% if(productDetail.price_product) { %>
+                                <input class="product-quantity" type="number" min="1" value="1">
+                            <% } else { %>
+                                <input class="product-quantity" disabled="true" type="number" min="1" value="1">
+                            <% } %>
                         </div>
-                        <p style="color: red;">Vui lòng chọn Size</p>
+                        <p hidden="true" style="color: red;">Vui lòng chọn Size</p>
                         <div class="product-content-right-prod-button">
-                            <button><i class="fas fa-shopping-cart"></i><p>MUA HÀNG</p></button>
+                            <% if(productDetail.price_product) { %>
+                                <button class="btn-buy-product"><i class="fas fa-shopping-cart"></i><p>MUA HÀNG</p></button>
+                            <% } else { %>
+                                <button class="btn-buy-product" style="pointer-events: none;"><i class="fas fa-shopping-cart"></i><p>MUA HÀNG</p></button>
+                            <% } %>
                         </div>
                         <div class="product-content-right-bottom">
                             <div class="product-content-right-bottom-top">
@@ -76,11 +124,10 @@
                                 </div>
                                 <div class="product-content-right-bottom-content">
                                     <div class="product-content-right-bottom-content-Chitiet">
-                                        Vòng tay Trầm Hương 108 Hạt Việt Nam phù hợp cho cả Nam và Nữ giúp đoạn trừ 108 muộn phiền. Vòng tay mang lại vận khí may mắn, tài lộc đồng thời toát lên vẻ đẹp tuyệt mỹ, tự tin.
+                                        <%= productDetail.brand || '' %>
                                     </div>
                                     <div class="product-content-right-bottom-content-Baoquan">
-                                        Bạn nên dùng vải sạch lau khô vòng và để sản phẩm ở nơi thoáng mát, sau khi vòng trầm khô thì dùng vải sạch chà mạnh để tinh dầu trong vòng thoát mùi ra.<br>
-                                        Hạn chế dùng nhiệt sấy khô cho vòng bởi quá trình này có thể khiến tinh dầu trong vòng nóng lên và bốc hơi ra ngoài.
+                                        <%= productDetail.preserve || '' %>
                                     </div>
                                 </div>
                             </div>
@@ -89,6 +136,50 @@
                 </div>
             </div>
         </section>
+        <!-- --------------------------------------------------------Product -->
+
+        <!--------------------------------------------------- Sản phẩm liên quan -->
+        <section class="product-related">
+            <div class="product-related-title">
+                <p>Sản Phẩm Liên Quan</p>
+            </div>
+            <div class="product-related-content row">
+                <% productRand.forEach(function(product) { %>
+                    <div class="product-related-item">
+                        <% if(product.images && product.images.length > 0) { %>
+                            <a href="/product/<%= product.product_code %>"><img src="/images/<%= product.images[0].image_name %>.<%= product.images[0].image_type %>" alt="<%= product.images[0].image_name %>"></a>
+                        <% } else { %>
+                            <a href="/product/<%= product.product_code %>"><img src="/images/300x300.png" alt="300x300"></a>
+                        <% } %>
+                        <h1><a href="/product/<%= product.product_code %>"><%= product.product_name %></a></h1>
+                        <% if(product.price_product) { %>
+                            <p><%= product.price_product.salePrice %><sup>đ</sup></p>
+                        <% } %>
+                    </div>
+                <% }) %>
+                <!-- <div class="product-related-item">
+                    <img src="./images/Vòng Tay Trầm Hương 108 Hạt Sánh Chìm Mix Hoa Sen Trầm Cao Cấp Trầm Hương Đủ Kích Thước Nam Nữ.jpeg" alt="">
+                    <h1>Vòng Tay Trầm Hương 108 Hạt Sánh Chìm Mix Hoa Sen Trầm Cao Cấp Trầm Hương Đủ Kích Thước Nam Nữ</h1>
+                    <p>790.000 <sup>đ</sup></p>
+                </div>
+                <div class="product-related-item">
+                    <img src="./images/Vòng Tay Trầm Hương 108 Hạt Sánh Chìm Mix Hoa Sen Trầm Cao Cấp Trầm Hương Đủ Kích Thước Nam Nữ.jpeg" alt="">
+                    <h1>Vòng Tay Trầm Hương 108 Hạt Sánh Chìm Mix Hoa Sen Trầm Cao Cấp Trầm Hương Đủ Kích Thước Nam Nữ</h1>
+                    <p>790.000 <sup>đ</sup></p>
+                </div>
+                <div class="product-related-item">
+                    <img src="./images/Vòng Tay Trầm Hương 108 Hạt Sánh Chìm Mix Hoa Sen Trầm Cao Cấp Trầm Hương Đủ Kích Thước Nam Nữ.jpeg" alt="">
+                    <h1>Vòng Tay Trầm Hương 108 Hạt Sánh Chìm Mix Hoa Sen Trầm Cao Cấp Trầm Hương Đủ Kích Thước Nam Nữ</h1>
+                    <p>790.000 <sup>đ</sup></p>
+                </div>
+                <div class="product-related-item">
+                    <img src="./images/Vòng Tay Trầm Hương 108 Hạt Sánh Chìm Mix Hoa Sen Trầm Cao Cấp Trầm Hương Đủ Kích Thước Nam Nữ.jpeg" alt="">
+                    <h1>Vòng Tay Trầm Hương 108 Hạt Sánh Chìm Mix Hoa Sen Trầm Cao Cấp Trầm Hương Đủ Kích Thước Nam Nữ</h1>
+                    <p>790.000 <sup>đ</sup></p>
+                </div> -->
+            </div>
+        </section>
+        <!--------------------------------------------------- Sản phẩm liên quan -->
 
         <script>
             const baoquan = document.querySelector(".baoquan")
@@ -110,5 +201,8 @@
         <%- include('./root/foodter') -%>
 
         <script src="https://kit.fontawesome.com/fe2553334c.js" crossorigin="anonymous"></script>
+        <script src="/js/libs/crypto-js.js"></script>
+        <script src="/js/libs/common.js"></script>
+        <script src="/js/client/product-js.js"></script>
     </body>
 </html>

@@ -1,7 +1,9 @@
 type CartItem = {
-    itemCode: string,
-    quantity: number,
-    price: number
+    productCode: string,
+    sizeCode: string,
+    colorCode: string,
+    salePriceCode: string,
+    quantity: number
 }
 
 interface Cart {
@@ -19,7 +21,8 @@ type ProductPagination<T> = {
 }
 
 type SalePriceOfProduct = {
-    // salePriceId: string,
+    saleCode: string,
     productCode: string,
+    sizeCode ?: string,
     salePrice: number
 }
