@@ -18,7 +18,7 @@ const common = new function () {
     this.encrypt = function (data) {
         const message = JSON.stringify(data);
         const iv = secrectkey.split('').slice(0, 8).join('');
-        const cripher = CryptoJS.TripleDES.encrypt(message, CryptoJS.enc.Utf16.parse(secrectkey), {
+        const cripher = CryptoJS.TripleDES.encrypt(message, CryptoJS.enc.Utf8.parse(secrectkey), {
             iv: CryptoJS.enc.Utf8.parse(iv),
             mode: CryptoJS.mode.CBC
         });

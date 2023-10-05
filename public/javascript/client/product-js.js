@@ -1,4 +1,7 @@
 const spanSizes = document.querySelectorAll('.size span') || [];
+const spanSizeDefault = document.querySelector('.size span.active-size');
+let priceDefault =  document.querySelector('.product-content-right-prod-price p').textContent;
+priceDefault = priceDefault.split('').slice(0, priceDefault.length - 1).join('');
 
 if(spanSizes.length > 0) {
     spanSizes.forEach(function (span) {
@@ -75,5 +78,35 @@ btnBuyProduct.onclick = function (e) {
         salePriceCode,
         quantity
     };
-    console.log({ cart: common.encrypt(bodySession) });
+
+    common.callAPIHandler(common.method.POST, 'session/push-session-cart', { cart: common.encrypt(bodySession) }, function (result) {
+        const spanSize = document.querySelector('.size span.active-size');
+        const sizeCode = spanSize.dataset['sizeCode'];
+        const sizeCodeDefault = spanSizeDefault.dataset['sizeCode'];
+        const spanColor = document.querySelector('span.chose-color');
+        const colorCode = spanColor.dataset['colorCode'];
+        const colorCodeDefault = choseColorDefault.dataset['colorCode'];
+
+        if(sizeCode != sizeCodeDefault) {
+            spanSize.classList.remove('active-size');
+            spanSize.style = 'cursor: pointer';
+
+            spanSizeDefault.classList.add('active-size');
+            spanSizeDefault.style = 'cursor: default' ;
+            const supElement = document.createElement('sup');
+            supElement.textContent = 'đ';
+            const elementPrice =  document.querySelector('.product-content-right-prod-price p');
+            elementPrice.textContent = priceDefault;
+            elementPrice.appendChild(supElement);
+            document.querySelector('.product-quantity').value = '1';
+        }
+
+        if(colorCode != colorCodeDefault) {
+            spanColor.classList.remove('chose-color');
+            spanColor.style = 'cursor: pointer';
+
+            choseColorDefault.classList.add('chose-color');
+            choseColorDefault.style = `cursor: default; border: 1px solid #${colorCodeDefault}; background-color: #${colorCodeDefault}; opacity: 0.3`;
+        }
+    });
 }

@@ -1,9 +1,14 @@
 type CartItem = {
     productCode: string,
+    productName?: string,
     sizeCode: string,
+    sizename?: string,
     colorCode: string,
     salePriceCode: string,
-    quantity: number
+    price?: number,
+    unitPrice?: number,
+    quantity: number,
+    image?: Record<any, any>
 }
 
 interface Cart {
