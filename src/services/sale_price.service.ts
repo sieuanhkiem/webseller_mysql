@@ -18,7 +18,7 @@ export default class SalePriceService extends BaseService {
                                                                         }
                                                                     })
                                                                     .getOneOrFail()
-            console.log(salePrice);
+            // console.log(salePrice);
             await super.disconnectDatabase();
             return salePrice;
         } 
@@ -37,7 +37,6 @@ export default class SalePriceService extends BaseService {
                 }
             });
             await super.disconnectDatabase();
-            console.log(salePrice);
             return salePrice;
         } 
         catch (error: unknown) {

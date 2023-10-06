@@ -43,16 +43,20 @@
                             <th>Thành tiền</th>
                             <th>Xóa</th>
                         </tr>
-                        <tr>
-                            <td><img src="img/Vòng Tay Trầm Hương 108 Hạt Sánh Chìm Mix Hoa Sen Trầm Cao Cấp Trầm Hương Đủ Kích Thước Nam Nữ.jpeg" alt=""></td>
-                            <td><p>Vòng Tay Trầm Hương 108 Hạt Sánh Chìm Mix Hoa Sen Trầm Cao Cấp Trầm Hương Đủ Kích Thước Nam Nữ</p></td>
-                            <td><p><span style="color: yellow;"></span> </p></td>
-                            <td><p>L</p></td>
-                            <td><input type="number" min="0" value="1"></td>
-                            <td><p>790.000 <sup>đ</sup></p></td>
-                            <td><span>X</span></td>
-                        </tr>
-                        <tr>
+                        <% if(cart.cartItem) { %>
+                            <% cart.cartItem.forEach(function(cartItem) { %>
+                                <tr>
+                                    <td><img src="/images/<%= cartItem.image.image_name %>.<%= cartItem.image.image_type %>" alt="<%= cartItem.image_name %>"></td>
+                                    <td data-product-code="<%= cartItem.productCode %>"><p><%= cartItem.productName %></p></td>
+                                    <td data-color-code="<%= cartItem.colorCode %>"><p><span style="background-color: #<%= cartItem.colorCode %>"></span> </p></td>
+                                    <td data-size-code="<%= cartItem.sizeCode %>"><p><%= cartItem.sizeName %></p></td>
+                                    <td><input type="number" min="1" value="<%= cartItem.quantity %>"></td>
+                                    <td data-price="<%= cartItem.price %>" data-sale-price-code="<%= cartItem.salePriceCode %>" ><p><%= cartItem.price %> <sup>đ</sup></p></td>
+                                    <td><span class="btn-remove-product">X</span></td>
+                                </tr>
+                            <% }) %>
+                        <% } %>
+                        <!-- <tr>
                             <td><img src="img/Vòng tay trầm hương đơn Mix Charm_Trầm hương thiên nhiên.jpeg" alt=""></td>
                             <td><p>Vòng Tay Trầm Hương 108 Hạt Sánh Chìm Mix Hoa Sen Trầm Cao Cấp Trầm Hương Đủ Kích Thước Nam Nữ</p></td>
                             <td><p><span style="color: yellow;"></span> </p></td>
@@ -60,7 +64,7 @@
                             <td><input type="number" min="0" value="1"></td>
                             <td><p>790.000 <sup>đ</sup></p></td>
                             <td><span>X</span></td>
-                        </tr>
+                        </tr> -->
                     </table>
                 </div>
                 <div class="cart-content-right">
@@ -70,15 +74,15 @@
                         </tr>
                         <tr>
                             <td>TỔNG SẢN PHẨM</td>
-                            <td>2</td>
+                            <td><%= cart.totalItem %></td>
                         </tr>
                         <tr>
                             <td>TỔNG TIỀN HÀNG</td>
-                            <td><p>790.000 <sup>đ</sup></p></td>
+                            <td><p><%= cart.totalPrice %><sup>đ</sup></p></td>
                         </tr>
                         <tr>
                             <td>TẠM TÍNH</td>
-                            <td><p style="color: black;font-weight: bold;">790.000 <sup>đ</sup></p></td>
+                            <td><p style="color: black;font-weight: bold;"><%= cart.totalPrice %><sup>đ</sup></p></td>
                         </tr>
                     </table>
                     <div class="cart-content-right-text">

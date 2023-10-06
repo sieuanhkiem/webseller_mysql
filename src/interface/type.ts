@@ -2,7 +2,7 @@ type CartItem = {
     productCode: string,
     productName?: string,
     sizeCode: string,
-    sizename?: string,
+    sizeName?: string,
     colorCode: string,
     salePriceCode: string,
     price?: number,

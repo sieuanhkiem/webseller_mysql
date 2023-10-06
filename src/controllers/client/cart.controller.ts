@@ -4,8 +4,9 @@ import { logging } from '../../config/logging';
 export default class CartController {
     public static ShowCart(req: Request, res: Response) {
         try {
-            
-            return res.render('./client/cart.ejs')
+            const cart: Cart = req.session.cart || { totalPrice: 0, cartItem: [], totalItem: 0 };
+            console.log(cart);
+            return res.render('./client/cart.ejs', { cart })
         } 
         catch (error: unknown) {
             logging.error(`[${CartController.name}].[${CartController.ShowCart.name}]: ${error}`);

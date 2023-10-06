@@ -49,6 +49,7 @@ export default class SessionController {
                 logging.info('đã nhận session store');
                 const index = req.session.cart.cartItem.findIndex(product => product.productCode == cartItem.productCode && product.sizeCode == cartItem.sizeCode && product.colorCode == cartItem.colorCode);
                 if(index > -1) {
+                    console.log(index);
                     let cartItemCurrent: CartItem = req.session.cart.cartItem[index];
                     cartItemCurrent.quantity += cartItem.quantity;
                     cartItemCurrent.price! += cartItemCurrent.quantity * cartItemCurrent.unitPrice!;
@@ -60,17 +61,12 @@ export default class SessionController {
                     const salePrice: SalesPrice = await SessionController.salePriceService.FindSalePriceByCode(cartItem.salePriceCode) as SalesPrice;
                     cartItem.productName = product.product_name;
                     cartItem.image = product.images[0];
-                    cartItem.sizename = productSizeCode.size_name;
+                    cartItem.sizeName = productSizeCode.size_name;
                     cartItem.unitPrice = salePrice.sale_price;
                     cartItem.price = salePrice.sale_price * cartItem.quantity;
+                    console.log(cartItem);
                     req.session.cart.cartItem.push(cartItem);
                 } 
-                req.session.cart.totalItem = req.session.cart.cartItem.reduce(function (count: number, cartItem: CartItem) {
-                    return count + cartItem.quantity;
-                } , 0);
-                req.session.cart.totalPrice = req.session.cart.cartItem.reduce(function (totalPrice: number, cartItem: CartItem) {
-                    return totalPrice + cartItem.price!;
-                } , 0);
             }
             else {
                 req.session.cart = {
@@ -78,8 +74,22 @@ export default class SessionController {
                     totalPrice: 0,
                     cartItem: []
                 };
+                const product: Product = await SessionController.productService.FindProductByCode(cartItem.productCode) as Product;
+                const productSizeCode: ProductSize = await SessionController.productSizeSerivce.FindProductSizeByCode(cartItem.sizeCode) as ProductSize;
+                const salePrice: SalesPrice = await SessionController.salePriceService.FindSalePriceByCode(cartItem.salePriceCode) as SalesPrice;
+                cartItem.productName = product.product_name;
+                cartItem.image = product.images[0];
+                cartItem.sizeName = productSizeCode.size_name;
+                cartItem.unitPrice = salePrice.sale_price;
+                cartItem.price = salePrice.sale_price * cartItem.quantity;
                 req.session.cart.cartItem.push(cartItem);
             }
+            req.session.cart.totalItem = req.session.cart.cartItem.reduce(function (count: number, cartItem: CartItem) {
+                return count + cartItem.quantity;
+            } , 0);
+            req.session.cart.totalPrice = req.session.cart.cartItem.reduce(function (totalPrice: number, cartItem: CartItem) {
+                return totalPrice + cartItem.price!;
+            } , 0);
             return res.json({ 
                 code: 200,
                 cart: Common.encrypt(req.session.cart) 

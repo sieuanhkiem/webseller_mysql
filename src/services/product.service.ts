@@ -161,7 +161,6 @@ export default class ProductService extends BaseService {
                 }
             });
             await super.disconnectDatabase();
-            console.log(product);
             return product;
         } 
         catch (error: unknown) {

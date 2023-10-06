@@ -13,7 +13,6 @@ export default class ProductColorService extends BaseService {
                 }
             });
             await super.disconnectDatabase();
-            console.log(productCode);
             return productCode;
         } 
         catch (error: unknown) {

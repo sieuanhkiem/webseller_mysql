@@ -4,9 +4,11 @@ import { logging } from './config/logging';
 import config from './config/config';
 import { ForeignKeyMetadata } from "typeorm/metadata/ForeignKeyMetadata";
 import { RelationMetadata } from "typeorm/metadata/RelationMetadata";
+// import msnodesqlv8 from 'mssql/msnodesqlv8'
 
 const AppDataSource: DataSource = new DataSource({
     type: 'mssql',
+    // driver: msnodesqlv8,
     host: config.sqlserver.host,
     username: config.sqlserver.user,
     password: config.sqlserver.pass,
@@ -18,7 +20,7 @@ const AppDataSource: DataSource = new DataSource({
     logging: true,
     extra: {
         encrypt: false,
-        // trustedConnection: true
+        // trustedConnection: true,
         validateConnection: false,
         trustServerCertificate: true
     }
