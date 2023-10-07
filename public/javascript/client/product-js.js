@@ -98,15 +98,15 @@ btnBuyProduct.onclick = function (e) {
             const elementPrice =  document.querySelector('.product-content-right-prod-price p');
             elementPrice.textContent = priceDefault;
             elementPrice.appendChild(supElement);
-            document.querySelector('.product-quantity').value = '1';
         }
-
+        
         if(colorCode != colorCodeDefault) {
             spanColor.classList.remove('chose-color');
             spanColor.style = 'cursor: pointer';
-
+            
             choseColorDefault.classList.add('chose-color');
             choseColorDefault.style = `cursor: default; border: 1px solid #${colorCodeDefault}; background-color: #${colorCodeDefault}; opacity: 0.3`;
         }
+        document.querySelector('.product-quantity').value = '1';
     });
 }

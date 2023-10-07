@@ -50,8 +50,8 @@
                                     <td data-product-code="<%= cartItem.productCode %>"><p><%= cartItem.productName %></p></td>
                                     <td data-color-code="<%= cartItem.colorCode %>"><p><span style="background-color: #<%= cartItem.colorCode %>"></span> </p></td>
                                     <td data-size-code="<%= cartItem.sizeCode %>"><p><%= cartItem.sizeName %></p></td>
-                                    <td><input type="number" min="1" value="<%= cartItem.quantity %>"></td>
-                                    <td data-price="<%= cartItem.price %>" data-sale-price-code="<%= cartItem.salePriceCode %>" ><p><%= cartItem.price %> <sup>đ</sup></p></td>
+                                    <td class="product-quantity"><input type="number" min="1" value="<%= cartItem.quantity %>"></td>
+                                    <td data-unit-price="<%= cartItem.unitPrice %>" data-sale-price-code="<%= cartItem.salePriceCode %>" ><p><%= cartItem.price %> <sup>đ</sup></p></td>
                                     <td><span class="btn-remove-product">X</span></td>
                                 </tr>
                             <% }) %>
@@ -74,15 +74,15 @@
                         </tr>
                         <tr>
                             <td>TỔNG SẢN PHẨM</td>
-                            <td><%= cart.totalItem %></td>
+                            <td class="cart-total-item"><%= cart.totalItem %></td>
                         </tr>
                         <tr>
                             <td>TỔNG TIỀN HÀNG</td>
-                            <td><p><%= cart.totalPrice %><sup>đ</sup></p></td>
+                            <td class="cart-total-price"><p><%= cart.totalPrice %><sup>đ</sup></p></td>
                         </tr>
                         <tr>
                             <td>TẠM TÍNH</td>
-                            <td><p style="color: black;font-weight: bold;"><%= cart.totalPrice %><sup>đ</sup></p></td>
+                            <td class="cart-total-price-case"><p style="color: black;font-weight: bold;"><%= cart.totalPrice %><sup>đ</sup></p></td>
                         </tr>
                     </table>
                     <div class="cart-content-right-text">
@@ -90,7 +90,7 @@
                     </div>
                     <div class="cart-content-righ-button">
                         <button>MUA TIẾP</button>
-                        <button>XÁC NHẬN THÔNG TIN</button>
+                        <a href="/delivery"><button>XÁC NHẬN THÔNG TIN</button></a>
                     </div>
 
                 </div>
@@ -102,5 +102,8 @@
     <%- include('./root/foodter') -%>
 
     <script src="https://kit.fontawesome.com/fe2553334c.js" crossorigin="anonymous"></script>
+    <script src="/js/libs/crypto-js.js"></script>
+    <script src="/js/libs/common.js"></script>
+    <script src="/js/client/cart-js.js"></script>
 </body>
 </html>

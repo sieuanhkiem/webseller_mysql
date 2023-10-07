@@ -1,6 +1,8 @@
-import { Entity, Column, PrimaryColumn, BaseEntity, OneToMany } from 'typeorm';
+import { Entity, Column, PrimaryColumn, BaseEntity, OneToMany, ManyToOne } from 'typeorm';
 import { Length, IsDate, IsUUID } from 'class-validator'
-import { Shops } from './shops';
+import { City } from './city';
+import { District } from './district';
+import { Ward } from './ward';
 
 @Entity('Address')
 export class Address extends BaseEntity {
@@ -49,42 +51,6 @@ export class Address extends BaseEntity {
     @Length(255)
     address_3: string
 
-    @Column({
-        name: 'City',
-        type: 'nvarchar',
-        nullable: true,
-        length: 255
-    })
-    @Length(255)
-    city: string
-
-
-    @Column({
-        name: 'State',
-        type: 'nvarchar',
-        nullable: true,
-        length: 255
-    })
-    @Length(255)
-    state: string
-
-    @Column({
-        name: 'Conutry',
-        type: 'nvarchar',
-        nullable: true,
-        length: 255
-    })
-    @Length(255)
-    conutry: string
-
-    @Column({
-        name: 'Portal_Code',
-        type: 'nvarchar',
-        nullable: true,
-        length: 100
-    })
-    @Length(100)
-    portal_code: string
 
     @Column({
         name: 'Is_Delete',
@@ -103,6 +69,12 @@ export class Address extends BaseEntity {
     @IsDate()
     create_date: Date
 
-    @OneToMany(() => Shops, (shop) => shop.address, { nullable: false })
-    shops: Shops[]
+    @ManyToOne(() => City, (city) => city.address)
+    city: City
+
+    @ManyToOne(() => District, (district) => district.address)
+    district: District
+
+    @ManyToOne(() => Ward, (ward) => ward.address)
+    ward: Ward
 }

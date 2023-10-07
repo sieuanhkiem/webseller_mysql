@@ -44,7 +44,8 @@ export class SalesPrice extends BaseEntity {
         name: 'Curcency',
         type: 'nvarchar',
         length: 100,
-        nullable: false
+        nullable: true,
+        default: 'VNĐ'
     })
     curcency: string
 
@@ -60,7 +61,8 @@ export class SalesPrice extends BaseEntity {
         name: 'Created_By',
         type: 'nvarchar',
         nullable: true,
-        length: 100
+        length: 100,
+        default: 'admin'
     })
     @Length(100)
     created_by: string

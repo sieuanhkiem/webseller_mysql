@@ -20,22 +20,22 @@ export class SalesOrder extends BaseEntity {
     id: string
 
     @Column({
-        name: 'Transaction_Number',
+        name: 'Sale_Order_Code',
         type: 'nvarchar',
-        nullable: true,
-        length: 50
+        nullable: false,
+        length: 100
     })
-    @Length(50)
+    @Length(100)
     transaction_number: string
 
-    @Column({
-        name: 'Transaction Date',
-        type: 'datetime',
-        nullable: true,
-        default: Date.now()
-    })
-    @IsDate()
-    transaction_date: Date
+    // @Column({
+    //     name: 'Transaction_Date',
+    //     type: 'datetime',
+    //     nullable: true,
+    //     default: Date.now()
+    // })
+    // @IsDate()
+    // transaction_date: Date
 
     @Column({
         name: 'Sale_Date',
@@ -50,7 +50,7 @@ export class SalesOrder extends BaseEntity {
         name: 'Delivery_Date',
         type: 'datetime',
         nullable: true,
-        default: Date.now()
+        // default: Date.now()
     })
     @IsDate()
     delivery_date: Date
@@ -68,7 +68,8 @@ export class SalesOrder extends BaseEntity {
         name: 'Created_By',
         type: 'nvarchar',
         nullable: true,
-        length: 100
+        length: 100,
+        default: 'admin'
     })
     @Length(100)
     created_by: string
@@ -94,6 +95,7 @@ export class SalesOrder extends BaseEntity {
     @Column({
         name: 'Quantity',
         type: 'int',
+        unsigned: true,
         nullable: true
     })
     @IsInt()
@@ -102,6 +104,7 @@ export class SalesOrder extends BaseEntity {
     @Column({
         name: 'Amount',
         type: 'int',
+        unsigned: true,
         nullable: true
     })
     @IsInt()
@@ -109,20 +112,21 @@ export class SalesOrder extends BaseEntity {
 
     @Column({
         name: 'Tax',
-        type: 'nchar',
+        type: 'int',
+        unsigned: true,
         nullable: true,
-        length: 10
+        default: 5
     })
-    @Length(10)
-    tax: string
+    @IsInt()
+    tax: number
 
     @Column({
         name: 'Transport_Fee',
-        type: 'int',
-        nullable: true
+        type: 'bit',
+        nullable: true,
+        default : 0
     })
-    @IsInt()
-    transport_fee: number
+    transport_fee: boolean
 
     // @Column({
     //     name: 'Customer_Number',
@@ -137,19 +141,11 @@ export class SalesOrder extends BaseEntity {
         name: 'Salesman',
         type: 'nvarchar',
         length: 100,
-        nullable: false
+        nullable: false,
+        default: 'admin'
     })
     @Length(100)
     salesman: string
-
-    @Column({
-        name: 'Delivery_Address',
-        type: 'nvarchar',
-        length: 255,
-        nullable: false
-    })
-    @Length(255)
-    delivery_Address: string
 
     // @Column({
     //     name: 'Shop_Code',

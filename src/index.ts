@@ -11,6 +11,7 @@ import productRoute from './routes/client/product.route';
 import page_err from './routes/client/page_error.route';
 import sessionRoute from './routes/session/session.route';
 import cartRoute from './routes/client/cart.route';
+import deliveryRoute from './routes/client/delivery.route';
 import jsonRoute from './routes/json/json.route';
 // import { Common } from './common/common_extendsion';
 const mainApp: Express = express();
@@ -29,7 +30,8 @@ mainApp.use(session({
     secret: config.secrectkey,
     saveUninitialized: true,
     cookie: { 
-        maxAge: 1000 * 60 * 60 * 1 
+        maxAge: 1000 * 60 * 60 * 1 ,
+        sameSite: 'lax'
     },
     resave: false
 }));
@@ -42,6 +44,7 @@ mainApp.use('/product', productRoute);
 mainApp.use('/page_error', page_err);
 mainApp.use('/session', sessionRoute);
 mainApp.use('/cart', cartRoute);
+mainApp.use('/delivery', deliveryRoute);
 mainApp.use('/json', jsonRoute);
 
 mainApp.listen(config.server.port, async () => {

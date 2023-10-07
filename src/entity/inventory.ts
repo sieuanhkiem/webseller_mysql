@@ -1,8 +1,9 @@
-import { Entity, Column, PrimaryColumn, BaseEntity, ManyToOne } from 'typeorm';
+import { Entity, Column, PrimaryColumn, BaseEntity, ManyToOne, OneToOne, JoinColumn } from 'typeorm';
 import { Length, IsDate, IsNumber, IsUUID, IsInt } from 'class-validator';
 import { Product } from './product';
 import { Shops } from './shops';
 import { ProductColor } from './product_color';
+import { ProductSize } from './product_size';
 
 @Entity('Inventory')
 export class Inventory extends BaseEntity {
@@ -20,7 +21,7 @@ export class Inventory extends BaseEntity {
     id: string
 
     @Column({
-        name: 'Transaction_Date',
+        name: 'Inventory_Date',
         nullable: true,
         type: 'datetime',
         default: () => 'CURRENT_TIMESTAMP'
@@ -32,9 +33,10 @@ export class Inventory extends BaseEntity {
         name: 'Created_By',
         nullable: true,
         type: 'nvarchar',
-        length: 50
+        length: 100,
+        default: 'admin'
     })
-    @Length(50)
+    @Length(100)
     create_by: string
 
     @Column({
@@ -46,23 +48,23 @@ export class Inventory extends BaseEntity {
     @IsDate()
     create_date: Date
 
-    @Column({
-        name: 'Transaction_Type',
-        nullable: true,
-        type: 'nvarchar',
-        length: 50
-    })
-    @Length(50)
-    transaction_type: string
+    // @Column({
+    //     name: 'Transaction_Type',
+    //     nullable: true,
+    //     type: 'nvarchar',
+    //     length: 50
+    // })
+    // @Length(50)
+    // transaction_type: string
 
-    @Column({
-        name: 'Product_Num',
-        nullable: false,
-        type: 'nvarchar',
-        length: 100
-    })
-    @Length(100)
-    product_num: string
+    // @Column({
+    //     name: 'Product_Num',
+    //     nullable: false,
+    //     type: 'nvarchar',
+    //     length: 100
+    // })
+    // @Length(100)
+    // product_num: string
 
     @Column({
         name: 'Quantity',
@@ -95,7 +97,8 @@ export class Inventory extends BaseEntity {
         name: 'Currenry',
         type: 'nvarchar',
         length: 30,
-        nullable: true
+        nullable: true,
+        default: 'VNĐ'
     })
     @Length(30)
     currenry: string
@@ -141,6 +144,14 @@ export class Inventory extends BaseEntity {
     @ManyToOne(() => Shops, (shop) => shop.inventories, { nullable: false })
     shop: Shops
 
-    @ManyToOne(() => ProductColor, (productColor) => productColor.inventories, { nullable: false })
-    product_color: Product
+    // @ManyToOne(() => ProductColor, (productColor) => productColor.inventories, { nullable: false })
+    // product_color: Product
+
+    @OneToOne(() => ProductColor, { nullable: false})
+    @JoinColumn()
+    product_color: ProductColor
+
+    @OneToOne(() => ProductSize, { nullable: false})
+    @JoinColumn()
+    product_size: ProductSize
 }

@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryColumn, BaseEntity, ManyToOne, OneToMany } from 'typeorm';
+import { Entity, Column, PrimaryColumn, BaseEntity, JoinColumn, OneToMany, OneToOne } from 'typeorm';
 import { Length, IsUUID, IsDate } from 'class-validator'
 import { Address } from './address';
 import { Inventory } from './inventory';
@@ -33,7 +33,7 @@ export class Shops extends BaseEntity {
         name: 'Shop_Name',
         type: 'nvarchar',
         length: 255,
-        nullable: true
+        nullable: false
     })
     @Length(255)
     shop_name: string
@@ -101,7 +101,8 @@ export class Shops extends BaseEntity {
     @IsDate()
     create_date: Date
 
-    @ManyToOne(() => Address, (address) => address.shops, { nullable: false })
+    @OneToOne(() => Address, { nullable: false })
+    @JoinColumn()
     address: Address
 
     @OneToMany(() => Inventory, (inventory) => inventory.shop, { nullable: false })

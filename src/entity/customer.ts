@@ -1,6 +1,7 @@
-import { Entity, Column, PrimaryColumn, BaseEntity, OneToMany } from 'typeorm';
+import { Entity, Column, PrimaryColumn, BaseEntity, OneToMany, OneToOne, JoinColumn } from 'typeorm';
 import { IsNumber, Length, IsUUID , IsDate } from 'class-validator'
 import { SalesOrder } from './sales_order';
+import { Address } from './address';
 
 @Entity('Customer')
 export class Customer extends BaseEntity{
@@ -46,29 +47,20 @@ export class Customer extends BaseEntity{
     age: number
 
     @Column({
-        nullable: true,
-        length: 50,
-        type: 'nvarchar',
-        name: 'Adress'
-    })
-    @Length(50)
-    adress: string
-
-    @Column({
         name: 'Sex',
-        type: 'nchar',
-        length: 10,
-        nullable: true
+        type: 'bit',
+        nullable: true,
+        default: 0
     })
-    sex: string
+    sex: boolean
 
     @Column({
         nullable: true,
         type: 'nvarchar',
-        length: 50,
+        length: 255,
         name: 'Job'
     })
-    @Length(50)
+    @Length(255)
     job: string
 
     @Column({
@@ -108,4 +100,8 @@ export class Customer extends BaseEntity{
 
     @OneToMany(() => SalesOrder, (saleOrder) => saleOrder.customer)
     sales_orders: SalesOrder[]
+
+    @OneToOne(() => Address, { nullable: false })
+    @JoinColumn()
+    address: Address
 }

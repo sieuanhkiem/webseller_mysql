@@ -13,7 +13,7 @@ export default class ProductSizeService extends BaseService {
                 }
             });
             await super.disconnectDatabase();
-            console.log(productSizeCode);
+            // console.log(productSizeCode);
             return productSizeCode;
         } 
         catch (error: unknown) {

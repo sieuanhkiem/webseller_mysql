@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- google font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,300;8..144,500&display=swap" rel="stylesheet">
+    <!-- main css -->
+    <%- include('./root/link-header') -%>
+    <title>Mộc Hương Rừng Agarwood</title>
+</head>
+<body>
+    <!-- ---------------------------------------------------------Header -->
+    <%- include('./root/header') -%>
+    <!-- ---------------------------------------------------------Header -->
+
+    <!-- --------------------------------------------------------GDelivery -->
+    <section class="delivery">
+        <div class="container">
+            <div class="delivery-top-wrap">
+                <div class="delivery-top">
+                    <div class="delivery-top-delivery delivery-top-item">
+                        <i class="fas fa-shopping-cart"></i>
+                    </div>
+                    <div class="delivery-top-addres delivery-top-item">
+                        <i class="fa-sharp fa-solid fa-location-dot"></i>
+                    </div>
+                    <div class="delivery-top-conform delivery-top-item">
+                        <!-- <i class="fas fa-money-check-alt"></i> -->
+                        <i class="fa-sharp fa-solid fa-circle-check"></i>
+                    </div>
+                </div>
+        </div>
+        <div class="container">
+            <div class="delivery-content row">
+                <div class="delivery-content-left">
+                    <p>Vui lòng chọn địa chỉ giao hàng</p>
+                    <div class="delivery-content-left-input-top row">
+                        <div class="delivery-content-left-input-top-item">
+                            <label for="">Họ tên <span style="color: red;">*</span></label>
+                            <input type="text">
+                        </div>
+                        <div class="delivery-content-left-input-top-item">
+                            <label for="">Số điện thoại <span style="color: red;">*</span></label>
+                            <input type="text">
+                        </div>
+                        <div class="delivery-content-left-input-top-item">
+                            <label for="">CCCD/CMND<span style="color: red;">*</span></label>
+                            <input type="text">
+                        </div>
+                        <div class="delivery-content-left-input-top-item">
+                            <label for="">Tỉnh/Thành phố <span style="color: red;">*</span></label>
+                            <select name="city" class="city">
+                                <option value="#"></option>
+                            </select>
+                        </div>
+                        <div class="delivery-content-left-input-top-item">
+                            <label for="">Quận/huyện <span style="color: red;">*</span></label>
+                            <select name="district" class="district">
+                                <option value="#"></option>
+                            </select>
+                        </div>
+                        <div class="delivery-content-left-input-top-item">
+                            <label for="">Phường/Xã <span style="color: red;">*</span></label>
+                            <select name="ward" class="ward">
+                                <option value="#"></option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="delivery-content-left-input-top-item-bottom">
+                        <label for="">Địa chỉ <span style="color: red;">*</span></label>
+                        <input type="text">
+                    </div>
+                    <div class="delivery-content-left-button row">
+                        <a href=""><p><span>&#171;</span>Quay lại giỏ hàng</p></a>
+                        <button><p style="font-weight: bold;">XÁC NHẬN ĐƠN HÀNG</p></button>
+                    </div>
+                </div>
+                <div class="delivery-content-right">
+                    <table>
+                        <tr>
+                            <th>Tên sản phẩm</th>
+                            <th>Giảm giá</th>
+                            <th>Số lượng</th>
+                            <th>Thành tiền</th>
+                        </tr>
+                        <tr>
+                            <td>Vòng Tay Trầm Hương 108 Hạt Sánh Chìm Mix Hoa Sen Trầm Cao Cấp Trầm Hương Đủ Kích Thước Nam Nữ</td>
+                            <td>-30%</td>
+                            <td>1</td>
+                            <td>590.000 <sup>đ</sup></td>
+                        </tr>
+                        <tr>
+                            <td>Vòng Tay Trầm Hương 108 Hạt Sánh Chìm Mix Hoa Sen Trầm Cao Cấp Trầm Hương Đủ Kích Thước Nam Nữ</td>
+                            <td></td>
+                            <td>1</td>
+                            <td>790.000 <sup>đ</sup></td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: bold;" colspan="2"> Tổng tiền</td>
+                            <td style="font-weight: bold;"colspan="2"><p>790.000 <sup>đ</sup></p></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>  
+
+    <!-- ---------------------------------------------------------Footer -->
+    <%- include('./root/foodter') -%>
+    <!-- ---------------------------------------------------------Footer -->
+
+    <script src="https://kit.fontawesome.com/fe2553334c.js" crossorigin="anonymous"></script>
+</body>
+</html>
