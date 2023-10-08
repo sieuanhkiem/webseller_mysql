@@ -18,7 +18,26 @@ export default class WardService extends BaseService {
         } 
         catch (error: unknown) {
             logging.error(`[${WardService.name}].[${this.GetWardByDistrictCodeAndCityCode.name}]: ${error}`);
+            await super.disconnectDatabase();
             return [];
+        }
+    }
+
+    public async GetWardByCode(wardCode: string): Promise<Ward | null | undefined> {
+        try {
+            await super.connectDatabase();
+            const ward: Ward = await Ward.findOneOrFail({
+                where: {
+                    ward_code: wardCode
+                }
+            });
+            await super.disconnectDatabase();
+            return ward;
+        } 
+        catch (error: unknown) {
+            logging.error(`[${WardService.name}].[${this.GetWardByCode.name}]: ${error}`);
+            await super.disconnectDatabase();
+            return null;
         }
     }
 }

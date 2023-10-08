@@ -108,6 +108,6 @@ export class Shops extends BaseEntity {
     @OneToMany(() => Inventory, (inventory) => inventory.shop, { nullable: false })
     inventories: Inventory[]
 
-    @OneToMany(() => SalesOrder, (saleOrder) => saleOrder.shop, { nullable: false })
-    sales_order: SalesOrder[]
+    // @OneToMany(() => SalesOrder, (saleOrder) => saleOrder.shop, { nullable: false })
+    // sales_order: SalesOrder[]
 }

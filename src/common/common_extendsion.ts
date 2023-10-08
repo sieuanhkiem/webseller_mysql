@@ -28,4 +28,13 @@ export class Common {
         });
         return JSON.parse(wordArray.toString(CryptoJS.enc.Utf8));
     }
+
+    static booleanify(value: string): boolean {
+        const truety = [
+            'true',
+            'TRUE',
+            '1'
+        ];
+        return truety.includes(value);
+    }
 };

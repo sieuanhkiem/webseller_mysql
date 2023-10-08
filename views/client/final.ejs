@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- google font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,300;8..144,500&display=swap" rel="stylesheet">
+    <!-- main css -->
+    <%- include('./root/link-header') -%>
+    <link rel="stylesheet" href="./css/main.css">
+    <title>Mộc Hương Rừng Agarwood</title>
+</head>
+<body>
+    <!-- --------------------------------------------------------header -->
+    <%- include('./root/header') -%>
+    <!-- --------------------------------------------------------header -->
+
+    <!-- --------------------------------------------------------Gio hàng -->
+    <section class="Final">
+        <div class="container">
+            <div class="Final-top-wrap">
+                <div class="Final-top">
+                    <div class="Final-top-Final Final-top-item">
+                        <i class="fas fa-shopping-cart"></i>
+                    </div>
+                    <div class="Final-top-addres Final-top-item">
+                        <i class="fa-sharp fa-solid fa-location-dot"></i>
+                    </div>
+                    <div class="Final-top-conform Final-top-item">
+                        <i class="fa-sharp fa-solid fa-circle-check"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="Final-content">
+                <div class="Final-content-KH-header">
+                    <p><b>THÔNG TIN KHÁCH HÀNG</b></p>
+                </div>
+                <div class="Final-content-KH-content">
+                    <% if(saleOrders && saleOrders.length > 0) { %>
+                        <p>Họ và Tên: <%= saleOrders[0].customer.customer_name %></p>
+                        <p>Số điện thoại 1: <%= saleOrders[0].customer.telephone1 %></p>
+                        <p>Số điện thoại 2: --</p>
+                        <p>Địa chỉ: <%= saleOrders[0].customer.address.address_1 %></p>
+                    <% } else { %>
+                        <p>Họ và Tên: --</p>
+                        <p>Số điện thoại 1: --</p>
+                        <p>Số điện thoại 2: --</p>
+                        <p>Địa chỉ: --</p>
+                    <% } %>
+                </div>
+                <div class="Final-content-cart-header">
+                    <p><b>THÔNG TIN SẢN PHẨM MUA</b></p>
+                </div>
+                <div class="Final-content-cart-content">
+                    <table>
+                        <tr>
+                            <th>Tên sản phẩm</th>
+                            <th>Giảm giá</th>
+                            <th>Số lượng</th>
+                            <th>Thành tiền</th>
+                        </tr>
+                        <% if(saleOrders && saleOrders.length > 0) { %>
+                            <% saleOrders.forEach(function(saleOrder) { %>
+                                <tr>
+                                    <td><%= saleOrder.product.product_name %></td>
+                                    <td></td>
+                                    <td><%= saleOrder.quantity %></td>
+                                    <td><%= saleOrder.amount %><sup>đ</sup></td>
+                                </tr>
+                            <% }) %>
+                        <% } %>
+                        <!-- <tr>
+                            <td>Vòng Tay Trầm Hương 108 Hạt Sánh Chìm Mix Hoa Sen Trầm Cao Cấp Trầm Hương Đủ Kích Thước Nam Nữ</td>
+                            <td></td>
+                            <td>1</td>
+                            <td>790.000 <sup>đ</sup></td>
+                        </tr> -->
+                        <tr>
+                            <td style="font-weight: bold;" colspan="2"> Tổng tiền tạm tính</td>
+                            <td style="font-weight: bold;"colspan="2"><p><%= totalPrice %><sup>đ</sup></p></td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="Final-content-footer">
+                    <p>CẢM ƠN BẠN ĐÃ ỦNG HỘ <br> Hãy để ý điện thoại Bạn nhé, Shop sẽ liên hệ xác nhận đơn với bạn nè!</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- ---------------------------------------------------------Footer -->
+    <%- include('./root/foodter') -%>
+    <!-- ---------------------------------------------------------Footer -->
+
+    <script src="https://kit.fontawesome.com/fe2553334c.js" crossorigin="anonymous"></script>
+
+</body>
+</html>

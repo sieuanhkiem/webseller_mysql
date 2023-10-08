@@ -37,46 +37,60 @@
             <div class="delivery-content row">
                 <div class="delivery-content-left">
                     <p>Vui lòng chọn địa chỉ giao hàng</p>
-                    <div class="delivery-content-left-input-top row">
-                        <div class="delivery-content-left-input-top-item">
-                            <label for="">Họ tên <span style="color: red;">*</span></label>
-                            <input type="text">
+                    <form action="/delivery/post_delivery" method="post">
+                        <div class="delivery-content-left-input-top row">
+                            <div class="delivery-content-left-input-top-item">
+                                <label for="">Họ tên <span style="color: red;">*</span></label>
+                                <input name="fullname" type="text" required>
+                            </div>
+                            <div class="delivery-content-left-input-top-item">
+                                <label for="">Số điện thoại <span style="color: red;">*</span></label>
+                                <input name="telephone" type="text" required>
+                            </div>
+                            <div class="delivery-content-left-input-top-item">
+                                <label for="">CCCD/CMND<span style="color: red;">*</span></label>
+                                <input name="code" type="text" required>
+                            </div>
+                            <div class="delivery-content-left-input-top-item">
+                                <label for="">Ngày sinh<span style="color: red;">*</span></label>
+                                <input name="birthday" type="date" required>
+                            </div>
+                            <div class="delivery-content-left-input-top-item">
+                                <label for="">Giới tính<span style="color: red;">*</span></label></br>
+                                <span>Nam <input name="sex" type="radio" value="0" checked></span>
+                                <span>Nữ <input name="sex" type="radio" value="1"></span>
+                            </div>
+                            <div class="delivery-content-left-input-top-item">
+                                <label for="">Tỉnh/Thành phố <span style="color: red;">*</span></label>
+                                <select name="city" class="city" required>
+                                    <option value="#"></option>
+                                    <% cities.forEach(function(city){ %>
+                                        <option data-citiy-code="<%= city.city_code %>" value="<%= city.city_code %>"><%= city.city_name %></option>
+                                    <% }) %>
+                                </select>
+                            </div>
+                            <div class="delivery-content-left-input-top-item">
+                                <label for="">Quận/huyện <span style="color: red;">*</span></label>
+                                <select name="district" class="district" required>
+                                    <option value="#"></option>
+                                </select>
+                            </div>
+                            <div class="delivery-content-left-input-top-item">
+                                <label for="">Phường/Xã <span style="color: red;">*</span></label>
+                                <select name="ward" class="ward" required>
+                                    <option value="#"></option>
+                                </select>
+                            </div>
                         </div>
-                        <div class="delivery-content-left-input-top-item">
-                            <label for="">Số điện thoại <span style="color: red;">*</span></label>
-                            <input type="text">
+                        <div class="delivery-content-left-input-top-item-bottom">
+                            <label for="">Địa chỉ <span style="color: red;">*</span></label>
+                            <input name="address" type="text">
                         </div>
-                        <div class="delivery-content-left-input-top-item">
-                            <label for="">CCCD/CMND<span style="color: red;">*</span></label>
-                            <input type="text">
+                        <div class="delivery-content-left-button row">
+                            <a href="/cart/showcart"><p><span>&#171;</span>Quay lại giỏ hàng</p></a>
+                            <button type="submit"><p style="font-weight: bold;">XÁC NHẬN ĐƠN HÀNG</p></button>
                         </div>
-                        <div class="delivery-content-left-input-top-item">
-                            <label for="">Tỉnh/Thành phố <span style="color: red;">*</span></label>
-                            <select name="city" class="city">
-                                <option value="#"></option>
-                            </select>
-                        </div>
-                        <div class="delivery-content-left-input-top-item">
-                            <label for="">Quận/huyện <span style="color: red;">*</span></label>
-                            <select name="district" class="district">
-                                <option value="#"></option>
-                            </select>
-                        </div>
-                        <div class="delivery-content-left-input-top-item">
-                            <label for="">Phường/Xã <span style="color: red;">*</span></label>
-                            <select name="ward" class="ward">
-                                <option value="#"></option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="delivery-content-left-input-top-item-bottom">
-                        <label for="">Địa chỉ <span style="color: red;">*</span></label>
-                        <input type="text">
-                    </div>
-                    <div class="delivery-content-left-button row">
-                        <a href=""><p><span>&#171;</span>Quay lại giỏ hàng</p></a>
-                        <button><p style="font-weight: bold;">XÁC NHẬN ĐƠN HÀNG</p></button>
-                    </div>
+                    </form>
                 </div>
                 <div class="delivery-content-right">
                     <table>
@@ -86,21 +100,25 @@
                             <th>Số lượng</th>
                             <th>Thành tiền</th>
                         </tr>
-                        <tr>
-                            <td>Vòng Tay Trầm Hương 108 Hạt Sánh Chìm Mix Hoa Sen Trầm Cao Cấp Trầm Hương Đủ Kích Thước Nam Nữ</td>
-                            <td>-30%</td>
-                            <td>1</td>
-                            <td>590.000 <sup>đ</sup></td>
-                        </tr>
-                        <tr>
+                        <% if(cart.cartItem && cart.cartItem.length > 0) { %>
+                            <% cart.cartItem.forEach(function(item) { %>
+                                <tr>
+                                    <td><%= item.productName %></td>
+                                    <td></td>
+                                    <td><%= item.quantity %></td>
+                                    <td><%= item.price %> <sup>đ</sup></td>
+                                </tr>
+                            <% }) %>
+                        <% } %>
+                        <!-- <tr>
                             <td>Vòng Tay Trầm Hương 108 Hạt Sánh Chìm Mix Hoa Sen Trầm Cao Cấp Trầm Hương Đủ Kích Thước Nam Nữ</td>
                             <td></td>
                             <td>1</td>
                             <td>790.000 <sup>đ</sup></td>
-                        </tr>
+                        </tr> -->
                         <tr>
                             <td style="font-weight: bold;" colspan="2"> Tổng tiền</td>
-                            <td style="font-weight: bold;"colspan="2"><p>790.000 <sup>đ</sup></p></td>
+                            <td style="font-weight: bold;"colspan="2"><p><%= cart.totalPrice %> <sup>đ</sup></p></td>
                         </tr>
                     </table>
                 </div>
@@ -113,5 +131,8 @@
     <!-- ---------------------------------------------------------Footer -->
 
     <script src="https://kit.fontawesome.com/fe2553334c.js" crossorigin="anonymous"></script>
+    <script src="/js/libs/crypto-js.js"></script>
+    <script src="/js/libs/common.js"></script>
+    <script src="/js/client/delivery-js.js"></script>
 </body>
 </html>

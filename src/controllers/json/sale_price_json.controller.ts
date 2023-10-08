@@ -1,7 +1,6 @@
 import { Request, Response } from 'express';
 import { logging } from '../../config/logging';
 import { Common } from '../../common/common_extendsion';
-import config from '../../config/config';
 import SalePriceService from '../../services/sale_price.service';
 
 
@@ -25,7 +24,7 @@ export default class SalePriceJsonController {
             logging.error(`[${SalePriceJsonController.name}].[${SalePriceJsonController.SalePriceBySizeCode.name}]: ${error}`);
             return res.json({
                 code: 500,
-                error
+                error: (error as Error).stack
             });
         }
     }

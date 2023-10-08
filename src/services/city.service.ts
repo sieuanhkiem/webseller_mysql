@@ -13,7 +13,24 @@ export default class CityService extends BaseService {
         } 
         catch (error: unknown) {
             logging.error(`[${CityService.name}].[${this.GetAllCity.name}]: ${error}`);
+            await super.disconnectDatabase();
             return [];
+        }
+    }
+
+    public async GetCityByCode(cityCode: string): Promise<City | null | undefined> {
+        try {
+            await super.connectDatabase();
+            const city: City = await City.findOneByOrFail({
+                city_code: cityCode
+            });
+            await super.disconnectDatabase();
+            return city;
+        } 
+        catch (error: unknown) {
+            logging.error(`[${CityService.name}].[${this.GetCityByCode.name}]: ${error}`);
+            await super.disconnectDatabase();
+            return null;
         }
     }
 }

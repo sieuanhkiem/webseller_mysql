@@ -2,6 +2,7 @@ import { Entity, Column, PrimaryColumn, BaseEntity, ManyToOne } from 'typeorm';
 import { Length, IsDate, IsUUID, IsInt } from 'class-validator';
 import { Product } from './product';
 import { Shops } from './shops';
+import { Inventory } from './inventory';
 import { Customer } from './customer';
 
 @Entity('Sales_Order')
@@ -41,7 +42,7 @@ export class SalesOrder extends BaseEntity {
         name: 'Sale_Date',
         type: 'datetime',
         nullable: true,
-        default: Date.now()
+        default: () => 'CURRENT_TIMESTAMP'
     })
     @IsDate()
     sale_date: Date
@@ -172,11 +173,19 @@ export class SalesOrder extends BaseEntity {
     })
     is_cancle: boolean
 
+    @Column({
+        name: 'status',
+        type: 'int',
+        nullable: true,
+        default: 1
+    })
+    status: number
+
     @ManyToOne(() => Product, (product) => product.sales_order, { nullable: false })
     product: Product
 
-    @ManyToOne(() => Shops, (shop) => shop.sales_order, { nullable: false })
-    shop: Shops
+    @ManyToOne(() => Inventory, (inventory) => inventory.sales_order, { nullable: false })
+    inventory: Inventory
 
     @ManyToOne(() => Customer, (customer) => customer.sales_orders, { nullable: false })
     customer: Customer

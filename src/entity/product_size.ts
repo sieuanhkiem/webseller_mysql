@@ -1,6 +1,7 @@
 import { Entity, Column, PrimaryColumn, BaseEntity, ManyToOne, OneToMany } from 'typeorm';
 import { Length, IsUUID, IsDate } from 'class-validator';
 import { Product } from './product'
+import { Inventory } from './inventory'
 import { SalesPrice } from './sales_price';
 
 @Entity('Product_Size')
@@ -71,5 +72,8 @@ export class ProductSize extends BaseEntity {
     product: Product
 
     @OneToMany(() => SalesPrice, (salePrice) => salePrice.product_size)
-    sales_price: SalesPrice[] 
+    sales_price: SalesPrice[]
+    
+    @OneToMany(() => Inventory, (inventory) => inventory.product_size)
+    inventories: Inventory[]
 }

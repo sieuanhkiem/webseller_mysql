@@ -165,6 +165,7 @@ export default class ProductService extends BaseService {
         } 
         catch (error: unknown) {
             logging.error(`[${ProductService.name}].[${this.FindProductByCode.name}]: ${error}`);
+            await super.disconnectDatabase();
             return null;
         }
     }

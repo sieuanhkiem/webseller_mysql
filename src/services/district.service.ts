@@ -17,7 +17,26 @@ export default class DistrictService extends BaseService {
         } 
         catch (error: unknown) {
             logging.error(`[${DistrictService.name}].[${this.GetDistrictByCityCode.name}]: ${error}`);
+            await super.disconnectDatabase();
             return [];
+        }
+    }
+
+    public async GetDistrictByCode(districtCode: string): Promise<District | null | undefined> {
+        try {
+            await super.connectDatabase();
+            const districts: District = await District.findOneOrFail({
+                where: {
+                    district_code: districtCode
+                }
+            });
+            await super.disconnectDatabase();
+            return districts;
+        } 
+        catch (error: unknown) {
+            logging.error(`[${DistrictService.name}].[${this.GetDistrictByCode.name}]: ${error}`);
+            await super.disconnectDatabase();
+            return null;
         }
     }
 }

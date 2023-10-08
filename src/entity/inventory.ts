@@ -1,9 +1,10 @@
-import { Entity, Column, PrimaryColumn, BaseEntity, ManyToOne, OneToOne, JoinColumn } from 'typeorm';
+import { Entity, Column, PrimaryColumn, BaseEntity, ManyToOne, OneToMany } from 'typeorm';
 import { Length, IsDate, IsNumber, IsUUID, IsInt } from 'class-validator';
 import { Product } from './product';
 import { Shops } from './shops';
 import { ProductColor } from './product_color';
 import { ProductSize } from './product_size';
+import { SalesOrder } from './sales_order';
 
 @Entity('Inventory')
 export class Inventory extends BaseEntity {
@@ -144,14 +145,12 @@ export class Inventory extends BaseEntity {
     @ManyToOne(() => Shops, (shop) => shop.inventories, { nullable: false })
     shop: Shops
 
-    // @ManyToOne(() => ProductColor, (productColor) => productColor.inventories, { nullable: false })
-    // product_color: Product
+    @ManyToOne(() => ProductColor, (productColor) => productColor.inventories, { nullable: false })
+    product_color: Product
 
-    @OneToOne(() => ProductColor, { nullable: false})
-    @JoinColumn()
-    product_color: ProductColor
-
-    @OneToOne(() => ProductSize, { nullable: false})
-    @JoinColumn()
+    @ManyToOne(() => ProductSize, (productSize) => productSize.inventories, { nullable: false })
     product_size: ProductSize
+
+    @OneToMany(() => SalesOrder, (saleOrder) => saleOrder.inventory)
+    sales_order: SalesOrder[]
 }

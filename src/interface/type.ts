@@ -31,3 +31,15 @@ type SalePriceOfProduct = {
     sizeCode ?: string,
     salePrice: number
 }
+
+type PostDelivery = {
+    fullname: string,
+    telephone: string,
+    code: string,
+    birthdate: string,
+    sex: string,
+    city: string,
+    district: string,
+    ward: string,
+    address: string
+}

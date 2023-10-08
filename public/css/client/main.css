@@ -620,11 +620,22 @@ width: 130px;
   width: calc(50%-12px);
   padding: 5px 0;
 }
-.delivery-content-left-input-top-item input{
+.delivery-content-left-input-top-item input,
+.delivery-content-left-input-top-item select{
   width: 100%;
   height: 35px;
   border: 1px solid #dddddd;
 }
+.delivery-content-left-input-top-item select {
+  min-width: 240px;
+}
+
+.delivery-content-left-input-top-item span input[type="radio"] {
+  width: 14%;
+  position: relative;
+  top: 10px;
+}
+
 .delivery-content-left-input-top-item-bottom input{
   width: 100%;
   height: 35px;

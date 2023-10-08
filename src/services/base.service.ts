@@ -1,6 +1,6 @@
 import AppDataSource from '../data-source';
 import { logging } from '../config/logging';
-import { DataSource } from 'typeorm';
+import { BaseEntity, DataSource, EntityTarget, ObjectLiteral, Repository } from 'typeorm';
 
 export default class BaseService {
     dataSource: DataSource | undefined = undefined;
@@ -27,6 +27,31 @@ export default class BaseService {
             }
         } catch (error: unknown) {
             logging.error(`disconnect to database faild: ${error}`);
+        }
+    }
+
+    protected createRepository<T extends BaseEntity>(model: EntityTarget<T>): Repository<T> | undefined {
+        try {
+            if(this.dataSource != undefined && this.dataSource.isInitialized) return this.dataSource.getRepository(model) as Repository<T>;
+            throw new Error('database is not connect');
+        } 
+        catch (error: unknown) {
+            logging.error(`Get repository faild: ${error}`);
+        }
+    }
+
+    protected async Rollback(): Promise<void> {
+        try {
+            if(this.dataSource != undefined && this.dataSource.isInitialized) 
+            {
+                const query = this.dataSource.createQueryRunner();
+                await query.startTransaction();
+                await query.rollbackTransaction();
+            } 
+            throw new Error('database is not connect');
+        } 
+        catch (error: unknown) {
+            logging.error(`Get repository faild: ${error}`);
         }
     }
 }

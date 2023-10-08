@@ -12,6 +12,7 @@ import page_err from './routes/client/page_error.route';
 import sessionRoute from './routes/session/session.route';
 import cartRoute from './routes/client/cart.route';
 import deliveryRoute from './routes/client/delivery.route';
+import finalRoute from './routes/client/final.route';
 import jsonRoute from './routes/json/json.route';
 // import { Common } from './common/common_extendsion';
 const mainApp: Express = express();
@@ -45,6 +46,7 @@ mainApp.use('/page_error', page_err);
 mainApp.use('/session', sessionRoute);
 mainApp.use('/cart', cartRoute);
 mainApp.use('/delivery', deliveryRoute);
+mainApp.use('/final', finalRoute);
 mainApp.use('/json', jsonRoute);
 
 mainApp.listen(config.server.port, async () => {
