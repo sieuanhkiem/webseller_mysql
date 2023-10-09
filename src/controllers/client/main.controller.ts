@@ -1,4 +1,6 @@
 import { Request, Response } from 'express';
+import { logging } from '../../config/logging';
+import CategoryService from '../../services/category.service';
 
 
 // export async function index () {
@@ -11,7 +13,15 @@ import { Request, Response } from 'express';
 // };
 
 export default class MainControler {
+    private static categoryService: CategoryService = new CategoryService();
     public static async index(req: Request, res: Response) {
-        return res.render('./client/index.ejs');
+        try {
+            const category = await MainControler.categoryService.GetAllCategory();
+            return res.render('./client/index.ejs', { category });
+        } 
+        catch (error: unknown) {
+            logging.error(`[${MainControler.name}].[${MainControler.index.name}]: ${error}`);
+            return res.redirect('/page_error');
+        }
     }
 }

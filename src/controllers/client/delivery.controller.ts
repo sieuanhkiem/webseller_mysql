@@ -9,6 +9,7 @@ import InventoryService from '../../services/inventory.service';
 import { Inventory } from '../../entity/inventory';
 import ProductService from '../../services/product.service';
 import SaleOrderService from '../../services/sale_order.service';
+import CategoryService from '../../services/category.service';
 
 export default class DeliveryController {
     private static cityService: CityService = new CityService();
@@ -17,11 +18,13 @@ export default class DeliveryController {
     private static inventoryService: InventoryService = new InventoryService();
     private static productService: ProductService = new ProductService();
     private static saleOrderService: SaleOrderService = new SaleOrderService();
+    private static categoryService: CategoryService = new CategoryService();
     public static async index(req: Request, res: Response) {
         try {
             const cities = await DeliveryController.cityService.GetAllCity();
             const cart: Cart = req.session.cart!;
-            return res.render('./client/delivery.ejs', { cities, cart });
+            const category = await DeliveryController.categoryService.GetAllCategory();
+            return res.render('./client/delivery.ejs', { cities, cart, category });
         } 
         catch (error: unknown) {
             logging.error(`[${DeliveryController.name}].[${DeliveryController.index.name}]: ${error}`);

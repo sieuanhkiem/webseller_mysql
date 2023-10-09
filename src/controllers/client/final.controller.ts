@@ -3,9 +3,11 @@ import { logging } from '../../config/logging';
 import SaleOrderService from '../../services/sale_order.service';
 import { SalesOrder } from '../../entity/sales_order';
 import { SalerOrderStatus } from '../../enum/entity';
+import CategoryService from '../../services/category.service';
 
 export default class FinalController {
     private static saleOrderService: SaleOrderService = new SaleOrderService();
+    private static categoryService: CategoryService = new CategoryService();
     public static async index(req: Request, res: Response) {
         try {
             const customerCode: string | null = req.params.customercode || null;
@@ -20,7 +22,8 @@ export default class FinalController {
                 totalPrice += saleOrder.amount;
                 return totalPrice;
             }, 0);
-            res.render('./client/final.ejs', { saleOrders, totalPrice });
+            const category = await FinalController.categoryService.GetAllCategory();
+            res.render('./client/final.ejs', { saleOrders, totalPrice, category });
         } 
         catch (error: unknown) {
             logging.error(`[${FinalController.name}].[${FinalController.index}]: ${error}`);

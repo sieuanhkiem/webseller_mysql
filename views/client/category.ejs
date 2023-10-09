@@ -8,7 +8,7 @@
     <title>Mộc Hương Rừng Agarwood</title>
 </head>
 <body>
-    <%- include('./root/header') -%>
+    <%- include('./root/header', { category: category.categoriesProduct }) -%>
     <!-- ----------------------------------------------Category -->
     <% const showCountPagePaniation = product.maxPage > 5 ? 5 : product.maxPage %>
     <section class="category">
@@ -54,11 +54,11 @@
                         <% product.products.forEach(function(itProduct) { %>
                             <div class="category-right-content-item">
                                 <% if(itProduct.images != undefined && itProduct.images.length > 0) { %>
-                                    <a href="#"></a><img src="./images/<%= itProduct.images[0].image_name %>.<%= itProduct.images[0].image_type %>" alt="<%= itProduct.images[0].image_name %>"></a>
+                                    <a href="/product/<%= itProduct.product_code %>"><img src="./images/<%= itProduct.images[0].image_name %>.<%= itProduct.images[0].image_type %>" alt="<%= itProduct.images[0].image_name %>"></a>
                                 <%  } else { %>
-                                    <a href="#"></a><img src="./images/300x300.png" alt="300x300"></a>
+                                    <a href="/product/<%= itProduct.product_code %>"><img src="./images/300x300.png" alt="300x300"></a>
                                 <% } %>
-                                <h1><%= itProduct.product_name %></h1>
+                                <a href="/product/<%= itProduct.product_code %>"><h1><%= itProduct.product_name %></h1></a>
                                 <% if(itProduct.price_product) { %>
                                     <%= itProduct.price_product.salePrice %> <sup>đ</sup></p>
                                 <% } %>
