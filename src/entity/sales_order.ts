@@ -4,6 +4,7 @@ import { Product } from './product';
 import { Shops } from './shops';
 import { Inventory } from './inventory';
 import { Customer } from './customer';
+import { ProductSize } from './product_size';
 
 @Entity('Sales_Order')
 export class SalesOrder extends BaseEntity {
@@ -184,7 +185,10 @@ export class SalesOrder extends BaseEntity {
     @ManyToOne(() => Product, (product) => product.sales_order, { nullable: false })
     product: Product
 
-    @ManyToOne(() => Inventory, (inventory) => inventory.sales_order, { nullable: false })
+    @ManyToOne(() => ProductSize, (productSize) => productSize.sale_orders, { nullable: false})
+    product_size: ProductSize
+
+    @ManyToOne(() => Inventory, (inventory) => inventory.sales_order, { nullable: true })
     inventory: Inventory
 
     @ManyToOne(() => Customer, (customer) => customer.sales_orders, { nullable: false })

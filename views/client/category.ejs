@@ -53,8 +53,10 @@
                     <div class="category-right-content row">
                         <% product.products.forEach(function(itProduct) { %>
                             <div class="category-right-content-item">
-                                <% if(itProduct.images != undefined && itProduct.images.length > 0) { %>
-                                    <a href="/product/<%= itProduct.product_code %>"><img src="./images/<%= itProduct.images[0].image_name %>.<%= itProduct.images[0].image_type %>" alt="<%= itProduct.images[0].image_name %>"></a>
+                                <% if(itProduct.images_product != undefined && itProduct.images_product.length > 0) { %>
+                                    <% const imageFilter = itProduct.images_product.filter(imageProduct => imageProduct.images.image_default == true) %>
+                                    <% const image = imageFilter.length > 0 ? imageFilter[0].images : itProduct.images_product[0].images %>
+                                    <a href="/product/<%= itProduct.product_code %>"><img src="./images/<%= image.image_name %>" alt="<%= image.image_name %>"></a>
                                 <%  } else { %>
                                     <a href="/product/<%= itProduct.product_code %>"><img src="./images/300x300.png" alt="300x300"></a>
                                 <% } %>

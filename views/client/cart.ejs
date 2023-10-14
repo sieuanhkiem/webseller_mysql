@@ -46,7 +46,7 @@
                         <% if(cart.cartItem) { %>
                             <% cart.cartItem.forEach(function(cartItem) { %>
                                 <tr>
-                                    <td><img src="/images/<%= cartItem.image.image_name %>.<%= cartItem.image.image_type %>" alt="<%= cartItem.image_name %>"></td>
+                                    <td><img src="/images/<%= cartItem.image.image_name %>" alt="<%= cartItem.image_name %>"></td>
                                     <td data-product-code="<%= cartItem.productCode %>"><p><%= cartItem.productName %></p></td>
                                     <td data-color-code="<%= cartItem.colorCode %>"><p><span style="background-color: #<%= cartItem.colorCode %>"></span> </p></td>
                                     <td data-size-code="<%= cartItem.sizeCode %>"><p><%= cartItem.sizeName %></p></td>

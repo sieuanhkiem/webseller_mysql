@@ -60,7 +60,7 @@ export default class SessionController {
                     const productSizeCode: ProductSize = await SessionController.productSizeSerivce.FindProductSizeByCode(cartItem.sizeCode) as ProductSize;
                     const salePrice: SalesPrice = await SessionController.salePriceService.FindSalePriceByCode(cartItem.salePriceCode) as SalesPrice;
                     cartItem.productName = product.product_name;
-                    cartItem.image = product.images[0];
+                    cartItem.image = product.images_product.filter((imageProduct) => imageProduct.images.image_default == true)[0].images;
                     cartItem.sizeName = productSizeCode.size_name;
                     cartItem.unitPrice = salePrice.sale_price;
                     cartItem.price = salePrice.sale_price * cartItem.quantity;
@@ -78,7 +78,7 @@ export default class SessionController {
                 const productSizeCode: ProductSize = await SessionController.productSizeSerivce.FindProductSizeByCode(cartItem.sizeCode) as ProductSize;
                 const salePrice: SalesPrice = await SessionController.salePriceService.FindSalePriceByCode(cartItem.salePriceCode) as SalesPrice;
                 cartItem.productName = product.product_name;
-                cartItem.image = product.images[0];
+                cartItem.image = product.images_product.filter((imageProduct) => imageProduct.images.image_default == true)[0].images;
                 cartItem.sizeName = productSizeCode.size_name;
                 cartItem.unitPrice = salePrice.sale_price;
                 cartItem.price = salePrice.sale_price * cartItem.quantity;

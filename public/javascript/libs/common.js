@@ -26,6 +26,26 @@ const common = new function () {
     }
 
 
+    this.arrayBufferToBase64 = function(buffer) {
+        let binary = '';
+        var bytes = new Uint8Array(buffer);
+        for (let index = 0; index < bytes.length; index++) {
+            binary += String.fromCharCode(bytes[index]);            
+        }
+        return window.btoa(binary);
+    }
+
+    this.base64ToArrayBuffer = function (base64) {
+        let binary_string = window.atob(base64);
+        let len = binary_string.length;
+        let bytes = new Uint8Array(len);
+        for (let index = 0; index < len; index++) {
+            bytes[index] = binary_string.charCodeAt(index);
+        }
+        return bytes.buffer;
+    }
+
+
     this.callAPIHandler = function (method, path, body, callback) {
         const url = `${window.location.protocol}//${window.location.host}/${path}`;
         const xhttpRequest = new XMLHttpRequest();
@@ -48,6 +68,10 @@ const common = new function () {
 
         if(body && method == this.method.POST) xhttpRequest.send(JSON.stringify(body))
         else xhttpRequest.send(); 
+    }
+
+    this.alert = function () {
+        alert('hello');
     }
 }();
 

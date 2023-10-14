@@ -3,7 +3,7 @@ import { Length, IsUUID, IsDate, IsInt } from 'class-validator';
 import { ProductSize } from './product_size';
 import { SalesPrice } from './sales_price';
 import { SalesOrder } from './sales_order';
-import { Image } from './image';
+import { ImageProduct } from './image_product';
 import { Inventory } from './inventory';
 import { ProductCategory } from './product_category';
 import { ProductColor } from './product_color';
@@ -141,9 +141,12 @@ export class Product extends BaseEntity {
     @OneToMany(() => SalesOrder, (saleOrder) => saleOrder.product, { nullable: false })
     sales_order: SalesOrder[]
 
-    @ManyToMany(() => Image)
-    @JoinTable()
-    images:Image[]
+    // @ManyToMany(() => Image)
+    // @JoinTable()
+    // images:Image[]
+
+    @OneToMany(() => ImageProduct, (imageProduct) => imageProduct.product, { nullable: false })
+    images_product: ImageProduct[]
 
     @OneToMany(() => Inventory, (invetory) => invetory.product, { nullable: false })
     inventoris: Inventory[]

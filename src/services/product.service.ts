@@ -29,7 +29,9 @@ export default class ProductService extends BaseService {
                                                 .limit(quantityOfPage)
                                                 .setFindOptions({
                                                     relations: {
-                                                        images: true
+                                                        images_product: {
+                                                            images: true
+                                                        }
                                                     }
                                                 })
                                                 .getMany();
@@ -48,7 +50,7 @@ export default class ProductService extends BaseService {
             productReuslt = productReuslt.sort(function (proctOne: ProductPaginationModel, proctTwo: ProductPaginationModel) {
                 const priceOne = proctOne.price_product?.salePrice || 0;
                 const priceTwo = proctTwo.price_product?.salePrice || 0;
-                if(priceOne == 0 || priceTwo == 0) return -1;
+                if(priceOne == 0 || priceTwo == 0) return 1;
                 return order == Order.ASC ? priceOne - priceTwo : priceTwo - priceOne;
             });                                                                     
             await super.disconnectDatabase();                                          
@@ -82,7 +84,9 @@ export default class ProductService extends BaseService {
                              .setFindOptions({
                                 relations: {
                                     category_product: true,
-                                    images: true,
+                                    images_product: {
+                                        images: true
+                                    },
                                     product_sizes: true,
                                     product_colors: true
                                 }
@@ -122,7 +126,9 @@ export default class ProductService extends BaseService {
                                                                                  .orderBy('NEWID()')
                                                                                  .setFindOptions({
                                                                                     relations: {
-                                                                                        images: true
+                                                                                        images_product: {
+                                                                                            images: true
+                                                                                        }
                                                                                     }
                                                                                  })
                                                                                  .limit(5)
@@ -157,7 +163,10 @@ export default class ProductService extends BaseService {
                     product_code: productCode,
                 },
                 relations: {
-                    images: true
+                    images_product: {
+                        images: true
+                    },
+                    product_sizes: true
                 }
             });
             await super.disconnectDatabase();

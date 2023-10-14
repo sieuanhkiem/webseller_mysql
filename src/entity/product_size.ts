@@ -3,6 +3,7 @@ import { Length, IsUUID, IsDate } from 'class-validator';
 import { Product } from './product'
 import { Inventory } from './inventory'
 import { SalesPrice } from './sales_price';
+import { SalesOrder } from './sales_order';
 
 @Entity('Product_Size')
 export class ProductSize extends BaseEntity {
@@ -76,4 +77,7 @@ export class ProductSize extends BaseEntity {
     
     @OneToMany(() => Inventory, (inventory) => inventory.product_size)
     inventories: Inventory[]
+
+    @OneToMany(() => SalesOrder, (saleOrder) => saleOrder.product_size)
+    sale_orders: SalesOrder[]
 }

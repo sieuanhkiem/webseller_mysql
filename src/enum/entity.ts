@@ -3,3 +3,8 @@ export enum SalerOrderStatus {
     CHOVANCHUYEN = 100000000,
     DAGIAOHANG = 100000001
 }
+
+export enum ImageType {
+    SLIDERTYPE = 100000000,
+    PRODUCTTYPE = 100000001
+}

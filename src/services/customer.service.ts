@@ -45,7 +45,8 @@ export default class CustomerService extends BaseService {
             const wardService: WardService = new WardService();
             const ward: Ward | null = await wardService.GetWardByCode(postDelivery.ward) || null;
             const addressService: AddressService = new AddressService();
-            const address: Address | null = await addressService.CreateAddress(city!, district!, ward!, postDelivery.address) || null;
+            let address: Address | null = await addressService.FindAddress(city!.city_code, district!.district_code, ward!.ward_code, postDelivery.address);
+            if(address == null) address = await addressService.CreateAddress(city!, district!, ward!, postDelivery.address) || null;
 
             await super.connectDatabase();
             const repositoryCustomer: Repository<Customer> = super.createRepository(Customer) as Repository<Customer>;

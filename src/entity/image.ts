@@ -1,5 +1,6 @@
-import { Entity, Column, PrimaryColumn, BaseEntity, OneToMany } from 'typeorm';
-import { Length, IsUUID, IsDate } from 'class-validator';
+import { Entity, Column, PrimaryColumn, BaseEntity, OneToMany, ManyToOne } from 'typeorm';
+import { Length, IsUUID, IsDate, IsInt } from 'class-validator';
+import { Product } from '../entity/product';
 
 @Entity('Image')
 export class Image extends BaseEntity {
@@ -41,12 +42,12 @@ export class Image extends BaseEntity {
 
     @Column({
         name: 'Image_Type',
-        type: 'nvarchar',
-        length: 50,
+        type: 'int',
+        unsigned: true,
         nullable: true
     })
-    @Length(50)
-    image_type: string
+    @IsInt()
+    image_type: number
 
     @Column({
         name: 'Comment',
@@ -73,4 +74,15 @@ export class Image extends BaseEntity {
     })
     @IsDate()
     create_date: Date
+
+    @Column({
+        name: 'Image_Default',
+        type: 'bit',
+        nullable: true,
+        default: 0
+    })
+    image_default: boolean
+
+    // @ManyToOne(() => Product, (product) => product.images, { nullable: false })
+    // product: Product
 }

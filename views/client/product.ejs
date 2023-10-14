@@ -17,16 +17,26 @@
                 </div>
                 <div class="product-content row">
                     <div class="product-content-left row">
-                        <% if(productDetail.images && productDetail.images.length > 0) { %>
+                        <% if(productDetail.images_product && productDetail.images_product.length > 0) { %>
                             <div class="product-content-left-big-img">
-                                <img src="/images/<%= productDetail.images[0].image_name %>.<%= productDetail.images[0].image_type %>" alt="<%= productDetail.images[0].image_name %>">
+                                <% const imageDefault = productDetail.images_product.filter(imageProduct => imageProduct.images.image_default == 1) %>
+                                <% if(imageDefault.length > 0) { %>
+                                    <img src="/images/<%= imageDefault[0].images.image_name %>" alt="<%= imageDefault[0].images.image_name %>">
+                                <% } else { %>
+                                    <img src="/images/300x300.png" alt="300x300">
+                                <% } %>
+                            </div>
+                        <% } else { %>
+                            <div class="product-content-left-big-img">
+                                <img src="/images/300x300.png" alt="300x300">
                             </div>
                         <% } %>
 
-                        <% if(productDetail.images && productDetail.images.length > 1) { %>
+                        <% if(productDetail.images_product && productDetail.images_product.length > 0) { %>
                             <div class="product-content-left-small-img">
-                                <% for(let i = 1; i < productDetail.images.length && i <= 4; i++) { %>
-                                    <img src="./images/<%= productDetail.images[i].image_name %>.<%= productDetail.images[i].image_type %>" alt="<%= productDetail.images[i].image_name %>">
+                                <% const imagesNotDefault = productDetail.images_product.filter(imageProduct => imageProduct.images.image_default == 0) %>
+                                <% for(let i = 0; i < imagesNotDefault.length && i < 4; i++) { %>
+                                    <img src="./images/<%= imagesNotDefault[i].images.image_name %>" alt="<%= imagesNotDefault[i].images.image_name %>">
                                 <% } %>
                                 <!-- <img src="./images/Vòng tay trầm hương 108 hạt.jpeg" alt="">
                                 <img src="./images/Vòng tay trầm hương 108 hạt.jpeg" alt="">
@@ -146,8 +156,13 @@
             <div class="product-related-content row">
                 <% productRand.forEach(function(product) { %>
                     <div class="product-related-item">
-                        <% if(product.images && product.images.length > 0) { %>
-                            <a href="/product/<%= product.product_code %>"><img src="/images/<%= product.images[0].image_name %>.<%= product.images[0].image_type %>" alt="<%= product.images[0].image_name %>"></a>
+                        <% if(product.images_product && product.images_product.length > 0) { %>
+                            <% const imageDefaultOther = product.images_product.filter(imageProduct => imageProduct.images.image_default == 1) %>
+                            <% if(imageDefaultOther.length > 0) { %>
+                                <a href="/product/<%= product.product_code %>"><img src="/images/<%= imageDefaultOther[0].images.image_name %>" alt="<%= imageDefaultOther[0].images.image_name %>"></a>
+                            <% } else { %>
+                                <a href="/product/<%= product.product_code %>"><img src="/images/300x300.png" alt="300x300"></a>
+                            <% } %>
                         <% } else { %>
                             <a href="/product/<%= product.product_code %>"><img src="/images/300x300.png" alt="300x300"></a>
                         <% } %>

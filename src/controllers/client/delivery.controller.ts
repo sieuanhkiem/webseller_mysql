@@ -10,6 +10,7 @@ import { Inventory } from '../../entity/inventory';
 import ProductService from '../../services/product.service';
 import SaleOrderService from '../../services/sale_order.service';
 import CategoryService from '../../services/category.service';
+import { ProductSize } from '../../entity/product_size';
 
 export default class DeliveryController {
     private static cityService: CityService = new CityService();
@@ -48,36 +49,21 @@ export default class DeliveryController {
                 if(result != false) customer.address = result as Address;
             }
 
-            let arrCheck = [];
             for (let cartItem of cart.cartItem) {
-                const inventories = await DeliveryController.inventoryService.GetInventories(cartItem.productCode, cartItem.sizeCode, cartItem.colorCode, customer!.address.address_code);
-                if(inventories!.length > 0) {
-                    const product = await DeliveryController.productService.FindProductByCode(cartItem.productCode);
-                    let inventory: Inventory = inventories![0];
-                    const saleOrder: SalesOrder = new SalesOrder();
-                    saleOrder.quantity = cartItem.quantity;
-                    saleOrder.amount = cartItem.price!;
-                    saleOrder.customer = customer!;
-                    saleOrder.inventory = inventory;
-                    saleOrder.product = product!
-                    const resultCreate = await DeliveryController.saleOrderService.CreateSaleOrder(saleOrder);
-                    if(resultCreate != false) {
-                        inventory.quantity -= cartItem.quantity;
-                        await DeliveryController.inventoryService.UpdateInventory(inventory);
-                    }
-                    else arrCheck.push(resultCreate);
-                }
-                else {
-                    await DeliveryController.saleOrderService.Rollback();
-                    await DeliveryController.inventoryService.Rollback();
-                    logging.error(`Can not found invetory of product ${cartItem.productCode}`);
-                    return res.redirect('/page_error');
-                }
+                const product = await DeliveryController.productService.FindProductByCode(cartItem.productCode);
+                const sizeProduct: ProductSize = product?.product_sizes.filter((size: ProductSize) => size.size_code == cartItem.sizeCode)[0] as ProductSize;
+                const saleOrder: SalesOrder = new SalesOrder();
+                saleOrder.quantity = cartItem.quantity;
+                saleOrder.amount = cartItem.price!;
+                saleOrder.customer = customer!;
+                saleOrder.product = product!
+                saleOrder.product_size = sizeProduct;
+                const resultCreate = await DeliveryController.saleOrderService.CreateSaleOrder(saleOrder);
+                if(resultCreate == false) throw new Error(`Create sale order faild ${product?.product_name}-${product?.product_code}_${sizeProduct.size_code}-${sizeProduct.size_name}`);
             }
-            if(arrCheck.length == 0) {
-                req.session.destroy((err) => logging.error(err));
-                return res.redirect(`/final/${customer!.customer_code}`);
-            }
+
+            req.session.destroy((err) => logging.error(err));
+            return res.redirect(`/final/${customer!.customer_code}`);
         } 
         catch (error: unknown) {
             logging.error(`[${DeliveryController.name}].[${DeliveryController.postDelivery.name}]: ${error}`);

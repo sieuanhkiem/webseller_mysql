@@ -64,4 +64,30 @@ export default class AddressService extends BaseService {
             return null;
         }
     }
+
+    public async FindAddress(cityCode: string, districtCode: string, wardCode: string, addressDetail: string): Promise<Address | null> {
+        try {
+            await super.connectDatabase();
+            const address: Address = await Address.findOneOrFail({
+                where: {
+                    city: {
+                        city_code: cityCode
+                    },
+                    district: {
+                        district_code: districtCode
+                    },
+                    ward: {
+                        ward_code: wardCode
+                    },
+                    address_1: addressDetail
+                }
+            });
+            super.disconnectDatabase();
+            return address;
+        } catch (error: unknown) {
+            logging.error(`[${AddressService.name}].[${this.FindAddress.name}]: ${error}`);
+            await super.disconnectDatabase();
+            return null;
+        }
+    }
 }
