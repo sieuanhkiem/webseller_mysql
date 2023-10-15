@@ -139,16 +139,16 @@ export class Inventory extends BaseEntity {
     })
     is_delete: boolean
 
-    @ManyToOne(() => Product, (product) => product.inventoris, { nullable: false })
+    @ManyToOne(() => Product, (product) => product.inventoris, { nullable: false, onDelete: 'CASCADE' })
     product: Product
 
-    @ManyToOne(() => Shops, (shop) => shop.inventories, { nullable: false })
+    @ManyToOne(() => Shops, (shop) => shop.inventories, { nullable: false, onDelete: 'CASCADE' })
     shop: Shops
 
-    @ManyToOne(() => ProductColor, (productColor) => productColor.inventories, { nullable: false })
+    @ManyToOne(() => ProductColor, (productColor) => productColor.inventories, { nullable: false, onDelete: 'CASCADE' })
     product_color: Product
 
-    @ManyToOne(() => ProductSize, (productSize) => productSize.inventories, { nullable: false })
+    @ManyToOne(() => ProductSize, (productSize) => productSize.inventories, { nullable: false, onDelete: 'CASCADE' })
     product_size: ProductSize
 
     @OneToMany(() => SalesOrder, (saleOrder) => saleOrder.inventory)

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <%- include('./root/link_header') -%>
+    <title>Cấu hình Cửa hàng</title>
+</head>
+<body>
+   <header>
+        <h1> CHỈNH SỬA DANH MỤC SẢN PHẨM</h1>
+    </header>
+    <section class = "admin-content">
+        <%- include('./root/admin_content_left') -%>
+        <div class = "admin-content-right">
+            <div class="admin-content-right-category-add">
+                <h1>Update Danh mục</h1>
+                <div>
+                    <input type="text" data-category-code="<%= category.category_code %>" value="<%= category.category_name %>" placeholder="Nhập tên Danh mục" name="category-name">
+                    <button class="btn-update-category">Update</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="/js/libs/jquery-3.4.0.min.js"></script>
+    <script src="/js/libs/jToast.min.js"></script>
+    <script src="/js/libs/crypto-js.js"></script>
+    <script src="/js/libs/common.js"></script>
+    <script src="/js/admin/category-admin-js.js"></script>
+</body>
+</html>

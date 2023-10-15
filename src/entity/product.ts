@@ -151,7 +151,7 @@ export class Product extends BaseEntity {
     @OneToMany(() => Inventory, (invetory) => invetory.product, { nullable: false })
     inventoris: Inventory[]
 
-    @ManyToOne(() => ProductCategory, (productCateogry) => productCateogry.products, { nullable: false })
+    @ManyToOne(() => ProductCategory, (productCateogry) => productCateogry.products, { nullable: false, onDelete: 'CASCADE' })
     category_product: ProductCategory
 
     @ManyToMany(() => ProductColor)

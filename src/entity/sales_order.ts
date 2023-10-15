@@ -182,15 +182,15 @@ export class SalesOrder extends BaseEntity {
     })
     status: number
 
-    @ManyToOne(() => Product, (product) => product.sales_order, { nullable: false })
+    @ManyToOne(() => Product, (product) => product.sales_order, { nullable: false, onDelete: 'CASCADE' })
     product: Product
 
-    @ManyToOne(() => ProductSize, (productSize) => productSize.sale_orders, { nullable: false})
+    @ManyToOne(() => ProductSize, (productSize) => productSize.sale_orders, { nullable: false, onDelete: 'CASCADE'})
     product_size: ProductSize
 
-    @ManyToOne(() => Inventory, (inventory) => inventory.sales_order, { nullable: true })
+    @ManyToOne(() => Inventory, (inventory) => inventory.sales_order, { nullable: true, onDelete: 'CASCADE' })
     inventory: Inventory
 
-    @ManyToOne(() => Customer, (customer) => customer.sales_orders, { nullable: false })
+    @ManyToOne(() => Customer, (customer) => customer.sales_orders, { nullable: false, onDelete: 'CASCADE' })
     customer: Customer
 }

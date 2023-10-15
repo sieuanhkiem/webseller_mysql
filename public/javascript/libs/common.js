@@ -6,6 +6,12 @@ const common = new function () {
         GET: 'GET'
     }
 
+    this.toastLevel = {
+        SUCCESS: 100000000,
+        ERROR: 100000001,
+        WARRING: 100000002
+    }
+
     this.decrypt = function (cripherText) {
         const vi = secrectkey.split('').slice(0, 8).join('');
         const wordArray = CryptoJS.TripleDES.decrypt(cripherText, CryptoJS.enc.Utf8.parse(secrectkey), {
@@ -46,7 +52,7 @@ const common = new function () {
     }
 
 
-    this.callAPIHandler = function (method, path, body, callback) {
+    this.callAPIHandler = function (method, path, body, callback, callbackFaild) {
         const url = `${window.location.protocol}//${window.location.host}/${path}`;
         const xhttpRequest = new XMLHttpRequest();
         xhttpRequest.open(method, url);
@@ -56,9 +62,12 @@ const common = new function () {
                 if(this.status == 200) {
                     const jsonResult = JSON.parse(this.responseText);
                     if(jsonResult.code == 200) {
-                        if(callback != null) callback(jsonResult);
+                        if(callback != null || callback != undefined) callback(jsonResult);
                     }
-                    else console.error(jsonResult);
+                    else {
+                        if(callbackFaild != null || callbackFaild != undefined) callbackFaild(jsonResult);
+                        console.error(jsonResult);
+                    } 
                 }
                 else {
                     console.error(`Error: ${this.status} - ${this.statusText} - ${this.responseText}`);
@@ -70,8 +79,26 @@ const common = new function () {
         else xhttpRequest.send(); 
     }
 
-    this.alert = function () {
-        alert('hello');
+    this.ToastMessage = function (message, toastLevel) {
+        let backgroundColor = '#d4edda';
+        let fontColor = '#447c51';
+
+        if(toastLevel == common.toastLevel.ERROR) {
+            backgroundColor = '#f8d7da';
+            fontColor = '#8a3d44';
+        }
+
+        if(toastLevel == common.toastLevel.WARRING) {
+            backgroundColor = '#fff3cd';
+            fontColor = '#977922';
+        }
+
+        showToast(message, {
+            duration: 3000,
+            background: backgroundColor,
+            color: fontColor,
+            borderRadius: '8px'
+        });
     }
 }();
 

@@ -101,7 +101,7 @@ export class Customer extends BaseEntity{
     @OneToMany(() => SalesOrder, (saleOrder) => saleOrder.customer)
     sales_orders: SalesOrder[]
 
-    @OneToOne(() => Address, { nullable: false })
+    @OneToOne(() => Address, { nullable: false, onDelete: 'CASCADE' })
     @JoinColumn()
     address: Address
 }

@@ -13,10 +13,10 @@ export class ImageProduct extends BaseEntity {
     @IsUUID()
     id: string
 
-    @ManyToOne(() => Product, (product) => product, { nullable: false})
+    @ManyToOne(() => Product, (product) => product, { nullable: false, onDelete: 'CASCADE'})
     product: Product
 
-    @OneToOne(() => Image)
+    @OneToOne(() => Image, {nullable: false, onDelete: 'CASCADE' })
     @JoinColumn()
     images: Image
 }

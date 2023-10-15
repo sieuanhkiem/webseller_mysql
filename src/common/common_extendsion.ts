@@ -37,4 +37,8 @@ export class Common {
         ];
         return truety.includes(value);
     }
+
+    static paddWithLeadingZeros(num: number, totalLengt: number): string {
+        return String(num).padStart(totalLengt, '0');
+    }
 };

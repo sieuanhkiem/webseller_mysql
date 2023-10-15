@@ -101,7 +101,7 @@ export class Shops extends BaseEntity {
     @IsDate()
     create_date: Date
 
-    @OneToOne(() => Address, { nullable: false })
+    @OneToOne(() => Address, { nullable: false, onDelete: 'CASCADE' })
     @JoinColumn()
     address: Address
 

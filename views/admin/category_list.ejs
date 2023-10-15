@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <%- include('./root/link_header') -%>
+    <title>Cấu hình Cửa Hàng</title>
+</head>
+<body>
+   <header>
+        <h1> CHỈNH SỬA DANH MỤC SẢN PHẨM</h1>
+    </header>
+    <section class = "admin-content">
+        <%- include('./root/admin_content_left') -%>
+        <div class = "admin-content-right">
+            <div class="admin-content-right-category-list">
+               <h1>Danh sách danh mục</h1>
+               <table>
+                    <tr>
+                        <th>STT</th>
+                        <th>Code</th>
+                        <th>Danh mục</th>
+                        <th>Tùy biến</th>
+                    </tr>
+                    <% if(categories && categories.length > 0) { %>
+                        <% let stt = 1 %>
+                        <% categories.forEach(function(category) { %>
+                            <tr>
+                                <td><%= stt++ %></td>
+                                <td><%= category.category_code %></td>
+                                <td><%= category.category_name %></td>
+                                <td><a href="/admin/category/update/<%= category.category_code %>" >Sửa</a>|<a data-category-code="<%= category.category_code %>" class="a-category-delete" >Xóa</a></td>
+                            </tr>
+                        <% }) %>
+                    <% } %>
+               </table>
+            </div>
+        </div>
+    </section>
+    <script src="/js/libs/jquery-3.4.0.min.js"></script>
+    <script src="/js/libs/jToast.min.js"></script>
+    <script src="/js/libs/crypto-js.js"></script>
+    <script src="/js/libs/common.js"></script>
+    <script src="/js/admin/category-admin-js.js"></script>
+</body>
+</html>

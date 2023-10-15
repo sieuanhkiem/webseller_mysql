@@ -5,15 +5,8 @@ import './common/string_extendsion';
 import { initialize } from './data-source';
 import session from 'express-session';
 import cookieParser from 'cookie-parser';
-import mainRoute from './routes/client/main.route';
-import categoryRoute from './routes/client/category.route';
-import productRoute from './routes/client/product.route';
-import page_err from './routes/client/page_error.route';
-import sessionRoute from './routes/session/session.route';
-import cartRoute from './routes/client/cart.route';
-import deliveryRoute from './routes/client/delivery.route';
-import finalRoute from './routes/client/final.route';
-import jsonRoute from './routes/json/json.route';
+import { AddRouteClient, AddRouteJson, AddRouteSession, AdRoutedAdmin } from './routes/index.route';
+
 // import { Common } from './common/common_extendsion';
 const mainApp: Express = express();
 mainApp.use('*/css', express.static('./public/css'));
@@ -39,15 +32,11 @@ mainApp.use(session({
 mainApp.use(express.json());
 mainApp.use(express.urlencoded({ extended: true }));
 mainApp.use(cookieParser());
-mainApp.use('', mainRoute);
-mainApp.use('/category', categoryRoute);
-mainApp.use('/product', productRoute);
-mainApp.use('/page_error', page_err);
-mainApp.use('/session', sessionRoute);
-mainApp.use('/cart', cartRoute);
-mainApp.use('/delivery', deliveryRoute);
-mainApp.use('/final', finalRoute);
-mainApp.use('/json', jsonRoute);
+
+AddRouteClient(mainApp);
+AddRouteSession(mainApp);
+AddRouteJson(mainApp);
+AdRoutedAdmin(mainApp);
 
 mainApp.listen(config.server.port, async () => {
     await initialize(false);
