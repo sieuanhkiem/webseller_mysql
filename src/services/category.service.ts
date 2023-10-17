@@ -3,6 +3,7 @@ import { logging } from '../config/logging';
 import { ProductCategory } from '../entity/product_category';
 import { DeleteResult, Repository, UpdateResult } from 'typeorm';
 import { Common } from '../common/common_extendsion';
+import { Product } from '../entity/product';
 
 export default class CategoryService extends BaseService {
 
@@ -39,7 +40,7 @@ export default class CategoryService extends BaseService {
         try {
             await super.connectDatabase();
             const categoryRepository: Repository<ProductCategory> = super.createRepository(ProductCategory) as Repository<ProductCategory>;
-            const countCategory: number = await categoryRepository.count();
+            const countCategory: number = await categoryRepository.count() + 1;
             let categoryNew: ProductCategory = new ProductCategory();
             categoryNew.category_code = `CATE-${new Date().formatTime('YYYYMMDDHHmmss')}-${Common.paddWithLeadingZeros(countCategory, 6)}`;
             categoryNew.category_name = categoryName;
@@ -76,6 +77,18 @@ export default class CategoryService extends BaseService {
         try {
             await super.connectDatabase();
             const categoryRepository: Repository<ProductCategory> = super.createRepository(ProductCategory) as Repository<ProductCategory>;
+            const productRepository: Repository<Product> = super.createRepository(Product) as Repository<Product>;
+            await productRepository.createQueryBuilder('product')
+            .innerJoin('product.category_product', 'category')
+            .update()
+            .set({ category_product: null })
+            .whereEntity( 
+                await productRepository.createQueryBuilder('product')
+                .innerJoin('product.category_product', 'category')
+                .where('category.category_code = :categoryCode', { categoryCode })
+                .getMany()
+            )
+            .execute();
             const deleteResult: DeleteResult = await categoryRepository.createQueryBuilder('category').delete()
             .where('category_code = :categoryCode', { categoryCode })
             .execute();

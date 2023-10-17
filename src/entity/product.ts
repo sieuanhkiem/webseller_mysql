@@ -132,29 +132,29 @@ export class Product extends BaseEntity {
     @IsDate()
     create_date: Date
 
-    @OneToMany(() => ProductSize, (productSize) => productSize.product, { nullable: false })
+    @OneToMany(() => ProductSize, (productSize) => productSize.product)
     product_sizes : ProductSize[]
 
-    @OneToMany(() => SalesPrice, (salePrice) => salePrice.product, { nullable: false })
+    @OneToMany(() => SalesPrice, (salePrice) => salePrice.product)
     sales_price: SalesPrice[]
 
-    @OneToMany(() => SalesOrder, (saleOrder) => saleOrder.product, { nullable: false })
+    @OneToMany(() => SalesOrder, (saleOrder) => saleOrder.product)
     sales_order: SalesOrder[]
 
     // @ManyToMany(() => Image)
     // @JoinTable()
     // images:Image[]
 
-    @OneToMany(() => ImageProduct, (imageProduct) => imageProduct.product, { nullable: false })
+    @OneToMany(() => ImageProduct, (imageProduct) => imageProduct.product)
     images_product: ImageProduct[]
 
-    @OneToMany(() => Inventory, (invetory) => invetory.product, { nullable: false })
+    @OneToMany(() => Inventory, (invetory) => invetory.product)
     inventoris: Inventory[]
 
-    @ManyToOne(() => ProductCategory, (productCateogry) => productCateogry.products, { nullable: false, onDelete: 'CASCADE' })
-    category_product: ProductCategory
+    @ManyToOne(() => ProductCategory, (productCateogry) => productCateogry.products, { nullable: true })
+    category_product: ProductCategory | null
 
-    @ManyToMany(() => ProductColor)
+    @ManyToMany(() => ProductColor, { onDelete: 'CASCADE' })
     @JoinTable()
     product_colors: ProductColor[]
 }

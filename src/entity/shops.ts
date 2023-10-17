@@ -101,11 +101,11 @@ export class Shops extends BaseEntity {
     @IsDate()
     create_date: Date
 
-    @OneToOne(() => Address, { nullable: false, onDelete: 'CASCADE' })
+    @OneToOne(() => Address, { nullable: true })
     @JoinColumn()
     address: Address
 
-    @OneToMany(() => Inventory, (inventory) => inventory.shop, { nullable: false })
+    @OneToMany(() => Inventory, (inventory) => inventory.shop)
     inventories: Inventory[]
 
     // @OneToMany(() => SalesOrder, (saleOrder) => saleOrder.shop, { nullable: false })

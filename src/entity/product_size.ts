@@ -69,7 +69,7 @@ export class ProductSize extends BaseEntity {
     @IsDate()
     create_date: Date
 
-    @ManyToOne(() => Product, (product) => product.product_sizes, { nullable: false, onDelete: 'CASCADE' })
+    @ManyToOne(() => Product, (product) => product.product_sizes, { nullable: true, onDelete: 'CASCADE' })
     product: Product
 
     @OneToMany(() => SalesPrice, (salePrice) => salePrice.product_size)

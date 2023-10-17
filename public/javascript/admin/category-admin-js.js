@@ -48,7 +48,9 @@ $('.btn-update-category').click(function (e) {
 $('a.a-category-delete').click(function (e) {
     const categoryCode = e.target.dataset['categoryCode'];
     const trElement =  e.target.parentElement.parentElement;
-    const tbodyElement = e.target.parentElement;
+    const tbodyElement = trElement.parentElement;
+    console.log(tbodyElement);
+    console.log(trElement);
 
     common.callAPIHandler(common.method.POST, 'json/category/category-delete', { category_code:  common.encrypt(categoryCode) }, function (result) {
         common.ToastMessage('Xóa category thành công', common.toastLevel.SUCCESS);

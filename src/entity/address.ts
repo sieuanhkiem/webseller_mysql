@@ -69,12 +69,12 @@ export class Address extends BaseEntity {
     @IsDate()
     create_date: Date
 
-    @ManyToOne(() => City, (city) => city.address, { nullable: false, onDelete: 'CASCADE' })
+    @ManyToOne(() => City, (city) => city.address, { nullable: true })
     city: City
 
-    @ManyToOne(() => District, (district) => district.address, { nullable: false, onDelete: 'CASCADE' })
+    @ManyToOne(() => District, (district) => district.address, { nullable: true })
     district: District
 
-    @ManyToOne(() => Ward, (ward) => ward.address, { nullable: false, onDelete: 'CASCADE' })
+    @ManyToOne(() => Ward, (ward) => ward.address, { nullable: true })
     ward: Ward
 }

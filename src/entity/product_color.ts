@@ -49,6 +49,6 @@ export class ProductColor extends BaseEntity {
     @IsDate()
     create_date: Date
 
-    @OneToMany(() => Inventory, (inventory) => inventory.product_color, { nullable: false })
+    @OneToMany(() => Inventory, (inventory) => inventory.product_color)
     inventories: Inventory[]
 }

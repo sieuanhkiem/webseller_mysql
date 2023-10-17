@@ -37,6 +37,7 @@ export async function initialize(refresh: boolean = false): Promise<void> {
             const dataSource: DataSource = await AppDataSource.initialize();
             isConnect = dataSource.isInitialized;
             if(refresh) {
+                await dataSource.manager.query('EXEC sp_msforeachtable "ALTER TABLE ? NOCHECK CONSTRAINT ALL"');
                 dataSource.entityMetadatas.forEach(ent => {
                     ent.foreignKeys.reduce(async function (current: Promise<never[]>, foreign: ForeignKeyMetadata) {
                         await dataSource.manager.query(

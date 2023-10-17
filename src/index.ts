@@ -38,6 +38,13 @@ AddRouteSession(mainApp);
 AddRouteJson(mainApp);
 AdRoutedAdmin(mainApp);
 
+mainApp.use(function (req: Request, res: Response) {
+    res.status(404);
+    if(req.accepts('html')) {
+        return res.redirect('/page_error');
+    }
+})
+
 mainApp.listen(config.server.port, async () => {
     await initialize(false);
     console.log(`⚡️[server]: Server is running at http://${config.server.hostname}:${config.server.port}}`);

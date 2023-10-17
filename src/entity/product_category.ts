@@ -57,6 +57,6 @@ export class ProductCategory extends BaseEntity {
     })
     is_delete: boolean
 
-    @OneToMany(() => Product, (product) => product.category_product, { nullable: false })
+    @OneToMany(() => Product, (product) => product.category_product)
     products: Product[]
 }

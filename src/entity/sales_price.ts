@@ -91,9 +91,9 @@ export class SalesPrice extends BaseEntity {
     })
     is_active: boolean
 
-    @ManyToOne(() => Product, (product) => product.sales_price, { nullable: false, onDelete: 'CASCADE' })
+    @ManyToOne(() => Product, (product) => product.sales_price, { nullable: true, onDelete: 'CASCADE' })
     product: Product
 
-    @ManyToOne(() => ProductSize, (productSize) => productSize.sales_price, { nullable: false, onDelete: 'CASCADE' })
+    @ManyToOne(() => ProductSize, (productSize) => productSize.sales_price, { nullable: true })
     product_size: ProductSize
 }
