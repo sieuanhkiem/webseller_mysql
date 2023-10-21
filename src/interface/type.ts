@@ -43,3 +43,24 @@ type PostDelivery = {
     ward: string,
     address: string
 }
+
+type ColorNew = {
+    color_name: string,
+    color_code: string
+}
+
+type ImageNew = {
+    image_name: string,
+    image_default ?: boolean,
+    buffer: string
+}
+
+type ProductNew = {
+    product_name: string,
+    category_code: string,
+    comment: string,
+    brand: string,
+    preserve: string,
+    colors: ColorNew[],
+    images: ImageNew[]
+}

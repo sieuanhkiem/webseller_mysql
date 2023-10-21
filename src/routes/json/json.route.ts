@@ -3,6 +3,7 @@ import SalePriceJsonController from '../../controllers/json/sale_price_json.cont
 import DistrictJsonController from '../../controllers/json/district_json.controller';
 import WardJsonController from '../../controllers/json/ward_json.controller';
 import CategoryJsonController from '../../controllers/json/category_json.controller'
+import ProductJsonController from '../../controllers/json/product_json.controller';
 const jsonRoute: Router = express.Router();
 
 jsonRoute.post('/sale_price/sale_price_code', SalePriceJsonController.SalePriceBySizeCode);
@@ -11,5 +12,6 @@ jsonRoute.post('/ward/get_ward_by_code', WardJsonController.GetWardByDistrictCod
 jsonRoute.post('/category/category-new', CategoryJsonController.InsertCategory);
 jsonRoute.post('/category/category-update', CategoryJsonController.UpdateCategory);
 jsonRoute.post('/category/category-delete', CategoryJsonController.DeleteCategory);
+jsonRoute.post('/product/product-new', ProductJsonController.InsertProduct);
 
 export default jsonRoute;

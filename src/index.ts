@@ -1,4 +1,5 @@
 import express, { Express, Request, Response } from 'express';
+import bodyParser from 'body-parser';
 const { logging } = require('./config/logging');
 import config from './config/config';
 import './common/string_extendsion';
@@ -28,6 +29,10 @@ mainApp.use(session({
         sameSite: 'lax'
     },
     resave: false
+}));
+mainApp.use(bodyParser({
+    limit: '50mb',
+    extended: true
 }));
 mainApp.use(express.json());
 mainApp.use(express.urlencoded({ extended: true }));

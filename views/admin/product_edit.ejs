@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <%- include('./root/link_header') -%>
+    <link rel="stylesheet" href="css/libs/pickr-monolight.min.css">
+    <title>Cấu hình Cửa Hàng</title>
+</head>
+<body>
+    <header>
+        <h1>CHỈNH SỬA DANH MỤC SẢN PHẨM</h1>
+    </header>
+    <section class = "admin-content">
+        <%- include('./root/admin_content_left') -%>
+        <div class = "admin-content-right">
+            <div class="admin-content-right-Product-add">
+                <h1>Update Sản Phẩm</h1>
+                <div>
+                    <label for="">Mã Sản phẩm <span style="color: red;">*</span></label>
+                    <input type="text" disabled="true" name="product-code" class="product-code" value="<%= product.product_code %>" />
+                    <label for="">Nhập Tên Sản phẩm <span style="color: red;">*</span></label>
+                    <input type="text" placeholder="Nhập tên Sản phẩm" required name="product-name" class="product-name" value="<%= product.product_name %>" />
+                    <label for="">Chọn Danh Mục<span style="color: red;">*</span></label>
+                    <select name="category_val" class="category-code">
+                        <% if(categories) { %>
+                            <% categories.forEach(function(category, index) { %>
+                                <% if(category.category_code == product.category_product.category_code) { %>
+                                    <option value="<%= category.category_code  %>" selected><%= category.category_name %></option>
+                                <% } else { %>
+                                    <option value="<%= category.category_code  %>"><%= category.category_name %></option>
+                                <% } %>
+                            <% }) %>
+                        <% } else { %>
+                            <option value="#">---Chọn---</option>
+                        <% } %>
+                    </select>
+                    <!-- <label for="">Chọn Loại Sản phẩm<span style="color: red;">*</span></label>
+                    <select name="" id="">
+                        <option value="#">---Chọn---</option>
+                    </select> -->
+                    <!-- <input type="checkbox" name="Size S" value="S" checked /> -->
+                    <!-- <label for="">Nhập Giá Sản phẩm<span style="color: red;">*</span></label>
+                    <input type="text" placeholder="Nhập Giá Sản phẩm"> -->
+                    <label for="">Nhập Màu Sản phẩm<span style="color: red;">*</span></label>
+                    <div class="color-pick"></div>
+                    <div class="color-wrap">
+                        <% if(product.product_colors && product.product_colors.length > 0) { %>
+                            <% product.product_colors.forEach(function(color) { %>
+                                <div class="color-box">
+                                    <div style="background-color: #<%= color.color_code %>; height: 40px;">
+                                        <div class="color-close" data-color-code="<%= color.color_code %>" data-old="1"></div>
+                                    </div>
+                                </div>
+                            <% }) %>
+                        <% } %>
+                    </div>
+                    <label for="">Nhập Mô tả Sản phẩm<span style="color: red;">*</span></label>
+                    <textarea class="comment" name="comment" cols="30" rows="10" placeholder="Mô tả sản phẩm"><%= product.comment || '' %></textarea>
+                    <label for="">Nhập Hướng dẫn Bảo quản<span style="color: red;">*</span></label>
+                    <textarea class="preserve" name="preserve" cols="30" rows="10" placeholder="Nhập hướng dẫn bảo quản" required> <%= product.preserve || '' %></textarea>
+                    <label for="">Nhập Hướng dẫn Tham khảo Size<span style="color: red;">*</span></label>
+                    <textarea name="brand" class="brand"  cols="30" rows="10" placeholder="Nhập hướng Tham khảo Size" required> <%= product.brand || '' %></textarea>
+                    <label for="">Chọn File hình chính Sản phẩm<span style="color: red;">*</span></label>
+                    <div class="upload-box">
+                        <div class="upload-btn-box">
+                            <label class="upload-btn">
+                                <p>Upload images</p>
+                                <input type="file" name="image-only-one" class="upload-input-file">
+                            </label>
+                        </div>
+                        <div class="upload-img-wrap" name="image-only-one">
+                            <% if(product.images_product && product.images_product.length > 0 ) { %>
+                                <% const imageDefault = product.images_product.find(imageProduct => imageProduct.images.image_default == true) ?? null %>
+                                <% if(imageDefault != null) { %>
+                                    <div class="upload-img-box">
+                                        <div style="background-image: url(data:image/*;base64,<%= imageDefault.images.image_base64 %>)" data-file="<%= imageDefault.images.image_name %>" data-file-code="<%= imageDefault.images.image_code %>" class="img-bg">
+                                        </div>
+                                    </div>
+                                <% } %>
+                            <% } %>
+                        </div>
+                    </div>
+                    <label for="">Chọn File hình phụ Sản phẩm<span style="color: red;">*</span></label>
+                    <div class="upload-box">
+                        <div class="upload-btn-box">
+                            <label class="upload-btn">
+                                <p>Upload images</p>
+                                <input type="file" multiple name="image-multi" class="upload-input-file">
+                            </label>
+                        </div>
+                        <div class="upload-img-wrap" name="image-multi">
+                            <% if(product.images_product && product.images_product.length > 0) { %>
+                                <% const maxImage = 3 %>
+                                <% const imageSub = product.images_product.filter(imageProduct => imageProduct.images.image_default == false) %>
+                                <% for(let i =0; i < imageSub.length && i < maxImage; i++) { %>
+                                    <% const imageProduct = imageSub[i] %>
+                                    <div class="upload-img-box">
+                                        <div style="background-image: url(data:image/*;base64,<%= imageProduct.images.image_base64 %>)" data-file="<%= imageProduct.images.image_name %>" data-file-code="<%= imageProduct.images.image_code %>" class="img-bg">
+                                            <div class="upload-img-close"></div>
+                                        </div>
+                                    </div>
+                                <% } %>
+                            <% } %>
+                        </div>
+                    </div>
+                    <button class="btn-update">Lưu</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="js/libs/pickr.min.js"></script>
+    <script src="js/libs/color.js"></script>
+    <script src="js/libs/jquery-3.4.0.min.js"></script>
+    <script src="js/libs/jToast.min.js"></script>
+    <script src="js/libs/crypto-js.js"></script>
+    <script src="js/libs/common.js"></script>
+    <script src="js/admin/product-admin-update.js"></script>
+</body>
+</html>

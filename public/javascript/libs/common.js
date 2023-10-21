@@ -51,6 +51,10 @@ const common = new function () {
         return bytes.buffer;
     }
 
+    this.arrayBufferToBinairyString = function (bytes) {
+        return bytes.reduce((str, byte) => str + byte.toString(2).padStart(8, '0'), '');
+    }
+
 
     this.callAPIHandler = function (method, path, body, callback, callbackFaild) {
         const url = `${window.location.protocol}//${window.location.host}/${path}`;

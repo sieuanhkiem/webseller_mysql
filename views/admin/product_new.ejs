@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <%- include('./root/link_header') -%>
+    <link rel="stylesheet" href="css/libs/pickr-monolight.min.css">
+    <title>Cấu hình Cửa Hàng</title>
+</head>
+<body>
+    <header>
+        <h1>CHỈNH SỬA DANH MỤC SẢN PHẨM</h1>
+    </header>
+    <section class = "admin-content">
+        <%- include('./root/admin_content_left') -%>
+        <div class = "admin-content-right">
+            <div class="admin-content-right-Product-add">
+                <h1>Thêm Sản Phẩm</h1>
+                <div>
+                    <!-- <label for="">Mã Sản phẩm <span style="color: red;">*</span></label>
+                    <input type="text" disabled="true" name="product-code" class="product-code"/> -->
+                    <label for="">Nhập Tên Sản phẩm <span style="color: red;">*</span></label>
+                    <input type="text" placeholder="Nhập tên Sản phẩm" required name="product-name" class="product-name" />
+                    <label for="">Chọn Danh Mục<span style="color: red;">*</span></label>
+                    <select name="category_val" class="category-code">
+                        <% if(categories) { %>
+                            <% categories.forEach(function(category, index) { %>
+                                <% if(index == 0) { %>
+                                    <option value="<%= category.category_code  %>" selected><%= category.category_name %></option>
+                                <% } else { %>
+                                    <option value="<%= category.category_code  %>"><%= category.category_name %></option>
+                                <% } %>
+                            <% }) %>
+                        <% } else { %>
+                            <option value="#">---Chọn---</option>
+                        <% } %>
+                    </select>
+                    <!-- <label for="">Chọn Loại Sản phẩm<span style="color: red;">*</span></label>
+                    <select name="" id="">
+                        <option value="#">---Chọn---</option>
+                    </select> -->
+                    <!-- <input type="checkbox" name="Size S" value="S" checked /> -->
+                    <!-- <label for="">Nhập Giá Sản phẩm<span style="color: red;">*</span></label>
+                    <input type="text" placeholder="Nhập Giá Sản phẩm"> -->
+                    <label for="">Nhập Màu Sản phẩm<span style="color: red;">*</span></label>
+                    <div class="color-pick"></div>
+                    <div class="color-wrap"></div>
+                    <label for="">Nhập Mô tả Sản phẩm<span style="color: red;">*</span></label>
+                    <textarea class="comment" name="comment" cols="30" rows="10" placeholder="Mô tả sản phẩm"></textarea>
+                    <label for="">Nhập Hướng dẫn Bảo quản<span style="color: red;">*</span></label>
+                    <textarea class="preserve" name="preserve" cols="30" rows="10" placeholder="Nhập hướng dẫn bảo quản" required></textarea>
+                    <label for="">Nhập Hướng dẫn Tham khảo Size<span style="color: red;">*</span></label>
+                    <textarea name="brand" class="brand"  cols="30" rows="10" placeholder="Nhập hướng Tham khảo Size" required></textarea>
+                    <label for="">Chọn File hình chính Sản phẩm<span style="color: red;">*</span></label>
+                    <div class="upload-box">
+                        <div class="upload-btn-box">
+                            <label class="upload-btn">
+                                <p>Upload images</p>
+                                <input type="file" name="image-only-one" class="upload-input-file">
+                            </label>
+                        </div>
+                        <div class="upload-img-wrap" name="image-only-one"></div>
+                    </div>
+                    <label for="">Chọn File hình phụ Sản phẩm<span style="color: red;">*</span></label>
+                    <div class="upload-box">
+                        <div class="upload-btn-box">
+                            <label class="upload-btn">
+                                <p>Upload images</p>
+                                <input type="file" multiple name="image-multi" class="upload-input-file">
+                            </label>
+                        </div>
+                        <div class="upload-img-wrap" name="image-multi"></div>
+                    </div>
+                    <button class="btn-add">Thêm</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="js/libs/pickr.min.js"></script>
+    <script src="js/libs/color.js"></script>
+    <script src="js/libs/jquery-3.4.0.min.js"></script>
+    <script src="js/libs/jToast.min.js"></script>
+    <script src="js/libs/crypto-js.js"></script>
+    <script src="js/libs/common.js"></script>
+    <script src="js/admin/product-admin-js.js"></script>
+</body>
+</html>
