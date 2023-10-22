@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <%- include('./root/link_header') -%>
+    <title>Cấu hình Cửa hàng</title>
+</head>
+<body>
+   <header>
+        <h1> CHỈNH SỬA DANH MỤC SẢN PHẨM</h1>
+    </header>
+    <section class = "admin-content">
+        <%- include('./root/admin_content_left') -%>
+        <div class = "admin-content-right">
+            <div class="admin-content-right-category-list">
+               <h1>Danh sách Danh mục</h1>
+               <table>
+                    <tr>
+                        <th>STT</th>
+                        <th>Danh mục</th>
+                        <th>Code</th>
+                        <th>Tên sản phẩm</th>
+                        <th>Tùy biến</th>
+                    </tr>
+                    <% if(products && products.length > 0) { %>
+                        <% let stt = 1 %>
+                        <% products.forEach(function(product) { %>
+                            <tr>
+                                <td><%= stt++ %></td>
+                                <td><%= product.category_product.category_name %></td>
+                                <td><%= product.product_code %></td>
+                                <td><%= product.product_name %></td>
+                                <td><a href="/admin/product/update/<%= product.product_code %>">Sửa</a>|<span class="btn-del" data-product-code="<%= product.product_code %>" >Xóa</span></td>
+                            </tr>
+                        <% }) %>
+                    <% } %>
+               </table>
+            </div>
+        </div>
+    </section>
+
+    <script src="js/libs/jquery-3.4.0.min.js"></script>
+    <script src="js/libs/jToast.min.js"></script>
+    <script src="js/libs/crypto-js.js"></script>
+    <script src="js/libs/common.js"></script>
+    <script src="js/admin/product-admin-delete.js"></script>
+</body>
+</html>

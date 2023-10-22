@@ -248,3 +248,8 @@ div.upload-img-close::after {
     position: relative;
     padding-bottom: 100%;
 }
+
+
+.btn-del {
+    cursor: pointer;
+}

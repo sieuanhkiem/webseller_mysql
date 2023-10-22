@@ -68,11 +68,13 @@ $('input.upload-input-file[name=image-only-one]').on('change', async function (e
     const arrFileImage = Array.prototype.slice.call(e.target.files);
     const divImgWrap = $(this).closest('.upload-box').find('div.upload-img-wrap[name=image-only-one]');
     const imgbg = divImgWrap.children().children();
-    imageArrDel.push({
-        image_name: imgbg.data('file'),
-        image_code: imgbg.data('file-code'),
-        image_default: true
-    });
+    if(imgbg.length > 0) {
+        imageArrDel.push({
+            image_name: imgbg.data('file'),
+            image_code: imgbg.data('file-code'),
+            image_default: true
+        });
+    }
     divImgWrap.empty();
     const countFileImage = arrFileImage.length;
     for (let index = 0; index < countFileImage; index++) {
@@ -181,13 +183,64 @@ $('.color-close').on('click', function (e) {
 });
 
 $('button.btn-update').on('click', function (e) {
-    if(imageArrDel.length > 0) {
+    const inputProductCode = $('.product-code');
+    if(imageArrDel.length > 0 || colorPicksDel.length > 0) {
         console.log(imageArrDel);
+        const product = {
+            product_code: inputProductCode.val(),
+            images: imageArrDel,
+            colors: colorPicksDel
+        };
+        common.callAPIHandler(common.method.POST, 'json/product/product-update/delete-img-color', { product: common.encrypt(product) },
+        function (result) {
+            common.ToastMessage('Thay đổi cơ cấu hình ảnh và màu sắc thành công', common.toastLevel.SUCCESS);
+        },
+        function (resultError) {
+            common.ToastMessage('Thay đổi cơ cấu hình ảnh và màu sắc thất bại', common.toastLevel.ERROR);
+            common.ToastMessage(`${resultError.error}`, common.toastLevel.ERROR);
+        });
     }
 
-    if(colorPicksDel.length > 0) {
-        console.log(colorPicksDel);
+    const inputProductName = $('input.product-name');
+    const selectCategoryCode = $('select.category-code');
+    const textAreaComment = $('textarea.comment');
+    const textAreaPreserve = $('textarea.preserve');
+    const textareaBrand = $('textarea.brand');
+
+
+    const productName = inputProductName.val() || null;
+    const categoryCode = selectCategoryCode.val();
+    const comment = textAreaComment.val();
+    const preserve = textAreaPreserve.val();
+    const brand = textareaBrand.val();
+
+
+    if(productName == '' || productName == null) {
+        common.ToastMessage('Vui lòng nhập tên sản phẩm', common.toastLevel.WARRING);
+        inputProductName.focus();
+        return;
     }
-    
-    console.log(imageArr);
+
+    const product = {
+        product_name: productName,
+        product_code: inputProductCode.val(),
+        category_code: categoryCode,
+        comment,
+        brand,
+        preserve,
+        colors: colorPicks,
+        images: imageArr 
+    };
+
+    common.callAPIHandler(common.method.POST, 'json/product/product-update', { product: common.encrypt(product) },
+    function (result) {
+        const productUpdate = common.decrypt(result);
+        console.log(productUpdate);
+        common.ToastMessage('Cập nhật sản phẩm thành công', common.toastLevel.SUCCESS);
+        common.ToastMessage(`${productUpdate.product_code}`, common.toastLevel.SUCCESS);
+    },
+    function (resultError) {
+        common.ToastMessage('Cập nhật sản phẩm thất bại', common.toastLevel.ERROR);
+        common.ToastMessage(`${resultError.error}`, common.toastLevel.ERROR);
+    });
 });

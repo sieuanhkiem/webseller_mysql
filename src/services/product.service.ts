@@ -2,7 +2,7 @@ import { Product } from '../entity/product'
 import { ProductPaginationModel } from '../models/product/product-pagination.model';
 import { SalesPrice } from '../entity/sales_price'
 import BaseService from './base.service';
-import { Repository, SelectQueryBuilder } from 'typeorm';
+import { DeleteResult, Repository, SelectQueryBuilder } from 'typeorm';
 import { logging } from '../config/logging';
 import '../common/date_extendsion';
 import { Order } from '../enum/order';
@@ -250,6 +250,190 @@ export default class ProductService extends BaseService {
             logging.error(`[${ProductService.name}].[${this.InsertProduct.name}]: ${error}`);
             await super.disconnectDatabase();
             return false;
+        }
+    }
+
+    public async DeleteImageAndColorProduct(productUpdate: ProductUpdate): Promise<number | boolean> {
+        try {
+            const product: Product | null | undefined = await this.FindProductByCode(productUpdate.product_code);
+            if(product == null || product == undefined) throw new Error(`Can not found product by ${productUpdate.product_code}`);
+            await super.connectDatabase();
+            const productRepository: Repository<Product> = super.createRepository(Product) as Repository<Product>;
+            const imageRepository: Repository<Image> = super.createRepository(Image) as Repository<Image>;
+            const imageProductRepository: Repository<ImageProduct> = super.createRepository(ImageProduct) as Repository<ImageProduct>;
+            const colorRepository: Repository<ProductColor> = super.createRepository(ProductColor) as Repository<ProductColor>;
+            let imageCheck: boolean = true;
+            let colorCheck: boolean = true;
+            if(productUpdate.images.length > 0) {
+                for (let imageUpdate of productUpdate.images) {
+                    const image: Image = await imageRepository.createQueryBuilder('image')
+                                        .where('image.image_code = :imageCode', { imageCode: imageUpdate.image_code! })
+                                        .getOneOrFail();
+                    
+                                     
+                    const imageProduct: ImageProduct = await imageProductRepository.createQueryBuilder('imageProduct')
+                                                        .innerJoin('imageProduct.product', 'product')
+                                                        .innerJoin('imageProduct.images', 'image')
+                                                        .where('product.product_code = :productCode and image.image_code = :imageCode', { productCode: product.product_code, imageCode: image.image_code })
+                                                        .getOneOrFail();
+
+                    const deleteImageProductReult: DeleteResult = await imageProductRepository.createQueryBuilder().delete()
+                                                                    .where('id = :id', { id: imageProduct.id })
+                                                                    .execute();
+                    
+                    if(deleteImageProductReult.affected && deleteImageProductReult.affected > 0) {
+                        const deleteImageResult = await imageRepository.createQueryBuilder('image').delete()
+                                                                        .where('image.image_code = :imageCode', { imageCode: image.image_code })
+                                                                        .execute();
+                        imageCheck = deleteImageResult.affected != null && deleteImageResult.affected > 0;
+                    }
+                }
+            }
+
+            if(productUpdate.colors.length > 0) {
+                let productColor: ProductColor[] = product.product_colors;
+                for(let colorUpdate of productUpdate.colors) {
+                    const color: ProductColor = await colorRepository.createQueryBuilder('color')
+                                                               .where('color.color_code = :colorCode', { colorCode: colorUpdate.color_code })
+                                                               .getOneOrFail();
+                    const indexColor = productColor.findIndex(colr => colr.color_code == color.color_code);
+                    if(indexColor > -1) productColor.splice(indexColor, 1);                                      
+                }
+                product.product_colors = productColor;
+                let productAfterUpdate: Product = await productRepository.save(product);
+                colorCheck = productAfterUpdate.product_colors.length == productColor.length;
+            }
+            await super.disconnectDatabase();
+            return colorCheck && imageCheck;
+        } 
+        catch (error: unknown) {
+            logging.error(`[${ProductService.name}].[${this.DeleteImageAndColorProduct.name}}]: ${error}`);
+            await super.disconnectDatabase();
+            return false;
+        }
+    }
+
+    public async UpdateProduct(productUpdate: ProductNew): Promise<Product | null> {
+        try {
+            const product: Product | null | undefined = await this.FindProductByCode(productUpdate.product_code!);
+            if(product == null || product == undefined) throw new Error(`Can not found product by code ${productUpdate.product_code}`);
+            await super.connectDatabase();
+            const productRepository: Repository<Product> = super.createRepository(Product) as Repository<Product>;
+            const categoryRepository: Repository<ProductCategory> = super.createRepository(ProductCategory) as Repository<ProductCategory>;
+            const imageRepository: Repository<Image> = super.createRepository(Image) as Repository<Image>;
+            const colorRepository: Repository<ProductColor> = super.createRepository(ProductColor) as Repository<ProductColor>;
+            const imageProductRepository: Repository<ImageProduct> = super.createRepository(ImageProduct) as Repository<ImageProduct>;
+            const category: ProductCategory = await categoryRepository.createQueryBuilder('category').where('category_code= :categoryCode', { categoryCode: productUpdate.category_code }).getOneOrFail();
+            const colors: ProductColor[] = [];
+
+            if(productUpdate.colors.length > 0) {
+                for(let color of productUpdate.colors) {
+                    const colorFind: ProductColor | null = await colorRepository.findOne({
+                        where: {
+                            color_code: color.color_code
+                        }
+                    });
+                    if(colorFind == null) {
+                        const colorNew = new ProductColor();
+                        colorNew.color_code = color.color_code;
+                        colorNew.color_name = color.color_name;
+                        colors.push(await colorRepository.save(colorNew));
+                    }
+                    else colors.push(colorFind);
+                }
+            }
+
+            product.product_name = productUpdate.product_name;
+            product.brand = productUpdate.brand;
+            product.comment = productUpdate.comment;
+            product.preserve = productUpdate.preserve;
+            product.category_product = category;
+            product.product_colors.push(...colors);
+            const productAfterUpdate: Product = await productRepository.save(product);
+
+            if(productUpdate.images.length > 0) {
+                for(let image of productUpdate.images) {
+                    const countImage: number = await imageRepository.count();
+                    const imageNew: Image = new Image();
+                    imageNew.image_code = `IMG-${new Date().formatTime('YYYYMMDDHHmmss')}-${Common.paddWithLeadingZeros(countImage + 1, 6)}`;
+                    imageNew.image_name = image.image_name;
+                    imageNew.image_type = ImageType.PRODUCTTYPE;
+                    if(image.image_default != undefined || image.image_default != null) imageNew.image_default = image.image_default;
+                    imageNew.image = Buffer.from(image.buffer, 'base64');
+                    const imageProduct: ImageProduct = new ImageProduct();
+                    imageProduct.images = await imageRepository.save(imageNew);
+                    imageProduct.product = productAfterUpdate;
+                    await imageProductRepository.save(imageProduct);
+                }
+            }
+
+            await super.disconnectDatabase();
+            return productAfterUpdate;
+        } 
+        catch (error: unknown) {
+            logging.error(`[${ProductService.name}].[${this.UpdateProduct.name}]: ${error}`);
+            await super.disconnectDatabase();
+            return null;
+        }
+    }
+
+    public async GetAllProduct(): Promise<Product[]> {
+        try {
+            await super.connectDatabase();
+            const productRepository: Repository<Product> = super.createRepository(Product) as Repository<Product>;
+            const products: Product[] = await productRepository.createQueryBuilder('product').setFindOptions({
+                relations: {
+                    category_product: true,
+                    product_colors: true,
+                    images_product: true,
+                    product_sizes: true
+                }
+            }).getMany();
+            await super.disconnectDatabase();
+            return products;
+        } 
+        catch (error: unknown) {
+            logging.error(`[${ProductService.name}].[${this.GetAllProduct.name}]: ${error}`);
+            await super.disconnectDatabase();
+            return [];
+        }
+    }
+
+    public async DeleteProduct(productCode: string): Promise<boolean> {
+        try {
+            const productDel: Product | null | undefined =  await this.FindProductByCode(productCode);
+            if(productDel == null || productDel == undefined) throw new Error(`Can not found product by code ${productCode}`);
+            await super.connectDatabase();
+            const imageProductRepository: Repository<ImageProduct> = super.createRepository(ImageProduct) as Repository<ImageProduct>;
+            const imageRepository: Repository<Image> = super.createRepository(Image) as Repository<Image>;
+            const productRepository: Repository<Product> = super.createRepository(Product) as Repository<Product>;
+            if(productDel.images_product.length > 0) {
+                for(let imageProduct of productDel.images_product) {
+                    const deleteImageProduct: DeleteResult = await imageProductRepository.createQueryBuilder()
+                                                                                        .delete()
+                                                                                        .where('id= :id', { id: imageProduct.id})
+                                                                                        .execute();
+                    if(deleteImageProduct.affected != null && deleteImageProduct.affected > 0) {
+                        await imageRepository.createQueryBuilder()
+                                            .delete()
+                                            .where('id= :id', { id: imageProduct.images.id })
+                                            .execute();
+                        
+                    }
+                }
+            }
+
+            const deleteProduct: DeleteResult = await productRepository.createQueryBuilder()
+                                                      .delete()
+                                                      .where('product_code = :productCode', { productCode: productDel.product_code })
+                                                      .execute();
+            await super.disconnectDatabase();
+            return deleteProduct.affected != null && deleteProduct.affected != undefined && deleteProduct.affected > 0;
+        } 
+        catch (error: unknown) {
+            logging.error(`[${ProductService.name}].[${this.DeleteProduct.name}]: ${error}`);
+            await super.disconnectDatabase();
+            return false
         }
     }
 }

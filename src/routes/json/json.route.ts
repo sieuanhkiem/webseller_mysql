@@ -13,5 +13,8 @@ jsonRoute.post('/category/category-new', CategoryJsonController.InsertCategory);
 jsonRoute.post('/category/category-update', CategoryJsonController.UpdateCategory);
 jsonRoute.post('/category/category-delete', CategoryJsonController.DeleteCategory);
 jsonRoute.post('/product/product-new', ProductJsonController.InsertProduct);
+jsonRoute.post('/product/product-update/delete-img-color', ProductJsonController.DeleteImageAndColorOfProduct);
+jsonRoute.post('/product/product-update', ProductJsonController.UpdateProduct);
+jsonRoute.post('/product/product-delete', ProductJsonController.DeleteProduct);
 
 export default jsonRoute;

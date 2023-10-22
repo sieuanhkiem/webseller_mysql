@@ -17,18 +17,30 @@ export default class ProductAdminController {
                 if(product!.images_product.length > 0) {
                     product!.images_product = product.images_product.map(image => {
                         const imageModel: ImageModel = new ImageModel(image.images)
-                        imageModel.image_base64 = image.images.image.toString('base64');
+                        if(image.images.image != null) imageModel.image_base64 = image.images.image.toString('base64');
+                        // else imageModel.image_base64 =
                         image.images = imageModel;
                         return image;
                     })
                 }
-                console.log(product);
+                // console.log(product);
                 return res.render('./admin/product_edit.ejs', { categories, product });
             }
             return res.render('./admin/product_new.ejs', { categories });
         } 
         catch (error: unknown) {
             logging.error(`[${ProductAdminController.name}].[${ProductAdminController.EditProduct.name}]: ${error}`);
+            return res.redirect('/page_error');
+        }
+    }
+
+    public static async ListProduct(req: Request, res: Response) {
+        try {
+            const products = await ProductAdminController.productService.GetAllProduct();
+            return res.render('./admin/product_list.ejs', { products });
+        } 
+        catch (error: unknown) {
+            logging.error(`[${ProductAdminController.name}].[${ProductAdminController.ListProduct.name}]: ${error}`);
             return res.redirect('/page_error');
         }
     }

@@ -51,16 +51,24 @@ type ColorNew = {
 
 type ImageNew = {
     image_name: string,
+    image_code?: string,
     image_default ?: boolean,
     buffer: string
 }
 
 type ProductNew = {
     product_name: string,
+    product_code?: string,
     category_code: string,
     comment: string,
     brand: string,
     preserve: string,
+    colors: ColorNew[],
+    images: ImageNew[]
+}
+
+type ProductUpdate = {
+    product_code: string,
     colors: ColorNew[],
     images: ImageNew[]
 }
