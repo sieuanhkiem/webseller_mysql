@@ -115,7 +115,6 @@ $('input.upload-input-file[name=image-only-one]').on('change', async function (e
 
 
 $('input.upload-input-file[name=image-multi]').on('change', async function (e) {
-    console.log(e.target.files);
     const maxImage = 3;
     const arrFileImage = Array.prototype.slice.call(e.target.files);
     // const divImgWrap = $(this).closest('.upload-box').find('div.upload-img-wrap[name=image-only-one]');
@@ -160,7 +159,6 @@ $('input.upload-input-file[name=image-multi]').on('change', async function (e) {
 });
 
 $('.upload-img-close').on('click', function (e) {
-    console.log(e.currentTarget);
     const imgBg = $(e.currentTarget).closest('.img-bg');
     const fileImageName = imgBg.data('file');
     const fileImageCode = imgBg.data('file-code')
@@ -243,4 +241,12 @@ $('button.btn-update').on('click', function (e) {
         common.ToastMessage('Cập nhật sản phẩm thất bại', common.toastLevel.ERROR);
         common.ToastMessage(`${resultError.error}`, common.toastLevel.ERROR);
     });
+});
+
+
+$('.btn-price').on('click', function (e) {
+    const inputProductCode = $('.product-code');
+    const productCode = inputProductCode.val();
+    let url =`${window.location.protocol}//${window.location.hostname}:${window.location.port}/admin/product/size-price/${productCode}`;
+    window.open(url, '_blank');
 });

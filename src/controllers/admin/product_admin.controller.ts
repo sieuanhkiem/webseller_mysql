@@ -3,10 +3,12 @@ import { logging } from '../../config/logging';
 import CategoryService from '../../services/category.service';
 import ProductService from '../../services/product.service';
 import { ImageModel } from '../../models/image/image.model';
+import SalePriceService from '../../services/sale_price.service';
 
 export default class ProductAdminController {
     private static categoryService: CategoryService = new CategoryService();
     private static productService: ProductService = new ProductService();
+    private static salePriceService: SalePriceService = new SalePriceService();
     public static async EditProduct(req: Request, res: Response) {
         try {
             const categories = await ProductAdminController.categoryService.GetAllCategory();
@@ -41,6 +43,21 @@ export default class ProductAdminController {
         } 
         catch (error: unknown) {
             logging.error(`[${ProductAdminController.name}].[${ProductAdminController.ListProduct.name}]: ${error}`);
+            return res.redirect('/page_error');
+        }
+    }
+
+    public static async SalePriceSize(req: Request, res: Response) {
+        try {
+            const productCode: string | null = req.params.productcode || null;
+            if(productCode == null) throw new Error(`Can not found product code request`);
+            const product = await ProductAdminController.productService.FindProductByCode(productCode);
+            const salePrices = await ProductAdminController.salePriceService.GetSalePriceByProduct(productCode);
+            if(product == null || product == undefined) throw new Error(`Can not found product by code ${productCode}`);
+            return res.render('./admin/size_price.ejs', { product, salePrices });
+        } 
+        catch (error: unknown) {
+            logging.error(`[${ProductAdminController.name}].[${ProductAdminController.SalePriceSize.name}]: ${error}`);
             return res.redirect('/page_error');
         }
     }

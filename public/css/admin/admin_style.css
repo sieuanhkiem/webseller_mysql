@@ -250,6 +250,6 @@ div.upload-img-close::after {
 }
 
 
-.btn-del {
+.size-price-delete, .btn-del {
     cursor: pointer;
 }

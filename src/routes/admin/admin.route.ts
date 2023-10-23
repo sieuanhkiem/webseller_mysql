@@ -13,5 +13,6 @@ adminRoute.get('/category/update/:categorycode', CategoryAdminController.EditCat
 adminRoute.get('/product/new', ProductAdminController.EditProduct);
 adminRoute.get('/product/update/:productcode', ProductAdminController.EditProduct);
 adminRoute.get('/product/list', ProductAdminController.ListProduct);
+adminRoute.get('/product/size-price/:productcode', ProductAdminController.SalePriceSize);
 
 export default adminRoute;

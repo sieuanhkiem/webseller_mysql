@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <%- include('./root/link_header') -%>
+    <title>Cấu hình Cửa hàng</title>
+</head>
+<body>
+   <header>
+        <h1>THÊM SIZE SẢN PHẨM</h1>
+    </header>
+    <section class = "admin-content">
+        <%- include('./root/admin_content_left') -%>
+        <div class = "admin-content-right">
+            <div class="admin-content-right-category-add">
+                <h1>Thêm size sản phẩm</h1>
+                <div>
+                    <label for="">Mã Sản phẩm</label>
+                    <input type="text" disabled="true" name="product-code" class="product-code" value="<%= product.product_code %>"/>
+                    <label for="">Tên Sản phẩm</label>
+                    <input type="text" placeholder="Nhập tên Sản phẩm" name="product-name" class="product-name" disabled="true" value="<%= product.product_name %>" /></br>
+
+                    <label for="">Nhập size<span style="color: red;">*</span></label>
+                    <input type="text" placeholder="Nhập size" required name="product-size" class="product-size"/>
+                    <label for="">Nhập giá<span style="color: red;">*</span></label>
+                    <input type="number" min="0" placeholder="Nhập giá" required name="product-price" class="product-price"/>
+                    <button class="btn-save">Lưu</button>
+                </div>
+            </div>
+            <div class="admin-content-right-category-list">
+                <h1>Danh size và giá</h1>
+                <table class="table-size-price">
+                     <tr>
+                         <!-- <th>STT</th> -->
+                         <th>Mã size code</th>
+                         <th>Size</th>
+                         <th>giá</th>
+                         <th>Tùy biến</th>
+                     </tr>
+                     <% if(salePrices.length > 0) { %>
+                        <% salePrices.forEach(function(salePrice) { %>
+                            <tr>
+                               <td data-size-code="<%= salePrice.product_size.size_code  %>" ><%= salePrice.product_size.size_code %></td>
+                               <td><%= salePrice.product_size.size_name %></td>
+                               <td data-sale-code="<%= salePrice.sale_code %>" ><%= salePrice.sale_price %></td>
+                               <td><span class="size-price-delete">Xóa</span></td>
+                           </tr>
+                        <% }) %>
+                     <% } %>
+                </table>
+             </div>
+        </div>
+    </section>
+
+    <script src="js/libs/jquery-3.4.0.min.js"></script>
+    <script src="js/libs/jToast.min.js"></script>
+    <script src="js/libs/crypto-js.js"></script>
+    <script src="js/libs/common.js"></script>
+    <script src="js/admin/sale-price-admin-js.js"></script>
+</body>
+</html>

@@ -72,3 +72,14 @@ type ProductUpdate = {
     colors: ColorNew[],
     images: ImageNew[]
 }
+
+type SizePriceNew = {
+    sale_price: number,
+    size_name: string,
+    product_code: string
+}
+
+type SizePriceDelete = {
+    size_code: string,
+    sale_code: string
+}

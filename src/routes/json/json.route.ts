@@ -16,5 +16,7 @@ jsonRoute.post('/product/product-new', ProductJsonController.InsertProduct);
 jsonRoute.post('/product/product-update/delete-img-color', ProductJsonController.DeleteImageAndColorOfProduct);
 jsonRoute.post('/product/product-update', ProductJsonController.UpdateProduct);
 jsonRoute.post('/product/product-delete', ProductJsonController.DeleteProduct);
+jsonRoute.post('/product/insert-size-price', SalePriceJsonController.InsertSalePriceAndSize);
+jsonRoute.post('/product/delete-size-price', SalePriceJsonController.DeleteSizeAndPrice);
 
 export default jsonRoute;
