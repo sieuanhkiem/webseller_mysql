@@ -83,3 +83,9 @@ type SizePriceDelete = {
     size_code: string,
     sale_code: string
 }
+
+type ProductCount = {
+    product_name: string,
+    product_code: string,
+    count?: number
+}

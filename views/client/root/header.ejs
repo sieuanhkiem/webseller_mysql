@@ -7,7 +7,18 @@
     <div class="menu">
         <li><a href ="">Sản phẩm</a>
             <ul class="Sub-Menu">
-                <li><a href ="">Vòng tay & Lắc tay</a>
+                <% if(categoriesWithProduct != undefined && categoriesWithProduct.length > 0) { %>
+                    <% categoriesWithProduct.forEach(function(categoryProduct) { %>
+                        <li><a href ="/category/<%= categoryProduct.category.category_code %>/1.ASC"><%= categoryProduct.category.category_name %></a>
+                            <ul>
+                                <% categoryProduct.products.forEach(function(product) { %>
+                                    <li><a href ="/product/<%= product.product_code %>"><%= product.product_name %></a></li>
+                                <% }) %>
+                            </ul>
+                        </li>
+                    <% }) %>
+                <% } %>
+                <!-- <li><a href ="">Vòng tay & Lắc tay</a>
                     <ul>
                         <li><a href ="">Trầm hương Đơn Mix cỏ 4 lá may mắn</a></li>
                         <li><a href ="">Vòng tay Trầm hương 108 hạt Mix cỏ 4 lá theo Mệnh</a></li>
@@ -25,7 +36,7 @@
                     <ul>
                         <li><a href ="">Nhẫn Trầm hương Mix Đá - Đủ 5 màu bản mệnh</a></li>
                     </ul>
-                </li>
+                </li> -->
             </ul>
         </li>
         <% if(category != undefined && category != null) { %>

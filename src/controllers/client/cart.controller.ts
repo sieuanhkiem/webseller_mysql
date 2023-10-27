@@ -9,7 +9,8 @@ export default class CartController {
             const cart: Cart = req.session.cart || { totalPrice: 0, cartItem: [], totalItem: 0 };
             // console.log(cart);
             const category = await CartController.categoryService.GetAllCategory();
-            return res.render('./client/cart.ejs', { cart, category })
+            const categoriesWithProduct = await CartController.categoryService.GetProductWithCategory();
+            return res.render('./client/cart.ejs', { cart, category, categoriesWithProduct })
         } 
         catch (error: unknown) {
             logging.error(`[${CartController.name}].[${CartController.ShowCart.name}]: ${error}`);

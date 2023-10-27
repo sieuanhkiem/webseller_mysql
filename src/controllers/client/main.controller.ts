@@ -17,7 +17,8 @@ export default class MainControler {
     public static async index(req: Request, res: Response) {
         try {
             const category = await MainControler.categoryService.GetAllCategory();
-            return res.render('./client/index.ejs', { category });
+            const categoriesWithProduct = await MainControler.categoryService.GetProductWithCategory();
+            return res.render('./client/index.ejs', { category, categoriesWithProduct });
         } 
         catch (error: unknown) {
             logging.error(`[${MainControler.name}].[${MainControler.index.name}]: ${error}`);

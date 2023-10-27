@@ -23,7 +23,8 @@ export default class FinalController {
                 return totalPrice;
             }, 0);
             const category = await FinalController.categoryService.GetAllCategory();
-            res.render('./client/final.ejs', { saleOrders, totalPrice, category });
+            const categoriesWithProduct = await FinalController.categoryService.GetProductWithCategory();
+            res.render('./client/final.ejs', { saleOrders, totalPrice, category, categoriesWithProduct });
         } 
         catch (error: unknown) {
             logging.error(`[${FinalController.name}].[${FinalController.index}]: ${error}`);

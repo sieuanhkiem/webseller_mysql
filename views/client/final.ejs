@@ -8,13 +8,13 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,300;8..144,500&display=swap" rel="stylesheet">
     <!-- main css -->
-    <%- include('./root/link-header', { category }) -%>
+    <%- include('./root/link-header') -%>
     <link rel="stylesheet" href="./css/main.css">
     <title>Mộc Hương Rừng Agarwood</title>
 </head>
 <body>
     <!-- --------------------------------------------------------header -->
-    <%- include('./root/header') -%>
+    <%- include('./root/header', { category, categoriesWithProduct }) -%>
     <!-- --------------------------------------------------------header -->
 
     <!-- --------------------------------------------------------Gio hàng -->

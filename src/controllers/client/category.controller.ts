@@ -21,7 +21,8 @@ export default class CategoryController {
             const currentCategory = categoriesProduct.find(category => category.category_code == categoryCode);
             if(currentCategory == null || currentCategory == undefined) throw new Error('Category code is not found');
             const productPagination = await CategoryController.productService.GetProductByNumberPage(page, config.quantityofpage, categoryCode, order);
-            return res.render('./client/category.ejs', { product: productPagination, category: { categoriesProduct, currentCategory }, quantityOfPage:  config.quantityofpage, order });
+            const categoriesWithProduct = await CategoryController.categoryService.GetProductWithCategory();
+            return res.render('./client/category.ejs', { product: productPagination, category: { categoriesProduct, currentCategory }, quantityOfPage:  config.quantityofpage, order, categoriesWithProduct });
         } 
         catch (error: unknown) {
             logging.error(`[${CategoryController.name}].[${CategoryController.index.name}]: ${error}`);

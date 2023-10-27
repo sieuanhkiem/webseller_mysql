@@ -16,7 +16,8 @@ export default class ProductController {
             if(productDetail == null || productDetail == undefined) throw new Error(`Can not find product by ${productCode}`);
             const productRand = await ProductController.productService.GetRandomProduct();
             const category = await ProductController.categoryService.GetAllCategory();
-            return res.render('./client/product.ejs', { productDetail, productRand, category });
+            const categoriesWithProduct = await ProductController.categoryService.GetProductWithCategory();
+            return res.render('./client/product.ejs', { productDetail, productRand, category, categoriesWithProduct });
         } 
         catch (error: unknown) {
             logging.error(`[${ProductController.name}].[${ProductController.index.name}]: ${error}`)

@@ -25,7 +25,8 @@ export default class DeliveryController {
             const cities = await DeliveryController.cityService.GetAllCity();
             const cart: Cart = req.session.cart!;
             const category = await DeliveryController.categoryService.GetAllCategory();
-            return res.render('./client/delivery.ejs', { cities, cart, category });
+            const categoriesWithProduct = await DeliveryController.categoryService.GetProductWithCategory();
+            return res.render('./client/delivery.ejs', { cities, cart, category, categoriesWithProduct });
         } 
         catch (error: unknown) {
             logging.error(`[${DeliveryController.name}].[${DeliveryController.index.name}]: ${error}`);
