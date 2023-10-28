@@ -108,5 +108,11 @@ btnBuyProduct.onclick = function (e) {
             choseColorDefault.style = `cursor: default; border: 1px solid #${colorCodeDefault}; background-color: #${colorCodeDefault}; opacity: 0.3`;
         }
         document.querySelector('.product-quantity').value = '1';
+        common.ToastMessage('Thêm sản phẩm thành công', common.toastLevel.SUCCESS);
+        common.ToastMessage('Vui lòng vào giỏ hàng để xem chi tiết', common.toastLevel.SUCCESS);
+    }, 
+    function (resultError) {
+        common.ToastMessage('Thêm sản phẩm thất bại', common.toastLevel.ERROR);
+        common.ToastMessage(`${resultError.error}`, common.toastLevel.ERROR);
     });
 }

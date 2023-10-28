@@ -6,9 +6,7 @@
   "scripts": {
     "build": "npx tsc",
     "start": "node dist/index.js",
-    "dev": "concurrently \"npx tsc --watch\" \"nodemon -q ./dist/index.js\"",
-    "typeorm": "typeorm-ts-node-commonjs --dataSource src/data-source.ts",
-    "typeorm:migratie": "npm run typeorm migration:run"
+    "dev": "concurrently \"npx tsc --watch\" \"nodemon -q ./dist/index.js\""
   },
   "author": "",
   "license": "ISC",
@@ -38,6 +36,7 @@
     "concurrently": "^8.2.1",
     "nodemon": "^3.0.1",
     "ts-node": "^10.9.1",
+    "tsconfig-paths": "^4.2.0",
     "typescript": "^5.2.2",
     "winston": "^3.10.0"
   }

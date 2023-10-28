@@ -21,7 +21,7 @@
                             <div class="product-content-left-big-img">
                                 <% const imageDefault = productDetail.images_product.filter(imageProduct => imageProduct.images.image_default == 1) %>
                                 <% if(imageDefault.length > 0) { %>
-                                    <img src="/images/<%= imageDefault[0].images.image_name %>" alt="<%= imageDefault[0].images.image_name %>">
+                                    <img src="data:image/*;base64,<%= imageDefault[0].images.image_base64 %>" alt="<%= imageDefault[0].images.image_name %>">
                                 <% } else { %>
                                     <img src="/images/300x300.png" alt="300x300">
                                 <% } %>
@@ -36,7 +36,7 @@
                             <div class="product-content-left-small-img">
                                 <% const imagesNotDefault = productDetail.images_product.filter(imageProduct => imageProduct.images.image_default == 0) %>
                                 <% for(let i = 0; i < imagesNotDefault.length && i < 4; i++) { %>
-                                    <img src="./images/<%= imagesNotDefault[i].images.image_name %>" alt="<%= imagesNotDefault[i].images.image_name %>">
+                                    <img src="data:image/*;base64,<%= imagesNotDefault[i].images.image_base64 %>" alt="<%= imagesNotDefault[i].images.image_name %>">
                                 <% } %>
                                 <!-- <img src="./images/Vòng tay trầm hương 108 hạt.jpeg" alt="">
                                 <img src="./images/Vòng tay trầm hương 108 hạt.jpeg" alt="">
@@ -159,7 +159,7 @@
                         <% if(product.images_product && product.images_product.length > 0) { %>
                             <% const imageDefaultOther = product.images_product.filter(imageProduct => imageProduct.images.image_default == 1) %>
                             <% if(imageDefaultOther.length > 0) { %>
-                                <a href="/product/<%= product.product_code %>"><img src="/images/<%= imageDefaultOther[0].images.image_name %>" alt="<%= imageDefaultOther[0].images.image_name %>"></a>
+                                <a href="/product/<%= product.product_code %>"><img src="data:image/*;base64,<%= imageDefaultOther[0].images.image_base64 %>" alt="<%= imageDefaultOther[0].images.image_name %>"></a>
                             <% } else { %>
                                 <a href="/product/<%= product.product_code %>"><img src="/images/300x300.png" alt="300x300"></a>
                             <% } %>
@@ -217,6 +217,8 @@
 
         <script src="https://kit.fontawesome.com/fe2553334c.js" crossorigin="anonymous"></script>
         <script src="/js/libs/crypto-js.js"></script>
+        <script src="js/libs/jquery-3.4.0.min.js"></script>
+        <script src="js/libs/jToast.min.js"></script>
         <script src="/js/libs/common.js"></script>
         <script src="/js/client/product-js.js"></script>
     </body>

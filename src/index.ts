@@ -51,6 +51,6 @@ mainApp.use(function (req: Request, res: Response) {
 })
 
 mainApp.listen(config.server.port, async () => {
-    await initialize(false);
+    await initialize();
     console.log(`⚡️[server]: Server is running at http://${config.server.hostname}:${config.server.port}}`);
 });

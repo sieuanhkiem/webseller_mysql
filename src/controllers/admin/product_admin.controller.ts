@@ -16,15 +16,6 @@ export default class ProductAdminController {
             if(productCode != null) {
                 let product = await ProductAdminController.productService.FindProductByCode(productCode);
                 if(product == null) throw new Error(`Can not file product by code ${productCode}`);
-                if(product!.images_product.length > 0) {
-                    product!.images_product = product.images_product.map(image => {
-                        const imageModel: ImageModel = new ImageModel(image.images)
-                        if(image.images.image != null) imageModel.image_base64 = image.images.image.toString('base64');
-                        // else imageModel.image_base64 =
-                        image.images = imageModel;
-                        return image;
-                    })
-                }
                 // console.log(product);
                 return res.render('./admin/product_edit.ejs', { categories, product });
             }

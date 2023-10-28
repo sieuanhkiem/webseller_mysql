@@ -181,9 +181,10 @@ $('.color-close').on('click', function (e) {
 });
 
 $('button.btn-update').on('click', function (e) {
+    $("#overlay").fadeIn(300);
     const inputProductCode = $('.product-code');
     if(imageArrDel.length > 0 || colorPicksDel.length > 0) {
-        console.log(imageArrDel);
+        // console.log(imageArrDel);
         const product = {
             product_code: inputProductCode.val(),
             images: imageArrDel,
@@ -233,11 +234,13 @@ $('button.btn-update').on('click', function (e) {
     common.callAPIHandler(common.method.POST, 'json/product/product-update', { product: common.encrypt(product) },
     function (result) {
         const productUpdate = common.decrypt(result);
-        console.log(productUpdate);
+        // console.log(productUpdate);
+        $("#overlay").fadeOut(300);
         common.ToastMessage('Cập nhật sản phẩm thành công', common.toastLevel.SUCCESS);
         common.ToastMessage(`${productUpdate.product_code}`, common.toastLevel.SUCCESS);
     },
     function (resultError) {
+        $("#overlay").fadeOut(300);
         common.ToastMessage('Cập nhật sản phẩm thất bại', common.toastLevel.ERROR);
         common.ToastMessage(`${resultError.error}`, common.toastLevel.ERROR);
     });

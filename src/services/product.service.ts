@@ -12,6 +12,7 @@ import { ProductColor } from '../entity/product_color';
 import { Common } from '../common/common_extendsion';
 import { ImageProduct } from '../entity/image_product';
 import { ImageType } from '../enum/entity';
+import { ImageModel } from '../models/image/image.model';
 
 
 export default class ProductService extends BaseService {
@@ -51,6 +52,13 @@ export default class ProductService extends BaseService {
                 .groupBy('product.product_code, sale_price.sale_code')
                 .execute();
                 if(salePrice.length > 0) productPagination.price_product = salePrice[0];
+
+                productPagination.images_product = productPagination.images_product.map((productImage) => {
+                    const imageModel: ImageModel = new ImageModel(productImage.images);
+                    if(productImage.images.image != null) imageModel.image_base64 = productImage.images.image.toString('base64');
+                    productImage.images = imageModel;
+                    return productImage
+                });
             }
 
             productReuslt = productReuslt.sort(function (proctOne: ProductPaginationModel, proctTwo: ProductPaginationModel) {
@@ -98,7 +106,14 @@ export default class ProductService extends BaseService {
                                 }
                              })
                              .getOneOrFail();
+
             
+            productDetail.images_product = productDetail.images_product.map((productImage) => {
+                const imageModel: ImageModel = new ImageModel(productImage.images);
+                if(productImage.images.image != null) imageModel.image_base64 = productImage.images.image.toString('base64');
+                productImage.images = imageModel;
+                return productImage
+            });                 
 
             const salePriceProduct: SalePriceOfProduct[] = await repositorySalePrice.createQueryBuilder('sale_price')
                                                                             .select('Min(sale_price.sale_price)', 'salePrice')
@@ -151,6 +166,13 @@ export default class ProductService extends BaseService {
                                                                                 .groupBy('product.product_code, sale_price.sale_code')
                                                                                 .execute();
                 if(salePrice.length > 0) product.price_product = salePrice[0];
+
+                product.images_product = product.images_product.map((productImage) => {
+                    const imageModel: ImageModel = new ImageModel(productImage.images);
+                    if(productImage.images.image != null) imageModel.image_base64 = productImage.images.image.toString('base64');
+                    productImage.images = imageModel;
+                    return productImage
+                });
             }                                                                    
             await super.disconnectDatabase();
             return productsRand;
@@ -164,7 +186,7 @@ export default class ProductService extends BaseService {
     public async FindProductByCode(productCode: string): Promise<Product | null | undefined> {
         try {
             await super.connectDatabase();
-            const product: Product = await Product.findOneOrFail({
+            let product: Product = await Product.findOneOrFail({
                 where: {
                     product_code: productCode,
                 },
@@ -176,6 +198,12 @@ export default class ProductService extends BaseService {
                     product_colors: true,
                     category_product: true
                 }
+            });
+            product.images_product = product.images_product.map((productImage) => {
+                const imageModel: ImageModel = new ImageModel(productImage.images);
+                if(productImage.images.image != null) imageModel.image_base64 = productImage.images.image.toString('base64');
+                productImage.images = imageModel;
+                return productImage
             });
             await super.disconnectDatabase();
             return product;

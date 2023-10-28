@@ -189,6 +189,8 @@ $('button.btn-add').on('click', function (e) {
         images: imageArr 
     };
 
+    $("#overlay").fadeIn(300);
+
     common.callAPIHandler(common.method.POST, 'json/product/product-new', { product: common.encrypt(product) }, 
     function (result) {
         const product = common.decrypt(result.product);
@@ -200,10 +202,12 @@ $('button.btn-add').on('click', function (e) {
         $('div.upload-img-wrap[name=image-multi]').empty();
         $('div.upload-img-wrap[name=image-only-one]').empty();
         $('.color-wrap').empty();
+        $("#overlay").fadeOut(300);
         common.ToastMessage('Tạo prouct thành công', common.toastLevel.SUCCESS);
         common.ToastMessage(`product code: ${product.product_code}`, common.toastLevel.SUCCESS);
     },
     function (resultError) {
+        $("#overlay").fadeOut(300);
         common.ToastMessage('Tạo prouct thất bại', common.toastLevel.ERROR);
         common.ToastMessage(`${resultError.error}`, common.toastLevel.ERROR);
     });
