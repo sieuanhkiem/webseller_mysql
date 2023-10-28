@@ -10,7 +10,8 @@ export class ProductSize extends BaseEntity {
     @PrimaryColumn('uuid', {
         name: 'Id',
         generated: 'uuid',
-        type: 'uniqueidentifier'
+        type: 'char',
+        length: 36
     })
     @IsUUID()
     id: string
@@ -54,7 +55,7 @@ export class ProductSize extends BaseEntity {
 
     @Column({
         name: 'Is_Delete',
-        type: 'bit',
+        type: 'tinyint',
         nullable: true,
         default: 0
     })

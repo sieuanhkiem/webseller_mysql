@@ -7,7 +7,8 @@ export class Image extends BaseEntity {
     @PrimaryColumn('uuid', {
         name: 'Id',
         generated: 'uuid',
-        type: 'uniqueidentifier'
+        type: 'char',
+        length: 36
     })
     @IsUUID()
     id: string
@@ -35,7 +36,7 @@ export class Image extends BaseEntity {
 
     @Column({
         name: 'Image',
-        type: 'image',
+        type: 'longblob',
         nullable: true
     })
     image: Buffer
@@ -60,7 +61,7 @@ export class Image extends BaseEntity {
 
     @Column({
         name: 'Is_Delete',
-        type: 'bit',
+        type: 'tinyint',
         nullable: true,
         default: 0
     })
@@ -77,7 +78,7 @@ export class Image extends BaseEntity {
 
     @Column({
         name: 'Image_Default',
-        type: 'bit',
+        type: 'tinyint',
         nullable: true,
         default: 0
     })

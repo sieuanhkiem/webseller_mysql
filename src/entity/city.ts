@@ -9,7 +9,8 @@ export class City extends BaseEntity {
     @PrimaryColumn('uuid', {
         name: 'Id',
         generated: 'uuid',
-        type: 'uniqueidentifier'
+        type: 'char',
+        length: 36
     })
     @IsUUID()
     id: string

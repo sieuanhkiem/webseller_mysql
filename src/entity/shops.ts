@@ -9,7 +9,8 @@ export class Shops extends BaseEntity {
     @PrimaryColumn('uuid', {
         name: 'Id',
         generated: 'uuid',
-        type: 'uniqueidentifier'
+        type: 'char',
+        length: 36
     })
     // @Column({
     //     name: 'Id',

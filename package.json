@@ -20,6 +20,7 @@
     "express-session": "^1.17.3",
     "moment": "^2.29.4",
     "mssql": "^9.2.0",
+    "mysql": "^2.18.1",
     "reflect-metadata": "^0.1.13",
     "typeorm": "^0.3.17"
   },
@@ -31,6 +32,7 @@
     "@types/express": "^4.17.17",
     "@types/express-session": "^1.17.8",
     "@types/mssql": "^8.1.2",
+    "@types/mysql": "^2.15.23",
     "@types/node": "^20.6.0",
     "class-validator": "^0.14.0",
     "concurrently": "^8.2.1",

@@ -6,7 +6,8 @@ export class Employee extends BaseEntity {
     @PrimaryColumn('uuid', {
         name: 'Id',
         generated: 'uuid',
-        type: 'uniqueidentifier'
+        type: 'char',
+        length: 36
     })
     // @Column({
     //     name: 'Id',
@@ -81,7 +82,7 @@ export class Employee extends BaseEntity {
 
     @Column({
         name: 'Is_Active',
-        type: 'bit',
+        type: 'tinyint',
         nullable: true,
         default: 1
     })
@@ -90,7 +91,7 @@ export class Employee extends BaseEntity {
 
     @Column({
         name: 'Is_Delete',
-        type: 'bit',
+        type: 'tinyint',
         nullable: true,
         default: 0
     })

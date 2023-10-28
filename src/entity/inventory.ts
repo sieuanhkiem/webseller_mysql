@@ -11,7 +11,8 @@ export class Inventory extends BaseEntity {
     @PrimaryColumn('uuid', {
         name: 'Id',
         generated: 'uuid',
-        type: 'uniqueidentifier'
+        type: 'char',
+        length: 36
     })
     // @Column({
     //     name: 'Id',
@@ -133,7 +134,7 @@ export class Inventory extends BaseEntity {
 
     @Column({
         name: 'Is_Delete',
-        type: 'bit',
+        type: 'tinyint',
         nullable: true,
         default: 0
     })

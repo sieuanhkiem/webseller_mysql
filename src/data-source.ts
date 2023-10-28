@@ -10,7 +10,7 @@ import { Ward } from './entity/ward'
 // import msnodesqlv8 from 'mssql/msnodesqlv8'
 
 const AppDataSource: DataSource = new DataSource({
-    type: 'mssql',
+    type: 'mysql',
     // driver: msnodesqlv8,
     host: config.sqlserver.host,
     username: config.sqlserver.user,

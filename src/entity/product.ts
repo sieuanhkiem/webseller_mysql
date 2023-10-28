@@ -13,7 +13,8 @@ export class Product extends BaseEntity {
     @PrimaryColumn('uuid', {
         name: 'Id',
         generated: 'uuid',
-        type: 'uniqueidentifier'
+        type: 'char',
+        length: 36
     })
     // @Column({
     //     name: 'Id',
@@ -82,10 +83,10 @@ export class Product extends BaseEntity {
     @Column({
         name: 'Brand',
         type: 'nvarchar',
-        length: 50,
+        length: 255,
         nullable: true
     })
-    @Length(50)
+    @Length(255)
     brand: string
 
     @Column({
@@ -117,7 +118,7 @@ export class Product extends BaseEntity {
 
     @Column({
         name: 'Is_Delete',
-        type: 'bit',
+        type: 'tinyint',
         nullable: true,
         default: 0
     })

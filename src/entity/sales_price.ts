@@ -8,7 +8,8 @@ export class SalesPrice extends BaseEntity {
     @PrimaryColumn('uuid', {
         name: 'Id',
         generated: 'uuid',
-        type: 'uniqueidentifier'
+        type: 'char',
+        length: 36
     })
     @IsUUID()
     id: string
@@ -78,7 +79,7 @@ export class SalesPrice extends BaseEntity {
 
     @Column({
         name: 'Is_Delete',
-        type: 'bit',
+        type: 'tinyint',
         nullable: true,
         default: 0
     })
@@ -86,8 +87,9 @@ export class SalesPrice extends BaseEntity {
 
     @Column({
         name: 'Is_Active',
-        type: 'bit',
-        nullable: true
+        type: 'tinyint',
+        nullable: true,
+        default: 1
     })
     is_active: boolean
 
