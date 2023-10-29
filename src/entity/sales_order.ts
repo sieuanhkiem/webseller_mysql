@@ -42,16 +42,16 @@ export class SalesOrder extends BaseEntity {
 
     @Column({
         name: 'Sale_Date',
-        type: 'datetime',
+        type: 'timestamp',
         nullable: true,
-        default: () => 'CURRENT_TIMESTAMP'
+        // default: () => 'CURRENT_TIMESTAMP'
     })
     @IsDate()
     sale_date: Date
 
     @Column({
         name: 'Delivery_Date',
-        type: 'datetime',
+        type: 'timestamp',
         nullable: true,
         // default: Date.now()
     })
@@ -79,7 +79,7 @@ export class SalesOrder extends BaseEntity {
 
     @Column({
         name: 'Create_Date',
-        type: 'datetime',
+        type: 'timestamp',
         nullable: true,
         default: () => 'CURRENT_TIMESTAMP'
     })
@@ -88,9 +88,9 @@ export class SalesOrder extends BaseEntity {
 
     @Column({
         name: 'Last_Update',
-        type: 'datetime',
+        type: 'timestamp',
         nullable: true,
-        default: () => 'CURRENT_TIMESTAMP'
+        // default: () => 'CURRENT_TIMESTAMP'
     })
     @IsDate()
     last_update: Date

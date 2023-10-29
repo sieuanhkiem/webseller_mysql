@@ -69,7 +69,7 @@ export class Image extends BaseEntity {
 
     @Column({
         name: 'Create_Date',
-        type: 'datetime',
+        type: 'timestamp',
         nullable: true,
         default: () => 'CURRENT_TIMESTAMP'
     })

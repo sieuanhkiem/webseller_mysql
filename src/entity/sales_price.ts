@@ -46,13 +46,13 @@ export class SalesPrice extends BaseEntity {
         type: 'nvarchar',
         length: 100,
         nullable: true,
-        default: 'VNĐ'
+        default: 'VND'
     })
     curcency: string
 
     @Column({
         name: 'Price_Date',
-        type: 'datetime',
+        type: 'timestamp',
         nullable: true,
     })
     @IsDate()
@@ -70,7 +70,7 @@ export class SalesPrice extends BaseEntity {
 
     @Column({
         name: 'Create_Date',
-        type: 'datetime',
+        type: 'timestamp',
         nullable: true,
         default: () => 'CURRENT_TIMESTAMP'
     })

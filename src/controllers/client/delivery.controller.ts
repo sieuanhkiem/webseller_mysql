@@ -59,6 +59,8 @@ export default class DeliveryController {
                 saleOrder.customer = customer!;
                 saleOrder.product = product!
                 saleOrder.product_size = sizeProduct;
+                saleOrder.last_update = new Date();
+                saleOrder.sale_date = new Date();
                 const resultCreate = await DeliveryController.saleOrderService.CreateSaleOrder(saleOrder);
                 if(resultCreate == false) throw new Error(`Create sale order faild ${product?.product_name}-${product?.product_code}_${sizeProduct.size_code}-${sizeProduct.size_name}`);
             }

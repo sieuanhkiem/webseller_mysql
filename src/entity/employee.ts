@@ -47,16 +47,16 @@ export class Employee extends BaseEntity {
 
     @Column({
         name: 'Start_Date',
-        type: 'datetime',
+        type: 'timestamp',
         nullable: true,
-        default: () => 'CURRENT_TIMESTAMP'
+        // default: () => 'CURRENT_TIMESTAMP'
     })
     @IsDate()
     start_date: Date
 
     @Column({
         name: 'End_Date',
-        type: 'datetime',
+        type: 'timestamp',
         nullable: true
     })
     @IsDate()
@@ -99,7 +99,7 @@ export class Employee extends BaseEntity {
 
     @Column({
         name: 'Create_Date',
-        type: 'datetime',
+        type: 'timestamp',
         nullable: true,
         default: () => 'CURRENT_TIMESTAMP'
     })

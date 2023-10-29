@@ -25,8 +25,8 @@ export class Inventory extends BaseEntity {
     @Column({
         name: 'Inventory_Date',
         nullable: true,
-        type: 'datetime',
-        default: () => 'CURRENT_TIMESTAMP'
+        type: 'timestamp',
+        // default: () => 'CURRENT_TIMESTAMP'
     })
     @IsDate()
     transaction_date: Date
@@ -44,7 +44,7 @@ export class Inventory extends BaseEntity {
     @Column({
         name: 'Create_Date',
         nullable: true,
-        type: 'datetime',
+        type: 'timestamp',
         default: () => 'CURRENT_TIMESTAMP'
     })
     @IsDate()
@@ -100,7 +100,7 @@ export class Inventory extends BaseEntity {
         type: 'nvarchar',
         length: 30,
         nullable: true,
-        default: 'VNĐ'
+        default: 'VND'
     })
     @Length(30)
     currenry: string

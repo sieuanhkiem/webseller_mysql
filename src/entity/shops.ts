@@ -95,7 +95,7 @@ export class Shops extends BaseEntity {
 
     @Column({
         name: 'Create_Date',
-        type: 'datetime',
+        type: 'timestamp',
         nullable: true,
         default: () => 'CURRENT_TIMESTAMP'
     })
