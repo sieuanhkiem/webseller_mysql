@@ -11,16 +11,22 @@
     <title>Mộc Hương Rừng Agarwood</title>
 </head>
 <body>
-    <%- include('./root/header', { category, categoriesWithProduct }) -%>
+    <%- include('./root/header', { category, categoriesWithProduct, imageLogo }) -%>
 
     <section id="Slider">
         <div class="aspect-ratio-169">
-            <img src="./images/header shop.jpg">
-            <img src="./images/mô tả trầm hương 1.jpg">
-            <img src="./images/header shop.jpg">
-            <img src="./images/mô tả trầm hương 2.jpg">
-            <img src="./images/header shop.jpg">
-            <img src="./images/mô tả trầm hương 3.jpg">
+            <% if(imagesSilder && imagesSilder.length > 0) { %>
+                <% imagesSilder.forEach(function(image) { %>
+                    <img src="data:image/*;base64,<%= image.image_base64 %>" alt="<%= image.image_name %>">
+                <% }) %>
+            <% } else { %>
+                <img src="./images/header shop.jpg">
+                <img src="./images/mô tả trầm hương 1.jpg">
+                <img src="./images/header shop.jpg">
+                <img src="./images/mô tả trầm hương 2.jpg">
+                <img src="./images/header shop.jpg">
+                <img src="./images/mô tả trầm hương 3.jpg">
+            <% } %>
         </div>
 
         <div class="dot-container">

@@ -1,7 +1,10 @@
 <header>
     <div class="logo">
-        <p><b>CHO TAO CÁI LOGO để đây</b></p>
-        <!-- <img src="img/logo web trầm.png" alt=""> -->
+        <% if(imageLogo) { %>
+            <a href="/"><img src="data:image/*;base64,<%= imageLogo.image_base64 %>" alt="<%= imageLogo.image_name %>"></a>
+        <% } else { %>
+            <a href="images/300x300.png"><img src="" alt="300x300"></a>
+        <% } %>
     </div>
     
     <div class="menu">

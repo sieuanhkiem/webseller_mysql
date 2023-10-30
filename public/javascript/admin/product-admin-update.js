@@ -236,6 +236,8 @@ $('button.btn-update').on('click', function (e) {
         const productUpdate = common.decrypt(result);
         // console.log(productUpdate);
         $("#overlay").fadeOut(300);
+        imageArr.length = 0;
+        imageArrDel.length = 0;
         common.ToastMessage('Cập nhật sản phẩm thành công', common.toastLevel.SUCCESS);
         common.ToastMessage(`${productUpdate.product_code}`, common.toastLevel.SUCCESS);
     },

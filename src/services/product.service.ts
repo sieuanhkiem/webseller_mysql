@@ -144,7 +144,7 @@ export default class ProductService extends BaseService {
             const repositorySalePrice: Repository<SalesPrice> = await this.dataSource?.getRepository(SalesPrice) as Repository<SalesPrice>;
             await super.connectDatabase();
             let productsRand: ProductPaginationModel[] = await repositoryProduct.createQueryBuilder('product')
-                                                                                 .orderBy('NEWID()')
+                                                                                 .orderBy('RAND()')
                                                                                  .setFindOptions({
                                                                                     relations: {
                                                                                         images_product: {
@@ -179,6 +179,7 @@ export default class ProductService extends BaseService {
         } 
         catch (error: unknown) {
             logging.error(`[${ProductService.name}].[${this.GetRandomProduct.name}]: ${error}`);
+            await super.disconnectDatabase();
             return []
         }
     }

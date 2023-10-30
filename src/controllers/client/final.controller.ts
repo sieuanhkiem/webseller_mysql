@@ -4,10 +4,12 @@ import SaleOrderService from '../../services/sale_order.service';
 import { SalesOrder } from '../../entity/sales_order';
 import { SalerOrderStatus } from '../../enum/entity';
 import CategoryService from '../../services/category.service';
+import { ImageService } from '../../services/image.service';
 
 export default class FinalController {
     private static saleOrderService: SaleOrderService = new SaleOrderService();
     private static categoryService: CategoryService = new CategoryService();
+    private static imageService: ImageService = new ImageService();
     public static async index(req: Request, res: Response) {
         try {
             const customerCode: string | null = req.params.customercode || null;
@@ -24,7 +26,8 @@ export default class FinalController {
             }, 0);
             const category = await FinalController.categoryService.GetAllCategory();
             const categoriesWithProduct = await FinalController.categoryService.GetProductWithCategory();
-            res.render('./client/final.ejs', { saleOrders, totalPrice, category, categoriesWithProduct });
+            const imageLogo = await FinalController.imageService.GetImageLogo();
+            res.render('./client/final.ejs', { saleOrders, totalPrice, category, categoriesWithProduct, imageLogo });
         } 
         catch (error: unknown) {
             logging.error(`[${FinalController.name}].[${FinalController.index}]: ${error}`);

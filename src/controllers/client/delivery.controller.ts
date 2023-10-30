@@ -11,6 +11,7 @@ import ProductService from '../../services/product.service';
 import SaleOrderService from '../../services/sale_order.service';
 import CategoryService from '../../services/category.service';
 import { ProductSize } from '../../entity/product_size';
+import { ImageService } from '../../services/image.service';
 
 export default class DeliveryController {
     private static cityService: CityService = new CityService();
@@ -20,13 +21,15 @@ export default class DeliveryController {
     private static productService: ProductService = new ProductService();
     private static saleOrderService: SaleOrderService = new SaleOrderService();
     private static categoryService: CategoryService = new CategoryService();
+    private static imageService: ImageService = new ImageService();
     public static async index(req: Request, res: Response) {
         try {
             const cities = await DeliveryController.cityService.GetAllCity();
             const cart: Cart = req.session.cart!;
             const category = await DeliveryController.categoryService.GetAllCategory();
             const categoriesWithProduct = await DeliveryController.categoryService.GetProductWithCategory();
-            return res.render('./client/delivery.ejs', { cities, cart, category, categoriesWithProduct });
+            const imageLogo = await DeliveryController.imageService.GetImageLogo();
+            return res.render('./client/delivery.ejs', { cities, cart, category, categoriesWithProduct, imageLogo });
         } 
         catch (error: unknown) {
             logging.error(`[${DeliveryController.name}].[${DeliveryController.index.name}]: ${error}`);

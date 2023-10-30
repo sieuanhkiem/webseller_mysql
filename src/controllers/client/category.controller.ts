@@ -5,10 +5,12 @@ import config from '../../config/config';
 import ProducService from '../../services/product.service';
 import CategoryService from '../../services/category.service';
 import { Order } from '../../enum/order';
+import { ImageService } from '../../services/image.service';
 
 export default class CategoryController {
     private static productService: ProducService = new ProducService();
     private static categoryService: CategoryService = new CategoryService();
+    private static imageService: ImageService = new ImageService();
 
     public static async index(req: Request, res: Response) {
         try {
@@ -22,7 +24,8 @@ export default class CategoryController {
             if(currentCategory == null || currentCategory == undefined) throw new Error('Category code is not found');
             const productPagination = await CategoryController.productService.GetProductByNumberPage(page, config.quantityofpage, categoryCode, order);
             const categoriesWithProduct = await CategoryController.categoryService.GetProductWithCategory();
-            return res.render('./client/category.ejs', { product: productPagination, category: { categoriesProduct, currentCategory }, quantityOfPage:  config.quantityofpage, order, categoriesWithProduct });
+            const imageLogo = await CategoryController.imageService.GetImageLogo();
+            return res.render('./client/category.ejs', { product: productPagination, category: { categoriesProduct, currentCategory }, quantityOfPage:  config.quantityofpage, order, categoriesWithProduct, imageLogo });
         } 
         catch (error: unknown) {
             logging.error(`[${CategoryController.name}].[${CategoryController.index.name}]: ${error}`);

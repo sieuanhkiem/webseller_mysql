@@ -6,5 +6,6 @@ export enum SalerOrderStatus {
 
 export enum ImageType {
     SLIDERTYPE = 100000000,
-    PRODUCTTYPE = 100000001
+    PRODUCTTYPE = 100000001,
+    LOGOTYPE = 100000002
 }

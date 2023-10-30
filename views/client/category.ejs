@@ -8,7 +8,7 @@
     <title>Mộc Hương Rừng Agarwood</title>
 </head>
 <body>
-    <%- include('./root/header', { category: category.categoriesProduct, categoriesWithProduct }) -%>
+    <%- include('./root/header', { category: category.categoriesProduct, categoriesWithProduct, imageLogo }) -%>
     <!-- ----------------------------------------------Category -->
     <% const showCountPagePaniation = product.maxPage > 5 ? 5 : product.maxPage %>
     <section class="category">

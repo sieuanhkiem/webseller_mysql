@@ -103,7 +103,7 @@ $('input.upload-input-file[name=image-only-one]').on('change', async function (e
 
 
 $('input.upload-input-file[name=image-multi]').on('change', async function (e) {
-    console.log(e.target.files);
+    // console.log(e.target.files);
     const maxImage = 3;
     const arrFileImage = Array.prototype.slice.call(e.target.files);
     // const divImgWrap = $(this).closest('.upload-box').find('div.upload-img-wrap[name=image-only-one]');
@@ -202,6 +202,7 @@ $('button.btn-add').on('click', function (e) {
         $('div.upload-img-wrap[name=image-multi]').empty();
         $('div.upload-img-wrap[name=image-only-one]').empty();
         $('.color-wrap').empty();
+        imageArr.length = 0;
         $("#overlay").fadeOut(300);
         common.ToastMessage('Tạo prouct thành công', common.toastLevel.SUCCESS);
         common.ToastMessage(`product code: ${product.product_code}`, common.toastLevel.SUCCESS);
